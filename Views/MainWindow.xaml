@@ -1,0 +1,97 @@
+﻿<Window x:Class="Ark.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Ark.Models.Controls"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Ark"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Width="1280"
+        Height="720"
+        AllowsTransparency="True"
+        ResizeMode="CanResize"
+        SizeChanged="Window_SizeChanged"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        mc:Ignorable="d">
+
+    <!--  Window Chrome  -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45"
+                      CornerRadius="0"
+                      GlassFrameThickness="0"
+                      ResizeBorderThickness="7"
+                      UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+
+        <!--  Grid System  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Custom Window  -->
+        <DockPanel Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   Background="{StaticResource ContainerDarkBrush}"
+                   LastChildFill="False">
+            <!--  Logo  -->
+            <Image Width="27"
+                   Height="27"
+                   Margin="10 0 0 0"
+                   Panel.ZIndex="10"
+                   DockPanel.Dock="Left"
+                   Source="pack://application:,,,/Ark_Logo.ico" />
+
+            <!--  Buttons  -->
+            <Button Background="#E74545"
+                    Click="CloseButton_Click"
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource WindowButtons}" />
+            <Button Background="#E59432"
+                    Click="MaximizeButton_Click"
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource WindowButtons}" />
+            <Button Background="#40E75D"
+                    Click="MinimizeButton_Click"
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource WindowButtons}" />
+        </DockPanel>
+
+        <!--  Sidebar NavMenu  -->
+        <StackPanel Grid.Row="1"
+                    Background="{StaticResource ContainerBrush}">
+
+            <controls:IconRadioButtons x:Name="SongLibrary_RadioButton"
+                                       Margin="0 60 0 0"
+                                       Click="navItem_Click"
+                                       GroupName="NavItems"
+                                       HoverIconSource="pack://application:,,,/Resources/Images/Music_Selected.png"
+                                       IconSource="pack://application:,,,/Resources/Images/Music_Unselected.png"
+                                       IsChecked="True" />
+            <controls:IconRadioButtons x:Name="Bible_RadioButton"
+                                       Click="navItem_Click"
+                                       GroupName="NavItems"
+                                       HoverIconSource="pack://application:,,,/Resources/Images/Bible_Selected.png"
+                                       IconSource="pack://application:,,,/Resources/Images/Bible_Unselected.png" />
+            <controls:IconRadioButtons x:Name="Message_RadioButton"
+                                       Click="navItem_Click"
+                                       GroupName="NavItems"
+                                       HoverIconSource="pack://application:,,,/Resources/Images/Message_Selected.png"
+                                       IconSource="pack://application:,,,/Resources/Images/Message_Unselected.png" />
+        </StackPanel>
+
+        <Frame x:Name="ContentFrame"
+               Grid.Row="1"
+               Grid.Column="1"
+               Margin="40 40 40 0"
+               NavigationUIVisibility="Hidden" />
+    </Grid>
+
+</Window>

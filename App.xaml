@@ -1,0 +1,24 @@
+﻿<Application x:Class="Ark.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Ark"
+             xmlns:viewmodel="clr-namespace:Ark.ViewModels"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/ListBoxStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/RadioButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/ScrollBarStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/ToggleButtonStyles.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

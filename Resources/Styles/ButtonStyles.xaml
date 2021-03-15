@@ -1,0 +1,98 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Ark.Models.Controls">
+
+    <!--  Custom Window Buttons  -->
+    <Style x:Key="WindowButtons"
+           TargetType="Button">
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="Margin" Value="0 0 10 0" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <!--  Ellipse  -->
+                    <Ellipse Fill="{TemplateBinding Background}" />
+                    <!--  Change Cursor to Hand on Hover  -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Button Text  -->
+    <Style x:Key="TextButtons"
+           TargetType="Button">
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="/Resources/Fonts/#Gontserrat" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Background" Value="{DynamicResource ContainerBrush}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.Foreground="{DynamicResource UnfocusedBrush}" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ThumbBrush}" />
+                            <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{DynamicResource FocusedBrush}" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Icon Buttons  -->
+    <Style TargetType="controls:IconButtons">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="IconWidth" Value="25" />
+        <Setter Property="IconHeight" Value="25" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border x:Name="imageBorder"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}">
+                        <Image x:Name="image"
+                               Width="{Binding IconWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                               Height="{Binding IconHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                               RenderOptions.BitmapScalingMode="Linear"
+                               Source="{Binding IconSource, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="image" Property="Source" Value="{Binding HoverIconSource, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="imageBorder" Property="Background" Value="{Binding HoverBackground, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

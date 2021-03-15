@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable></Nullable>
+    <Version>0.0.1</Version>
+    <Authors>Newt Welch</Authors>
+    <Company>Welch Engines</Company>
+	<UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Ark_Logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Ark_Logo.ico" />
+    <None Remove="Resources\Fonts\GONTSERRAT-BOLD.TTF" />
+    <None Remove="Resources\Fonts\GONTSERRAT-BOLDITALIC.TTF" />
+    <None Remove="Resources\Fonts\GONTSERRAT-ITALIC.TTF" />
+    <None Remove="Resources\Fonts\GONTSERRAT-REGULAR.TTF" />
+    <None Remove="Resources\Images\Bible_Selected.png" />
+    <None Remove="Resources\Images\Bible_Unselected.png" />
+    <None Remove="Resources\Images\Edit_Selected.png" />
+    <None Remove="Resources\Images\Edit_Unselected.png" />
+    <None Remove="Resources\Images\Erase_Selected.png" />
+    <None Remove="Resources\Images\Erase_Unselected.png" />
+    <None Remove="Resources\Images\Message_Selected.png" />
+    <None Remove="Resources\Images\Message_Unselected.png" />
+    <None Remove="Resources\Images\Music_Selected.png" />
+    <None Remove="Resources\Images\Music_Unselected.png" />
+    <None Remove="Resources\Images\Tag_Selected.png" />
+    <None Remove="Resources\Images\Tag_Unselected.png" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Resource Include="Ark_Logo.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\GONTSERRAT-BOLD.TTF" />
+    <Resource Include="Resources\Fonts\GONTSERRAT-BOLDITALIC.TTF" />
+    <Resource Include="Resources\Fonts\GONTSERRAT-ITALIC.TTF" />
+    <Resource Include="Resources\Fonts\GONTSERRAT-REGULAR.TTF" />
+    <Resource Include="Resources\Images\Bible_Selected.png" />
+    <Resource Include="Resources\Images\Bible_Unselected.png" />
+    <Resource Include="Resources\Images\Edit_Selected.png" />
+    <Resource Include="Resources\Images\Edit_Unselected.png" />
+    <Resource Include="Resources\Images\Erase_Selected.png" />
+    <Resource Include="Resources\Images\Erase_Unselected.png" />
+    <Resource Include="Resources\Images\Message_Selected.png" />
+    <Resource Include="Resources\Images\Message_Unselected.png" />
+    <Resource Include="Resources\Images\Music_Selected.png" />
+    <Resource Include="Resources\Images\Music_Unselected.png" />
+    <Resource Include="Resources\Images\Tag_Selected.png" />
+    <Resource Include="Resources\Images\Tag_Unselected.png" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Compile Update="Models\Controls\IconButtons.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Models\Controls\IconRadioButtons.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+</Project>
