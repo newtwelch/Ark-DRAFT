@@ -1,4 +1,5 @@
-﻿using Ark.ViewModels;
+﻿using Ark.Models.SongLibrary;
+using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,5 +32,11 @@ namespace Ark.Views
 
         }
 
+        private void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SongData selectedItem = (SongData)e.AddedItems[0];
+            _viewModel.SelectedSong = selectedItem;
+            _viewModel.UpdateLyric();
+        }
     }
 }

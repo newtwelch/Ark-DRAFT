@@ -63,23 +63,14 @@
         <ListBox Grid.Row="1"
                  Grid.RowSpan="2"
                  ItemContainerStyle="{StaticResource SongListItem}"
+                 ItemsSource="{Binding Songs}"
+                 SelectionChanged="SongList_SelectionChanged"
                  Style="{StaticResource SongListBox}">
-            <ListBoxItem Content="1asd" />
-            <ListBoxItem Content="2asd" />
-            <ListBoxItem Content="3asd" />
-            <ListBoxItem Content="4asd" />
-            <ListBoxItem Content="5asd" />
-            <ListBoxItem Content="8asd" />
-            <ListBoxItem Content="10asd" />
-            <ListBoxItem Content="6asd" />
-            <ListBoxItem Content="6asd" />
-            <ListBoxItem Content="7asd" />
-            <ListBoxItem Content="8asd" />
-            <ListBoxItem Content="11asd" />
-            <ListBoxItem Content="18asd" />
-            <ListBoxItem Content="19asd" />
-            <ListBoxItem Content="20asd" />
-            <ListBoxItem Content="21asd" />
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
 
         <!--  Second Half  -->
@@ -133,7 +124,11 @@
                                                   DockPanel.Dock="Left"
                                                   HoverBackground="{DynamicResource RedBrush}"
                                                   HoverIconSource="pack://application:,,,/Resources/Images/Erase_Selected.png"
-                                                  IconSource="pack://application:,,,/Resources/Images/Erase_Unselected.png" />
+                                                  IconSource="pack://application:,,,/Resources/Images/Erase_Unselected.png"
+                                                  Visibility="Collapsed" />
+                            <Button Height="{Binding Height, ElementName=SongLyricText}"
+                                    Content="{Binding Line}"
+                                    Style="{StaticResource TextButtons}" />
                             <Rectangle Width="10"
                                        DockPanel.Dock="Left"
                                        Fill="{StaticResource BackgroundBrush}" />
@@ -147,7 +142,7 @@
                                      Focusable="True"
                                      Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
                                      Style="{StaticResource SongLyricText}"
-                                     Text="Hanloaasdasdasdasdasdasdasdasd"
+                                     Text="{Binding Text}"
                                      TextWrapping="Wrap" />
                         </DockPanel>
                     </StackPanel>
@@ -172,7 +167,7 @@
             <!--  Add Chorus  -->
             <Button x:Name="ChorusButton"
                     Margin="10 0 0 0"
-                       Content="C"
+                    Content="C"
                     Style="{StaticResource TextButtons}" />
 
             <!--  Add Bridge  -->
