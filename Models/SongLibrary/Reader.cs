@@ -8,6 +8,7 @@ namespace Ark.Models.SongLibrary
 {
     public class Reader
     {
+        // Get Songs
         public List<SongData> GetSongs()
         {
             List<SongData> list = new List<SongData>();
@@ -28,10 +29,12 @@ namespace Ark.Models.SongLibrary
                     list.Add(new SongData
                     {
                         SongID = rdr.GetInt32(0),
-                        Title = rdr.GetString(2),
-                        Author = rdr.GetString(3),
-                        RawLyric = rdr.GetString(5),
-                        Sequence = rdr.GetString(6)
+                        SongNum = rdr.GetInt32(1),
+                        Language = rdr.GetString(2),
+                        Title = rdr.GetString(3),
+                        Author = rdr.GetString(4),
+                        RawLyric = rdr.GetString(6),
+                        Sequence = rdr.GetString(7)
                     }
                     );
                 }
@@ -50,58 +53,105 @@ namespace Ark.Models.SongLibrary
             }
         }
 
-        //Get Lyrics
+        // Get Lyrics
         public List<LyricData> GetLyrics(SongData selectedSong)
         {
-            string rawlyric = selectedSong.RawLyric;
-            string sequence = selectedSong.Sequence;
+            List<LyricData> Lyrics = new List<LyricData>(); // Lyric list converted from raw lyric
+            List<LyricData> SequencedLyrics = new List<LyricData>(); // Lyric list that will be returned
+            string rawlyric = "";
+            string sequence = "";
 
-            int verseid = 1;
-            List<LyricData> Lyrics = new List<LyricData>();
-            List<LyricData> SequencedLyrics = new List<LyricData>();
-
-
-            // PARSE THE STRING ARRAY AND MAKE INTO LIST
-            string[] paragraphs = Array.FindAll(Regex.Split(rawlyric, "(\r?\n){2,}", RegexOptions.Multiline), p => !String.IsNullOrWhiteSpace(p));
-            foreach (string paragraph in paragraphs)
+            try
             {
-                if (paragraph.StartsWith("CHORUS"))
+                using var con = new SQLiteConnection(DataAccessConfiguration.ConnectionString, true);
+                con.Open();
+
+                using var cmd = new SQLiteCommand(con);
+
+                //read the title and authors of the song
+                cmd.CommandText = "SELECT * FROM Songs WHERE SongID = @songID;";
+                cmd.Parameters.AddWithValue("@songID", selectedSong.SongID);
+                cmd.Prepare();
+                using SQLiteDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
                 {
-                    Lyrics.Add(new LyricData() { Line = "C", Text = System.Text.RegularExpressions.Regex.Replace(paragraph, "^(.*\n){1}", ""), Type = LyricType.Chorus });
+                    rawlyric = rdr.GetString(6);
+                    sequence = rdr.GetString(7);
                 }
-                else if (paragraph.StartsWith("BRIDGE"))
+                rdr.Close();
+
+                con.Close();
+
+                int verseid = 1; //To determine stanza numbers
+
+                // Parse the RawLyric converting it into a List
+                string[] paragraphs = Array.FindAll(Regex.Split(rawlyric, "(\r?\n){2,}", RegexOptions.Multiline), p => !String.IsNullOrWhiteSpace(p));
+                foreach (string paragraph in paragraphs)
                 {
-                    Lyrics.Add(new LyricData() { Line = "B", Text = System.Text.RegularExpressions.Regex.Replace(paragraph, "^(.*\n){1}", ""), Type = LyricType.Bridge });
+                    if (paragraph.StartsWith("CHORUS"))
+                    {
+                        Lyrics.Add(new LyricData() { Line = "C", Text = System.Text.RegularExpressions.Regex.Replace(paragraph, "^(.*\n){1}", ""), Type = LyricType.Chorus });
+                    }
+                    else if (paragraph.StartsWith("BRIDGE"))
+                    {
+                        Lyrics.Add(new LyricData() { Line = "B", Text = System.Text.RegularExpressions.Regex.Replace(paragraph, "^(.*\n){1}", ""), Type = LyricType.Bridge });
+                    }
+                    else
+                    {
+                        Lyrics.Add(new LyricData() { Line = verseid++.ToString(), Text = paragraph, Type = LyricType.Stanza });
+                    }
+                }
+
+                // If sequence doesn't exist then do a default one
+                if (sequence == "o")
+                {
+                    // Check for stanzas
+                    List<LyricData> stanzas = Lyrics.FindAll(x => x.Type == LyricType.Stanza);
+
+                    // For each stanza add a Chorus if Chorus Exists
+                    foreach (LyricData stanza in stanzas)
+                    {
+                        // Add Stanza 
+                        SequencedLyrics.Add(stanza);
+
+                        // Check and add chorus
+                        if (Lyrics.Any(x => x.Type == LyricType.Chorus))
+                        {
+                            LyricData chorus = Lyrics.Find(x => x.Type == LyricType.Chorus);
+                            SequencedLyrics.Add(chorus);
+                        }
+                    }
+                    // If Bridge Exists then put it on the very last
+                    if (Lyrics.Any(x => x.Type == LyricType.Bridge))
+                    {
+                        LyricData bridge = Lyrics.Find(x => x.Type == LyricType.Bridge);
+                        SequencedLyrics.Add(bridge);
+                    }
                 }
                 else
+                // Sequence the lyrics if sequence exists
                 {
-                    Lyrics.Add(new LyricData() { Line = verseid++.ToString(), Text = paragraph, Type = LyricType.Stanza });
+                    string[] sequencer = sequence.Split(",");
+
+                    foreach (var line in sequencer)
+                    {
+                        if (SequencedLyrics.Count < paragraphs.Length)
+                        {
+                            LyricData lyric = Lyrics.Find(x => x.Line == line.ToUpper().Replace("S", ""));
+                            SequencedLyrics.Add(lyric);
+                        }
+                    }
                 }
+                return SequencedLyrics;
             }
-
-            if (sequence == null || sequence == " ")
+            catch (Exception ex)
             {
-                sequence = "S1,C,S2,C,S3,C,S4";
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine(ex.InnerException);
+                return new List<LyricData>();
             }
-
-            if (!Lyrics.Any(x => x.Type == LyricType.Chorus))
-            {
-                sequence = "S1,S2,S3,S4,S5";
-            }
-
-            // SEQUENCE THE LYRICS
-            string[] sequencer = sequence.Split(",");
-
-            foreach (var line in sequencer)
-            {
-                if (SequencedLyrics.Count < paragraphs.Length)
-                {
-                    LyricData lyric = Lyrics.Find(x => x.Line == line.ToUpper().Replace("S", ""));
-                    SequencedLyrics.Add(lyric);
-                }
-            }
-
-            return SequencedLyrics;
         }
     }
 }

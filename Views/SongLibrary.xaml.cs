@@ -22,21 +22,34 @@ namespace Ark.Views
     /// </summary>
     public partial class SongLibrary : UserControl
     {
+
         private SongLibraryViewModel _viewModel;
+
         public SongLibrary()
         {
+            // Set DataContext
             _viewModel = new SongLibraryViewModel();
             DataContext = _viewModel;
 
             InitializeComponent();
-
         }
 
         private void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SongData selectedItem = (SongData)e.AddedItems[0];
-            _viewModel.SelectedSong = selectedItem;
-            _viewModel.UpdateLyric();
+            if (e.AddedItems.Count == 0)
+            {
+            }
+            else
+            {
+                SongData selectedItem = (SongData)e.AddedItems[0];
+                _viewModel.SelectedSong = selectedItem;
+                _viewModel.RefreshLyrics();
+            }
+        }
+
+        private void EditSongButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SaveSong();
         }
     }
 }

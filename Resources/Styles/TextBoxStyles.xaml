@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Views="clr-namespace:Ark.Views">
 
     <!--  Default Text  -->
     <Style x:Key="DefaultText"
-           TargetType="TextBox">
+           TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource ContainerDarkBrush}" />
         <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
         <Setter Property="FontFamily" Value="/Resources/Fonts/#Gontserrat" />
@@ -11,13 +12,12 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="20 0 0 0" />
     </Style>
 
     <!--  Song Search  -->
     <Style x:Key="SongSearch"
            BasedOn="{StaticResource DefaultText}"
-           TargetType="TextBox">
+           TargetType="{x:Type TextBox}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="20 0 0 0" />
     </Style>
@@ -25,31 +25,63 @@
     <!--  Song Title  -->
     <Style x:Key="SongTitle"
            BasedOn="{StaticResource DefaultText}"
-           TargetType="TextBox">
+           TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="40" />
+        <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="0 5 0 0" />
+        <!--  Fancy Hover  -->
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding DataContext.EditModeChecked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:SongLibrary}}}" Value="True" />
+                    <Condition Binding="{Binding ElementName=SongTitle, Path=IsMouseOver}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--  Song Author  -->
     <Style x:Key="SongAuthor"
            BasedOn="{StaticResource DefaultText}"
-           TargetType="TextBox">
+           TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="0 0 0 20" />
+        <!--  Fancy Hover  -->
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding DataContext.EditModeChecked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:SongLibrary}}}" Value="True" />
+                    <Condition Binding="{Binding ElementName=SongAuthor, Path=IsMouseOver}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--  Song Lyrics  -->
     <Style x:Key="SongLyricText"
            BasedOn="{StaticResource DefaultText}"
-           TargetType="TextBox">
+           TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="20" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="0 10 0 10" />
+    </Style>
+
+    <!--  Song Language  -->
+    <Style x:Key="SongLanguage"
+           BasedOn="{StaticResource DefaultText}"
+           TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
 </ResourceDictionary>
