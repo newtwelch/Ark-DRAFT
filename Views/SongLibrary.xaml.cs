@@ -1,4 +1,5 @@
-﻿using Ark.Models.SongLibrary;
+﻿using Ark.Models.Helper;
+using Ark.Models.SongLibrary;
 using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -21,10 +23,11 @@ namespace Ark.Views
     /// <summary>
     /// Interaction logic for SongLibrary.xaml
     /// </summary>
-    public partial class SongLibrary : UserControl
+    public partial class SongLibrary : System.Windows.Controls.UserControl
     {
 
         private SongLibraryViewModel _viewModel;
+        TypeAssistant assistant;
 
         public SongLibrary()
         {
@@ -33,6 +36,9 @@ namespace Ark.Views
             DataContext = _viewModel;
 
             InitializeComponent();
+
+            assistant = new TypeAssistant();
+            assistant.Idled += assistant_Idled;
         }
 
         private void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,25 +58,33 @@ namespace Ark.Views
         {
             _viewModel.SaveSong();
         }
-
+        void assistant_Idled(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(
+            new MethodInvoker(() =>
+            {
+                if (SongSearchBox.Text == "")
+                {
+                    _viewModel.RefreshSongList();
+                }
+                else if (SongSearchBox.Text.StartsWith("*"))
+                {
+                    _viewModel.GetSongsBy("Author", SongSearchBox.Text.Replace("*", ""));
+                }
+                else if (SongSearchBox.Text.StartsWith("."))
+                {
+                    _viewModel.GetSongsBy("Lyrics", SongSearchBox.Text.Replace(".", ""));
+                }
+                else
+                {
+                    _viewModel.GetSongsBy("Title", SongSearchBox.Text);
+                }
+            }));
+        }
         private void SongSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (SongSearchBox.Text == "")
-            {
-                _viewModel.RefreshSongList();
-            }
-            else if (SongSearchBox.Text.StartsWith("*"))
-            {
-                _viewModel.GetSongsBy("Author", SongSearchBox.Text.Replace("*", ""));
-            }
-            else if (SongSearchBox.Text.StartsWith("."))
-            {
-                _viewModel.GetSongsBy("Lyrics", SongSearchBox.Text.Replace(".", ""));
-            }
-            else
-            {
-                _viewModel.GetSongsBy("Title", SongSearchBox.Text);
-            }
+            assistant.TextChanged();
+
         }
     }
 }

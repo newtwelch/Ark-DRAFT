@@ -3,8 +3,7 @@
                     xmlns:Views="clr-namespace:Ark.Views">
 
     <!--  Default Text  -->
-    <Style x:Key="DefaultText"
-           TargetType="{x:Type TextBox}">
+    <Style x:Key="DefaultText" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource ContainerDarkBrush}" />
         <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
         <Setter Property="FontFamily" Value="/Resources/Fonts/#Gontserrat" />
@@ -19,19 +18,18 @@
            BasedOn="{StaticResource DefaultText}"
            TargetType="{x:Type TextBox}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="20 0 0 0" />
+        <Setter Property="Padding" Value="20,0,0,0" />
         <!--  Search Watermark [msg to newt: save this :D ]  -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
-                        <Border Background="{StaticResource ContainerDarkBrush}"
-                                BorderThickness="0" />
+                        <Border Background="{StaticResource ContainerDarkBrush}" BorderThickness="0" />
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="5 0 0 0"
+                                      Margin="5,0,0,0"
                                       VerticalAlignment="Center" />
                         <Label x:Name="WaterMarkLabel"
-                               Padding="20 0 0 0"
+                               Padding="20,0,0,0"
                                VerticalAlignment="Center"
                                Content="{TemplateBinding Tag}"
                                Cursor="IBeam"
@@ -57,31 +55,23 @@
     </Style>
 
     <!--  SearchedLyric  -->
-    <Style x:Key="SearchedLyric"
-           BasedOn="{StaticResource DefaultText}"
-           TargetType="{x:Type TextBox}">
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="IsReadOnly" Value="True" />
+    <Style x:Key="SearchedLyric" TargetType="{x:Type TextBlock}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Padding" Value="20 0 0 0" />
+        <Setter Property="Padding" Value="20,0,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource OrangeBrush}" />
         <!--  Search Watermark [msg to newt: save this too :D ]  -->
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border Background="Transparent"
-                            BorderThickness="0">
-                        <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="0 0 0 0"
-                                      VerticalAlignment="Center" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Text" Value="">
-                            <Setter TargetName="PART_ContentHost" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Text" Value="" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!--  Song Title  -->
@@ -92,7 +82,7 @@
         <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0 5 0 0" />
+        <Setter Property="Padding" Value="0,5,0,0" />
         <!--  Fancy Hover  -->
         <Style.Triggers>
             <MultiDataTrigger>
@@ -113,7 +103,7 @@
         <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0 0 0 20" />
+        <Setter Property="Padding" Value="0,0,0,20" />
         <!--  Fancy Hover  -->
         <Style.Triggers>
             <MultiDataTrigger>
@@ -133,7 +123,7 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0 10 0 10" />
+        <Setter Property="Padding" Value="0,10,0,10" />
     </Style>
 
     <!--  Song Language  -->

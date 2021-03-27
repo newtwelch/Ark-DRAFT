@@ -133,6 +133,7 @@ namespace Ark.ViewModels
             songInterface.CreateSong("Title", "Author");
             RefreshSongList();
             SelectedSong = Songs[Songs.Count - 1];
+            RefreshLyrics();
         }
 
         // Delete Song

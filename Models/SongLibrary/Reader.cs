@@ -124,9 +124,9 @@ namespace Ark.Models.SongLibrary
                         break;
 
                     case "Lyrics":
-
+                        variableValue = variableValue.Replace("!", "").Replace(",", "");
                         // Get song by Author
-                        cmd.CommandText = "SELECT * FROM Songs WHERE lower(Lyrics) LIKE lower(@lyrics);";
+                        cmd.CommandText = $"SELECT * FROM Songs WHERE REPLACE(REPLACE(REPLACE(REPLACE(lower(Lyrics), ',', ''), '.', ''),'!',''),CHAR(10) + CHAR(13), '') LIKE lower(@lyrics);";
                         cmd.Parameters.AddWithValue("@lyrics", variableValue);
                         cmd.Prepare();
                         using (SQLiteDataReader rdr = cmd.ExecuteReader())
@@ -190,8 +190,8 @@ namespace Ark.Models.SongLibrary
                 using SQLiteDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    rawlyric = rdr.GetString(6);
-                    sequence = rdr.GetString(7);
+                    rawlyric = rdr.GetString(5);
+                    sequence = rdr.GetString(6);
                 }
                 rdr.Close();
 
