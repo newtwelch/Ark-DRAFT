@@ -31,7 +31,7 @@ namespace Ark.Models.SongLibrary
                 if (lyric.Type == LyricType.Stanza)
                 {
                     // If it is a Stanza then add it to the sequence string
-                    Sequence += "S" + lyric.Line + ",";
+                    Sequence += $"S{ lyric.Line },";
 
                     // If Stanza is first Stanza Then..
                     if (lyric.Line == "1")
@@ -48,7 +48,7 @@ namespace Ark.Models.SongLibrary
                             LyricData chorus = SequencedLyrics.Find(x => x.Type == LyricType.Chorus);
                             string storeLyric = chorus.Text;
                             // Add new lines
-                            chorus.Text = "\r\nCHORUS\r\n" + storeLyric + "\r\n";
+                            chorus.Text = $"\r\nCHORUS\r\n{ storeLyric }\r\n";
                             // Then add the chorus to the Raw Lyrics List
                             RawLyricsList.Add(chorus);
                         }
@@ -59,7 +59,7 @@ namespace Ark.Models.SongLibrary
                         // Just add it to the list
                         string storeLyric = lyric.Text;
                         // While also adding new lines around it
-                        lyric.Text = "\r\n" + storeLyric + "\r\n";
+                        lyric.Text = $"\r\n{ storeLyric }\r\n";
                         RawLyricsList.Add(lyric);
                     }
 
@@ -81,7 +81,7 @@ namespace Ark.Models.SongLibrary
                 LyricData bridge = SequencedLyrics.Find(x => x.Type == LyricType.Bridge);
                 string storeLyric = bridge.Text;
                 // Add new lines around it
-                bridge.Text = "\r\nBRIDGE\r\n" + storeLyric;
+                bridge.Text = $"\r\nBRIDGE\r\n{ storeLyric}";
                 RawLyricsList.Add(bridge);
             }
 

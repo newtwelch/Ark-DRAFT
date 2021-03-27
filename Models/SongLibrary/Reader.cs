@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -33,8 +34,8 @@ namespace Ark.Models.SongLibrary
                         Language = rdr.GetString(2),
                         Title = rdr.GetString(3),
                         Author = rdr.GetString(4),
-                        RawLyric = rdr.GetString(6),
-                        Sequence = rdr.GetString(7)
+                        RawLyric = rdr.GetString(5),
+                        Sequence = rdr.GetString(6)
                     }
                     );
                 }
@@ -53,6 +54,120 @@ namespace Ark.Models.SongLibrary
             }
         }
 
+        // Get Songs by
+        public List<SongData> GetSongsBy(string songVariable, string variableValue)
+        {
+
+            variableValue = $"%{variableValue}%";
+
+            List<SongData> list = new List<SongData>();
+            try
+            {
+                using var con = new SQLiteConnection(DataAccessConfiguration.ConnectionString, true);
+                con.Open();
+
+                using var cmd = new SQLiteCommand(con);
+
+                switch (songVariable)
+                {
+                    case "Title":
+                        // Get song by Title
+                        cmd.CommandText = "SELECT * FROM Songs WHERE REPLACE(REPLACE(REPLACE(lower(Title), ',', ''), '.', ''),'!','')  LIKE lower(@title);";
+                        cmd.Parameters.AddWithValue("@title", variableValue);
+                        cmd.Prepare();
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                        {
+                            while (rdr.Read())
+                            {
+                                list.Add(new SongData
+                                {
+                                    SongID = rdr.GetInt32(0),
+                                    SongNum = rdr.GetInt32(1),
+                                    Language = rdr.GetString(2),
+                                    Title = rdr.GetString(3),
+                                    Author = rdr.GetString(4),
+                                    RawLyric = rdr.GetString(5),
+                                    Sequence = rdr.GetString(6),
+                                }
+                                );
+                            }
+                            rdr.Close();
+                        }
+
+                        break;
+
+                    case "Author":
+
+                        // Get song by Author
+                        cmd.CommandText = "SELECT * FROM Songs WHERE lower(Author) LIKE lower(@author);";
+                        cmd.Parameters.AddWithValue("@author", variableValue);
+                        cmd.Prepare();
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                        {
+                            while (rdr.Read())
+                            {
+                                list.Add(new SongData
+                                {
+                                    SongID = rdr.GetInt32(0),
+                                    SongNum = rdr.GetInt32(1),
+                                    Language = rdr.GetString(2),
+                                    Title = rdr.GetString(3),
+                                    Author = rdr.GetString(4),
+                                    RawLyric = rdr.GetString(5),
+                                    Sequence = rdr.GetString(6)
+                                }
+                                );
+                            }
+                            rdr.Close();
+                        }
+
+                        break;
+
+                    case "Lyrics":
+
+                        // Get song by Author
+                        cmd.CommandText = "SELECT * FROM Songs WHERE lower(Lyrics) LIKE lower(@lyrics);";
+                        cmd.Parameters.AddWithValue("@lyrics", variableValue);
+                        cmd.Prepare();
+                        using (SQLiteDataReader rdr = cmd.ExecuteReader())
+                        {
+                            while (rdr.Read())
+                            {
+                                variableValue = variableValue.Replace("%", "");
+                                string lyric = rdr.GetString(5);
+                                lyric = lyric.Substring(lyric.IndexOf(variableValue, StringComparison.InvariantCultureIgnoreCase)).Replace("\n", " ").Replace("\r", " "); ;
+                                list.Add(new SongData
+                                {
+                                    SongID = rdr.GetInt32(0),
+                                    SongNum = rdr.GetInt32(1),
+                                    Language = rdr.GetString(2),
+                                    Title = rdr.GetString(3),
+                                    Author = rdr.GetString(4),
+                                    RawLyric = rdr.GetString(5),
+                                    Sequence = rdr.GetString(6),
+                                    SearchedLyric = $"{ lyric.Substring(0, Math.Min(lyric.Length, 35)) }..."
+                                }
+                                );
+                            }
+                            rdr.Close();
+                        }
+
+                        break;
+                }
+
+
+                con.Close();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine(ex.InnerException);
+                return new List<SongData>();
+            }
+        }
         // Get Lyrics
         public List<LyricData> GetLyrics(SongData selectedSong)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -26,6 +27,10 @@ namespace Ark.Models.SongLibrary
         public List<SongData> GetAllSongs()
         {
             return reader.GetSongs();
+        }
+        public ObservableCollection<SongData> GetSongsBy(string songVariable, string variableValue)
+        {
+            return new ObservableCollection<SongData>(reader.GetSongsBy(songVariable, variableValue));
         }
 
         public List<LyricData> GetSongLyrics(SongData selectedSong)

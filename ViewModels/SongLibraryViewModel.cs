@@ -149,6 +149,17 @@ namespace Ark.ViewModels
             SelectedSong.Lyrics = Lyrics.ToList();
             songInterface.SaveSong(SelectedSong);
         }
+
+        // Get Song By
+        public void GetSongsBy(string songVariable, string variableValue)
+        {
+            Songs.Clear();
+            foreach (SongData song in songInterface.GetSongsBy(songVariable, variableValue))
+            {
+                Songs.Add(song);
+            }
+        }
+
         // Refresh Song List
         public void RefreshSongList()
         {

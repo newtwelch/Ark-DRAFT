@@ -2,6 +2,7 @@
 using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,26 @@ namespace Ark.Views
         private void EditSongButton_Unchecked(object sender, RoutedEventArgs e)
         {
             _viewModel.SaveSong();
+        }
+
+        private void SongSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SongSearchBox.Text == "")
+            {
+                _viewModel.RefreshSongList();
+            }
+            else if (SongSearchBox.Text.StartsWith("*"))
+            {
+                _viewModel.GetSongsBy("Author", SongSearchBox.Text.Replace("*", ""));
+            }
+            else if (SongSearchBox.Text.StartsWith("."))
+            {
+                _viewModel.GetSongsBy("Lyrics", SongSearchBox.Text.Replace(".", ""));
+            }
+            else
+            {
+                _viewModel.GetSongsBy("Title", SongSearchBox.Text);
+            }
         }
     }
 }
