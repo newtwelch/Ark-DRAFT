@@ -19,10 +19,15 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
     </Style>
+
     <!--  SongList Box  -->
-    <Style x:Key="SongListBox"
-           BasedOn="{StaticResource DefaultListBox}"
-           TargetType="ListBox">
+    <Style x:Key="SongListBox" TargetType="ListBox">
+        <Setter Property="Background" Value="{StaticResource ContainerBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">

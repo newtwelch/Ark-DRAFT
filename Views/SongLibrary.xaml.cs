@@ -84,7 +84,6 @@ namespace Ark.Views
         private void SongSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             assistant.TextChanged();
-
         }
     }
 }

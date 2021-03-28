@@ -1,5 +1,6 @@
 ﻿using Ark.Model.Helper;
 using Ark.Models.SongLibrary;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -154,11 +155,11 @@ namespace Ark.ViewModels
         // Get Song By
         public void GetSongsBy(string songVariable, string variableValue)
         {
-            Songs.Clear();
-            foreach (SongData song in songInterface.GetSongsBy(songVariable, variableValue))
-            {
-                Songs.Add(song);
-            }
+           Songs.Clear();
+           foreach (SongData song in songInterface.GetSongsBy(songVariable, variableValue))
+           {
+               Songs.Add(song);
+           }
         }
 
         // Refresh Song List
