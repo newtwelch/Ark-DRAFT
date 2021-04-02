@@ -207,37 +207,35 @@
                     Content="B"
                     Style="{StaticResource TextButtons}"
                     Visibility="{Binding EditModeVisible}" />
+
             <!--  Language List  -->
-            <ListBox Background="Transparent"
+            <ListBox x:Name="LanguageList"
+                     Background="Transparent"
                      ItemContainerStyle="{StaticResource SongLanguageItem}"
+                     ItemsSource="{Binding SongLanguages}"
+                     SelectionChanged="LanguageList_SelectionChanged"
                      Style="{StaticResource DefaultListBox}"
                      Visibility="{Binding EditModeNotVisible}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Background="Transparent" Orientation="Horizontal" />
+                        <StackPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-                <ListBoxItem>
-                    <TextBox Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                             Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                             Focusable="False"
-                             Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                             Style="{StaticResource SongLanguage}"
-                             Text="ENGLISH" />
-                </ListBoxItem>
-                <ListBoxItem>
-                    <TextBox Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                             Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                             Focusable="False"
-                             Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                             Style="{StaticResource SongLanguage}"
-                             Text="TAGALOG" />
-                </ListBoxItem>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBox Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
+                                 Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
+                                 Focusable="False"
+                                 Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
+                                 Style="{StaticResource SongLanguage}"
+                                 Text="{Binding Language}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
 
         </StackPanel>
 
-        <!--  Gigantic StackPanel  -->
+        <!--  Righty Boi  -->
         <StackPanel Grid.Row="3"
                     Grid.RowSpan="2"
                     Grid.Column="1"
@@ -245,11 +243,12 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Orientation="Horizontal">
-            <!--  asd  -->
-            <TextBox Height="50"
+            <!--  Language Name  -->
+            <TextBox x:Name="LanguageTextBox"
+                     Height="50"
                      Padding="20,0"
                      Style="{StaticResource DefaultText}"
-                     Text="ENGLISH"
+                     Text="{Binding SelectedSong.Language}"
                      Visibility="{Binding EditModeVisible}" />
         </StackPanel>
 

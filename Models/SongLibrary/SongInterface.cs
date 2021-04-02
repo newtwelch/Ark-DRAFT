@@ -28,6 +28,11 @@ namespace Ark.Models.SongLibrary
         {
             return reader.GetSongs();
         }
+        // Getters
+        public List<SongData> GetAllLanguages(SongData selectedSong)
+        {
+            return reader.GetSongLanguages(selectedSong);
+        }
         public ObservableCollection<SongData> GetSongsBy(string songVariable, string variableValue)
         {
             return new ObservableCollection<SongData>(reader.GetSongsBy(songVariable, variableValue));

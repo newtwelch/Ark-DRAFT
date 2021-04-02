@@ -14,6 +14,7 @@ namespace Ark.ViewModels
         #region SongData
         //List Of Songs
         public ObservableCollection<SongData> Songs { get; set; }
+        public ObservableCollection<SongData> SongLanguages { get; set; }
         public SongInterface songInterface;
         //The selected Song;
         private SongData _selectedSong;
@@ -112,12 +113,13 @@ namespace Ark.ViewModels
                 //Select First Song
                 SelectedSong = Songs[0];
                 Lyrics = new ObservableCollection<LyricData>(songInterface.GetSongLyrics(SelectedSong));
+                SongLanguages = new ObservableCollection<SongData>(songInterface.GetAllLanguages(SelectedSong));
                 SelectedSong.Lyrics = Lyrics.ToList();
             }
 
         }
 
-        // Update Lyric
+        // Refresh Lyric
         public void RefreshLyrics()
         {
             Lyrics.Clear();
@@ -126,6 +128,15 @@ namespace Ark.ViewModels
                 Lyrics.Add(lyric);
             }
             SelectedSong.Lyrics = Lyrics.ToList();
+        }  
+        // Refres Languages
+        public void RefreshLanguages()
+        {
+            SongLanguages.Clear();
+            foreach (SongData song in songInterface.GetAllLanguages(SelectedSong))
+            {
+                SongLanguages.Add(song);
+            }
         }
 
         // Create Song

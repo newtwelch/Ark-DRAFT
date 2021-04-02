@@ -54,6 +54,52 @@ namespace Ark.Models.SongLibrary
             }
         }
 
+        // Get Song Languages
+        public List<SongData> GetSongLanguages(SongData selectedSong)
+        {
+            List<SongData> list = new List<SongData>();
+            int selectedSongNum = selectedSong.SongNum;
+            try
+            {
+                using var con = new SQLiteConnection(DataAccessConfiguration.ConnectionString, true);
+                con.Open();
+
+                using var cmd = new SQLiteCommand(con);
+
+                //read the title and authors of the song
+                cmd.CommandText = "SELECT * FROM Songs WHERE SongNum = @songNum;";
+                cmd.Parameters.AddWithValue("@songNum", selectedSongNum);
+                cmd.Prepare();
+                using SQLiteDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    list.Add(new SongData
+                    {
+                        SongID = rdr.GetInt32(0),
+                        SongNum = rdr.GetInt32(1),
+                        Language = rdr.GetString(2),
+                        Title = rdr.GetString(3),
+                        Author = rdr.GetString(4),
+                        RawLyric = rdr.GetString(5),
+                        Sequence = rdr.GetString(6)
+                    }
+                    );
+                }
+                rdr.Close();
+
+                con.Close();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine(ex.InnerException);
+                return new List<SongData>();
+            }
+        }
         // Get Songs by
         public List<SongData> GetSongsBy(string songVariable, string variableValue)
         {

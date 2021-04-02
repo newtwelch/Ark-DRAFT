@@ -103,6 +103,9 @@ namespace Ark.Views
                     case "Bible_RadioButton":
                         ContentFrame.Content = new Bible();
                         break;
+                    case "Message_RadioButton":
+                        ContentFrame.Content = new Bible();
+                        break;
                 }
             }
 
