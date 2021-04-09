@@ -55,8 +55,12 @@ namespace Ark.Views
                 _viewModel.SelectedSong = selectedItem;
                 _viewModel.RefreshLanguages();
                 _viewModel.RefreshLyrics();
-                LanguageList.SelectedIndex = 0;
-
+                if (LanguageList != null)
+                {
+                    string language = _viewModel.SelectedSong.Language;
+                    int index = LanguageList.Items.Cast<SongData>().ToList().FindIndex(x => x.Language == language);
+                    LanguageList.SelectedIndex = index;
+                }
             }
         }
         private void LanguageList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,6 +72,10 @@ namespace Ark.Views
             {
                 SongData selectedItem = (SongData)e.AddedItems[0];
                 _viewModel.SelectedSong = selectedItem;
+                int songID = selectedItem.SongID;
+                int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
+                SongList.SelectedIndex = index;
+                
                 _viewModel.RefreshLyrics();
             }
         }
@@ -75,7 +83,11 @@ namespace Ark.Views
         private void EditSongButton_Unchecked(object sender, RoutedEventArgs e)
         {
             _viewModel.SelectedSong.Language = LanguageTextBox.Text;
+            int songID = _viewModel.SelectedSong.SongID;
+            int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
+            SongList.SelectedIndex = index;
             _viewModel.SaveSong();
+            _viewModel.RefreshLanguages();
         }
         void assistant_Idled(object sender, EventArgs e)
         {
@@ -103,22 +115,6 @@ namespace Ark.Views
         private void SongSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             assistant.TextChanged();
-            //if (SongSearchBox.Text == "")
-            //{
-            //    _viewModel.RefreshSongList();
-            //}
-            //else if (SongSearchBox.Text.StartsWith("*"))
-            //{
-            //    _viewModel.GetSongsBy("Author", SongSearchBox.Text.Replace("*", ""));
-            //}
-            //else if (SongSearchBox.Text.StartsWith("."))
-            //{
-            //    _viewModel.GetSongsBy("Lyrics", SongSearchBox.Text.Replace(".", ""));
-            //}
-            //else
-            //{
-            //    _viewModel.GetSongsBy("Title", SongSearchBox.Text);
-            //}
         }
     }
 }

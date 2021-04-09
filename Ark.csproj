@@ -60,7 +60,7 @@
 	
   <ItemGroup>
     <None Update="Databases\SongDatabase.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 	

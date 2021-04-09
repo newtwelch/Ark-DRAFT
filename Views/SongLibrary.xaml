@@ -233,6 +233,13 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
+            <!--  Add Language  -->
+            <Button x:Name="LanguageButton"
+                    Command="{Binding Add_SongLanguage}"
+                    Content="+"
+                    Style="{StaticResource TextButtons}"
+                    Visibility="{Binding EditModeNotVisible}" />
+
         </StackPanel>
 
         <!--  Righty Boi  -->

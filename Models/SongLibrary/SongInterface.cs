@@ -49,6 +49,11 @@ namespace Ark.Models.SongLibrary
             CurrentSongID = adderRemover.CreateSong(Title, Author);
             return CurrentSongID;
         }
+        public int CreateSongLanguage(SongData selectedSong)
+        {
+            CurrentSongID = adderRemover.CreateSongLanguage(selectedSong);
+            return CurrentSongID;
+        }
         public void DeleteSong(int songID)
         {
             adderRemover.DeleteSong(songID);

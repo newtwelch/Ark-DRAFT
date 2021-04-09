@@ -118,7 +118,7 @@ namespace Ark.Models.SongLibrary
                 {
                     case "Title":
                         // Get song by Title
-                        cmd.CommandText = "SELECT * FROM Songs WHERE REPLACE(REPLACE(REPLACE(lower(Title), ',', ''), '.', ''),'!','')  LIKE lower(@title);";
+                        cmd.CommandText = "SELECT * FROM Songs WHERE REPLACE(REPLACE(REPLACE(lower(Title), ',', ''), '.', ''),'!','')  LIKE lower(@title) ORDER BY Title ASC;";
                         cmd.Parameters.AddWithValue("@title", variableValue);
                         cmd.Prepare();
                         using (SQLiteDataReader rdr = cmd.ExecuteReader())
@@ -145,7 +145,7 @@ namespace Ark.Models.SongLibrary
                     case "Author":
 
                         // Get song by Author
-                        cmd.CommandText = "SELECT * FROM Songs WHERE lower(Author) LIKE lower(@author);";
+                        cmd.CommandText = "SELECT * FROM Songs WHERE lower(Author) LIKE lower(@author) ORDER BY Title ASC;";
                         cmd.Parameters.AddWithValue("@author", variableValue);
                         cmd.Prepare();
                         using (SQLiteDataReader rdr = cmd.ExecuteReader())

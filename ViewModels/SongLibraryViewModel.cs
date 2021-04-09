@@ -95,6 +95,7 @@ namespace Ark.ViewModels
 
         #region Commands
         public ICommand Create_Song { get; set; }
+        public ICommand Add_SongLanguage { get; set; }
         public ICommand Delete_Song { get; set; }
         #endregion
 
@@ -102,6 +103,7 @@ namespace Ark.ViewModels
         {
             // Commands Initializer
             Create_Song = new RelayCommand(o => CreateSong(o));
+            Add_SongLanguage = new RelayCommand(o => AddSongLanguage(o));
             Delete_Song = new RelayCommand(o => DeleteSong(o));
 
             // Song Initializer 
@@ -145,6 +147,16 @@ namespace Ark.ViewModels
             songInterface.CreateSong("Title", "Author");
             RefreshSongList();
             SelectedSong = Songs[Songs.Count - 1];
+            RefreshLanguages();
+            RefreshLyrics();
+        }
+        // Add Song Language
+        public void AddSongLanguage(object sender)
+        {
+            songInterface.CreateSongLanguage(SelectedSong);
+            RefreshSongList();
+            SelectedSong = Songs[Songs.Count - 1];
+            RefreshLanguages();
             RefreshLyrics();
         }
 
