@@ -124,5 +124,35 @@ namespace Ark.Views
         {
             assistant.TextChanged();
         }
+
+        private void RemoveLyric_Click(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.Lyrics.Count > 1 && _viewModel.EditModeChecked)
+            {
+                LyricBox.SelectedItem = null;
+                System.Windows.Controls.Button button = sender as System.Windows.Controls.Button;
+                LyricData lyric = button.DataContext as LyricData;
+                LyricBox.SelectedItem = lyric;
+
+                if (lyric.Type == LyricType.Stanza)
+                {
+                    int selectedLyric = Int32.Parse(lyric.Line);
+
+                    foreach (LyricData _lyric in _viewModel.Lyrics.Where(x => x.Type == LyricType.Stanza))
+                    {
+                        int store = Int32.Parse(_lyric.Line);
+                        if (selectedLyric < store)
+                        {
+                            store -= 1;
+                            _lyric.Line = store.ToString();
+                        }
+                    }
+                }
+
+                _viewModel.Lyrics.Remove(lyric);
+                _viewModel.RefreshLocalLyrics();
+
+            }
+        }
     }
 }

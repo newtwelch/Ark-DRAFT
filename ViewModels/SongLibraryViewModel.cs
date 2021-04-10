@@ -97,6 +97,7 @@ namespace Ark.ViewModels
         public ICommand Create_Song { get; set; }
         public ICommand Add_SongLanguage { get; set; }
         public ICommand Delete_Song { get; set; }
+        public ICommand Add_Lyric { get; set; }
         #endregion
 
         public SongLibraryViewModel()
@@ -105,6 +106,7 @@ namespace Ark.ViewModels
             Create_Song = new RelayCommand(o => CreateSong(o));
             Add_SongLanguage = new RelayCommand(o => AddSongLanguage(o));
             Delete_Song = new RelayCommand(o => DeleteSong(o));
+            Add_Lyric = new RelayCommand(o => AddLyric(o));
 
             // Song Initializer 
             songInterface = new SongInterface();
@@ -131,7 +133,16 @@ namespace Ark.ViewModels
             }
             SelectedSong.Lyrics = Lyrics.ToList();
         }  
-        // Refres Languages
+        public void RefreshLocalLyrics()
+        {
+            List<LyricData> store = Lyrics.ToList();
+            Lyrics.Clear();
+            foreach(var lyric in store)
+            {
+                Lyrics.Add(lyric);
+            }
+        }
+        // Refresh Languages
         public void RefreshLanguages()
         {
             SongLanguages.Clear();
@@ -169,7 +180,67 @@ namespace Ark.ViewModels
             EditModeChecked = false;
             EditModeChecked = true;
         }
+        public void AddLyric(object sender)
+        {
+            switch (sender.ToString())
+            {
+                case "Stanza":
 
+                    int lineNumber = 1;
+                    foreach (LyricData lyric in Lyrics)
+                    {
+                        if (lyric.Type == LyricType.Stanza)
+                            lineNumber++;
+                    }
+
+                    Lyrics.Add(new LyricData
+                    {
+                        Line = lineNumber++.ToString(),
+                        Text = "Stanza",
+                        Type = LyricType.Stanza
+                    });
+                    break;
+
+                case "Chorus":
+
+                    if (Lyrics.Any(x => x.Type == LyricType.Chorus))
+                    {
+                        LyricData chorus = Lyrics.ToList().Find(x => x.Type == LyricType.Chorus);
+                        Lyrics.Add(chorus);
+                    }
+                    else
+                    {
+                        Lyrics.Add(new LyricData
+                        {
+                            Line = "C",
+                            Text = "Chorus",
+                            Type = LyricType.Chorus
+                        });
+                    }
+
+                    break;
+
+                case "Bridge":
+
+                    if (Lyrics.Any(x => x.Type == LyricType.Bridge))
+                    {
+                        LyricData bridge = Lyrics.ToList().Find(x => x.Type == LyricType.Bridge);
+                        Lyrics.Add(bridge);
+                    }
+                    else
+                    {
+                        Lyrics.Add(new LyricData
+                        {
+                            Line = "B",
+                            Text = "Bridge",
+                            Type = LyricType.Bridge
+                        });
+                    }
+
+                    break;
+
+            }
+        }
         // Delete Song
         public void DeleteSong(object sender)
         {
