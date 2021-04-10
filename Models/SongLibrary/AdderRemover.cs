@@ -60,7 +60,7 @@ namespace Ark.Models.SongLibrary
 
                 //inserting the song into the song list table
                 cmd.CommandText = "INSERT INTO Songs (SongNum,Title,Author) VALUES (@songNum,@title,@author);";
-                cmd.Parameters.AddWithValue("@title", selectedSong.Title + " - Language");
+                cmd.Parameters.AddWithValue("@title", selectedSong.Title + "I");
                 cmd.Parameters.AddWithValue("@author", selectedSong.Author); 
                 cmd.Parameters.AddWithValue("@songNum", selectedSong.SongNum);
                 cmd.Prepare();

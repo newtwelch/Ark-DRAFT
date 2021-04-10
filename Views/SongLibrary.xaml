@@ -32,46 +32,44 @@
             <RowDefinition Height=".1*" />
         </Grid.RowDefinitions>
 
-        <!--  Gigantic StackPanel  -->
-        <StackPanel Grid.Column="0" Margin="0,0,20,0">
+        <!--  Search and Button Group  -->
+        <DockPanel Grid.Column="0"
+                   Margin="0 0 20 0"
+                   LastChildFill="True">
 
-            <!--  Search and Button Group  -->
-            <DockPanel LastChildFill="True">
+            <!--  Delete Song  -->
+            <controls:IconButtons x:Name="DeleteSongButton"
+                                  Margin="0 0 10 0"
+                                  Background="{DynamicResource ContainerBrush}"
+                                  Command="{Binding Delete_Song}"
+                                  DockPanel.Dock="Right"
+                                  HoverBackground="{DynamicResource RedBrush}"
+                                  HoverIconSource="pack://application:,,,/Resources/Images/Erase_Selected.png"
+                                  IconSource="pack://application:,,,/Resources/Images/Erase_Unselected.png"
+                                  ToolTip="Delete selected song" />
 
-                <!--  Delete Song  -->
-                <controls:IconButtons x:Name="DeleteSongButton"
-                                      Margin="0,0,10,0"
-                                      Background="{DynamicResource ContainerBrush}"
-                                      Command="{Binding Delete_Song}"
-                                      DockPanel.Dock="Right"
-                                      HoverBackground="{DynamicResource RedBrush}"
-                                      HoverIconSource="pack://application:,,,/Resources/Images/Erase_Selected.png"
-                                      IconSource="pack://application:,,,/Resources/Images/Erase_Unselected.png"
-                                      ToolTip="Delete selected song" />
+            <!--  New Song  -->
+            <controls:IconButtons x:Name="NewSongButton"
+                                  Margin="0 0 10 0"
+                                  Background="{DynamicResource ContainerBrush}"
+                                  Command="{Binding Create_Song}"
+                                  DockPanel.Dock="Right"
+                                  HoverBackground="{DynamicResource ThumbBrush}"
+                                  HoverIconSource="pack://application:,,,/Resources/Images/Music_Selected.png"
+                                  IconSource="pack://application:,,,/Resources/Images/Music_Unselected.png"
+                                  ToolTip="Add new song" />
 
-                <!--  New Song  -->
-                <controls:IconButtons x:Name="NewSongButton"
-                                      Margin="0,0,10,0"
-                                      Background="{DynamicResource ContainerBrush}"
-                                      Command="{Binding Create_Song}"
-                                      DockPanel.Dock="Right"
-                                      HoverBackground="{DynamicResource ThumbBrush}"
-                                      HoverIconSource="pack://application:,,,/Resources/Images/Music_Selected.png"
-                                      IconSource="pack://application:,,,/Resources/Images/Music_Unselected.png"
-                                      ToolTip="Add new song" />
+            <!--  Search for Songs  -->
+            <TextBox x:Name="SongSearchBox"
+                     Width="Auto"
+                     Margin="0 0 10 0"
+                     DockPanel.Dock="Left"
+                     Style="{StaticResource SongSearch}"
+                     Tag="Search"
+                     TextChanged="SongSearchBox_TextChanged" />
 
-                <!--  Search for Songs  -->
-                <TextBox x:Name="SongSearchBox"
-                         Width="Auto"
-                         Margin="0,0,10,0"
-                         DockPanel.Dock="Left"
-                         Style="{StaticResource SongSearch}"
-                         Tag="Search"
-                         TextChanged="SongSearchBox_TextChanged" />
+        </DockPanel>
 
-            </DockPanel>
-
-        </StackPanel>
 
         <!--  Song List  -->
         <ListBox x:Name="SongList"
@@ -83,7 +81,7 @@
                  Style="{StaticResource SongListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel Margin="0,7,0,7">
+                    <DockPanel Margin="0 7 0 7">
                         <TextBlock Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
                                    DockPanel.Dock="Bottom"
                                    Style="{StaticResource SearchedLyric}"
@@ -98,44 +96,43 @@
         <!--  Second Half  -->
         <!--  Second Half  -->
 
-        <StackPanel Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Grid.Column="1"
-                    Margin="20,0,0,0">
 
-            <DockPanel Height="100"
-                       MaxHeight="200"
-                       LastChildFill="True">
-                <!--  Edit Current Song  -->
-                <controls:IconToggleButtons x:Name="EditSongButton"
-                                            Height="100"
-                                            Margin="0,0,10,0"
-                                            Background="{DynamicResource ContainerBrush}"
-                                            DockPanel.Dock="Left"
-                                            HoverIconSource="pack://application:,,,/Resources/Images/Edit_Selected.png"
-                                            IconSource="pack://application:,,,/Resources/Images/Edit_Unselected.png"
-                                            IsChecked="{Binding EditModeChecked, Mode=TwoWay}"
-                                            Unchecked="EditSongButton_Unchecked" />
+        <DockPanel Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="1"
+                   Height="100"
+                   MaxHeight="200"
+                   Margin="20 0 0 0"
+                   LastChildFill="True">
+            <!--  Edit Current Song  -->
+            <controls:IconToggleButtons x:Name="EditSongButton"
+                                        Height="100"
+                                        Margin="0 0 10 0"
+                                        Background="{DynamicResource ContainerBrush}"
+                                        DockPanel.Dock="Left"
+                                        HoverIconSource="pack://application:,,,/Resources/Images/Edit_Selected.png"
+                                        IconSource="pack://application:,,,/Resources/Images/Edit_Unselected.png"
+                                        IsChecked="{Binding EditModeChecked, Mode=TwoWay}"
+                                        Unchecked="EditSongButton_Unchecked" />
 
-                <!--  Title and Author  -->
-                <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
-                    <TextBox x:Name="SongTitle"
-                             Height="60"
-                             Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
-                             Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
-                             Style="{StaticResource SongTitle}"
-                             Text="{Binding SelectedSong.Title}" />
-                    <TextBox x:Name="SongAuthor"
-                             Height="50"
-                             Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
-                             Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
-                             Style="{StaticResource SongAuthor}"
-                             Text="{Binding SelectedSong.Author}" />
-                </StackPanel>
+            <!--  Title and Author  -->
+            <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
+                <TextBox x:Name="SongTitle"
+                         Height="60"
+                         Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
+                         Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
+                         Style="{StaticResource SongTitle}"
+                         Text="{Binding SelectedSong.Title}" />
+                <TextBox x:Name="SongAuthor"
+                         Height="50"
+                         Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
+                         Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
+                         Style="{StaticResource SongAuthor}"
+                         Text="{Binding SelectedSong.Author}" />
+            </StackPanel>
 
-            </DockPanel>
+        </DockPanel>
 
-        </StackPanel>
 
         <!--  Lyric List  -->
         <ListBox x:Name="LyricBox"
@@ -149,7 +146,7 @@
                     <StackPanel>
                         <DockPanel MinHeight="120" LastChildFill="True">
                             <controls:IconButtons Height="{Binding Height, ElementName=SongLyricText}"
-                                                  Margin="0,0,0,0"
+                                                  Margin="0 0 0 0"
                                                   Background="{DynamicResource ContainerBrush}"
                                                   DockPanel.Dock="Left"
                                                   HoverBackground="{DynamicResource RedBrush}"
@@ -164,27 +161,24 @@
                                        Fill="{StaticResource BackgroundBrush}" />
                             <TextBox x:Name="SongLyricText"
                                      MaxWidth="440"
-                                     AcceptsReturn="True"
-                                     AcceptsTab="True"
                                      Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
                                      Cursor="{Binding DataContext.EditCursorHandBeam, ElementName=EditSongButton}"
                                      Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
                                      Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
                                      IsReadOnly="{Binding DataContext.EditModeChecked, Converter={StaticResource Inverter}, ElementName=EditSongButton}"
                                      Style="{StaticResource SongLyricText}"
-                                     Text="{Binding Text}"
-                                     TextWrapping="Wrap" />
+                                     Text="{Binding Text}" />
                         </DockPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!--  Gigantic StackPanel  -->
+        <!--  Button  -->
         <StackPanel Grid.Row="3"
                     Grid.RowSpan="2"
                     Grid.Column="1"
-                    Margin="20,0,0,0"
+                    Margin="20 0 0 0"
                     VerticalAlignment="Top"
                     Orientation="Horizontal">
 
@@ -196,14 +190,14 @@
 
             <!--  Add Chorus  -->
             <Button x:Name="ChorusButton"
-                    Margin="10,0,0,0"
+                    Margin="10 0 0 0"
                     Content="C"
                     Style="{StaticResource TextButtons}"
                     Visibility="{Binding EditModeVisible}" />
 
             <!--  Add Bridge  -->
             <Button x:Name="BridgeButton"
-                    Margin="10,0,0,0"
+                    Margin="10 0 0 0"
                     Content="B"
                     Style="{StaticResource TextButtons}"
                     Visibility="{Binding EditModeVisible}" />
@@ -241,22 +235,19 @@
 
         </StackPanel>
 
-        <!--  Righty Boi  -->
-        <StackPanel Grid.Row="3"
-                    Grid.RowSpan="2"
-                    Grid.Column="1"
-                    Margin="20,0,0,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Orientation="Horizontal">
-            <!--  Language Name  -->
-            <TextBox x:Name="LanguageTextBox"
-                     Height="50"
-                     Padding="20,0"
-                     Style="{StaticResource DefaultText}"
-                     Text="{Binding SelectedSong.Language}"
-                     Visibility="{Binding EditModeVisible}" />
-        </StackPanel>
+        <!--  Language TextBox [ change language name here ]  -->
+        <TextBox x:Name="LanguageTextBox"
+                 Grid.Row="3"
+                 Grid.RowSpan="2"
+                 Grid.Column="1"
+                 Height="50"
+                 Margin="20 0 0 0"
+                 Padding="20 0"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Style="{StaticResource DefaultText}"
+                 Text="{Binding SelectedSong.Language}"
+                 Visibility="{Binding EditModeVisible}" />
 
     </Grid>
 </UserControl>

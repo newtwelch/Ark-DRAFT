@@ -18,7 +18,7 @@
            BasedOn="{StaticResource DefaultText}"
            TargetType="{x:Type TextBox}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="20,0,0,0" />
+        <Setter Property="Padding" Value="20 0 0 0" />
         <!--  Search Watermark [msg to newt: save this :D ]  -->
         <Setter Property="Template">
             <Setter.Value>
@@ -26,10 +26,10 @@
                     <Grid>
                         <Border Background="{StaticResource ContainerDarkBrush}" BorderThickness="0" />
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="5,0,0,0"
+                                      Margin="5 0 0 0"
                                       VerticalAlignment="Center" />
                         <Label x:Name="WaterMarkLabel"
-                               Padding="20,0,0,0"
+                               Padding="20 0 0 0"
                                VerticalAlignment="Center"
                                Content="{TemplateBinding Tag}"
                                Cursor="IBeam"
@@ -58,7 +58,7 @@
     <Style x:Key="SearchedLyric" TargetType="{x:Type TextBlock}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Padding" Value="20,0,0,0" />
+        <Setter Property="Padding" Value="20 0 0 0" />
         <Setter Property="Foreground" Value="{StaticResource OrangeBrush}" />
         <!--  Search Watermark [msg to newt: save this too :D ]  -->
         <Style.Triggers>
@@ -82,7 +82,7 @@
         <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0,5,0,0" />
+        <Setter Property="Padding" Value="0 5 0 0" />
         <!--  Fancy Hover  -->
         <Style.Triggers>
             <MultiDataTrigger>
@@ -103,7 +103,7 @@
         <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0,0,0,20" />
+        <Setter Property="Padding" Value="0 0 0 20" />
         <!--  Fancy Hover  -->
         <Style.Triggers>
             <MultiDataTrigger>
@@ -121,9 +121,12 @@
            BasedOn="{StaticResource DefaultText}"
            TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="20" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="AcceptsTab" Value="True" />
+        <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0,10,0,10" />
+        <Setter Property="Padding" Value="0 10 0 10" />
     </Style>
 
     <!--  Song Language  -->

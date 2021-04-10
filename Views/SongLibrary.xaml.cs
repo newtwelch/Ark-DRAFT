@@ -46,11 +46,16 @@ namespace Ark.Views
 
         private void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count == 0)
+            if (_viewModel.EditModeChecked)
             {
+                SongData selectedSong = _viewModel.SelectedSong;
+                _viewModel.SelectedSong = selectedSong;
+                (sender as System.Windows.Controls.ListBox).SelectedItem = null;
             }
             else
             {
+                if (e.AddedItems.Count == 0)
+                    return;
                 SongData selectedItem = (SongData)e.AddedItems[0];
                 _viewModel.SelectedSong = selectedItem;
                 _viewModel.RefreshLyrics();
@@ -63,6 +68,7 @@ namespace Ark.Views
                 }
             }
         }
+
         private void LanguageList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -75,7 +81,7 @@ namespace Ark.Views
                 int songID = _viewModel.SelectedSong.SongID;
                 int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
                 SongList.SelectedIndex = index;
-                
+                SongList.ScrollIntoView(SongList.SelectedItem);
                 _viewModel.RefreshLyrics();
             }
         }
@@ -84,11 +90,13 @@ namespace Ark.Views
         {
             _viewModel.SelectedSong.Language = LanguageTextBox.Text;
             int songID = _viewModel.SelectedSong.SongID;
+            _viewModel.SaveSong();
+            _viewModel.RefreshSongList();
             int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
             SongList.SelectedIndex = index;
-            _viewModel.SaveSong();
             _viewModel.RefreshLanguages();
         }
+
         void assistant_Idled(object sender, EventArgs e)
         {
             this.Dispatcher.Invoke(
