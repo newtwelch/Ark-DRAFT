@@ -53,12 +53,12 @@ namespace Ark.Views
             {
                 SongData selectedItem = (SongData)e.AddedItems[0];
                 _viewModel.SelectedSong = selectedItem;
-                _viewModel.RefreshLanguages();
                 _viewModel.RefreshLyrics();
                 if (LanguageList != null)
                 {
-                    string language = _viewModel.SelectedSong.Language;
-                    int index = LanguageList.Items.Cast<SongData>().ToList().FindIndex(x => x.Language == language);
+                    _viewModel.RefreshLanguages();
+                    int songID = _viewModel.SelectedSong.SongID;
+                    int index = LanguageList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
                     LanguageList.SelectedIndex = index;
                 }
             }
@@ -72,7 +72,7 @@ namespace Ark.Views
             {
                 SongData selectedItem = (SongData)e.AddedItems[0];
                 _viewModel.SelectedSong = selectedItem;
-                int songID = selectedItem.SongID;
+                int songID = _viewModel.SelectedSong.SongID;
                 int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
                 SongList.SelectedIndex = index;
                 

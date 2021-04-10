@@ -26,8 +26,8 @@
             <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="0" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
             <RowDefinition Height=".41*" />
             <RowDefinition Height=".1*" />
         </Grid.RowDefinitions>
@@ -225,7 +225,6 @@
                     <DataTemplate>
                         <TextBox Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
                                  Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                                 Focusable="False"
                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
                                  Style="{StaticResource SongLanguage}"
                                  Text="{Binding Language}" />
