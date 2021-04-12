@@ -13,7 +13,7 @@ namespace Ark.Models.Helper
         public int WaitingMilliSeconds { get; set; }
         System.Threading.Timer waitingTimer;
 
-        public TypeAssistant(int waitingMilliSeconds = 30)
+        public TypeAssistant(int waitingMilliSeconds = 100)
         {
             WaitingMilliSeconds = waitingMilliSeconds;
             waitingTimer = new Timer(p =>

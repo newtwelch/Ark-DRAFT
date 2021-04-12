@@ -69,6 +69,7 @@ namespace Ark.Views
             }
         }
 
+        // Language songs
         private void LanguageList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -86,6 +87,7 @@ namespace Ark.Views
             }
         }
 
+        // Save Song
         private void EditSongButton_Unchecked(object sender, RoutedEventArgs e)
         {
             _viewModel.SelectedSong.Language = LanguageTextBox.Text;
@@ -97,6 +99,7 @@ namespace Ark.Views
             _viewModel.RefreshLanguages();
         }
 
+        // Need this for some reason
         void assistant_Idled(object sender, EventArgs e)
         {
             this.Dispatcher.Invoke(
@@ -120,11 +123,14 @@ namespace Ark.Views
                 }
             }));
         }
+
+        // Searching for Songs
         private void SongSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             assistant.TextChanged();
         }
 
+        // Removing Selected Lyric
         private void RemoveLyric_Click(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Lyrics.Count > 1 && _viewModel.EditModeChecked)
@@ -152,6 +158,18 @@ namespace Ark.Views
                 _viewModel.Lyrics.Remove(lyric);
                 _viewModel.RefreshLocalLyrics();
 
+            }
+        }
+
+        private void LyricBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LyricBox.SelectedItem != null && !_viewModel.EditModeChecked)
+            {
+                LyricData lyric = LyricBox.SelectedItem as LyricData;
+                LyricBox.SelectedItem = lyric;
+
+                DisplayWindow.Instance.TextDisplay.Text = lyric.Text;
+                DisplayWindow.Instance.Show();
             }
         }
     }

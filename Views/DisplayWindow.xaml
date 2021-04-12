@@ -1,0 +1,30 @@
+﻿<Window x:Class="Ark.Views.DisplayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dd="clr-namespace:Ark.ViewModels"
+        xmlns:local="clr-namespace:Ark.Views"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="Display Window"
+        d:DataContext="{d:DesignInstance dd:DisplayWindowViewModel,
+                                         IsDesignTimeCreatable=True}"
+        d:DesignHeight="720"
+        d:DesignWidth="1280"
+        Background="{StaticResource BackgroundBrush}"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize"
+        ShowActivated="False"
+        WindowStyle="None"
+        mc:Ignorable="d">
+    <Grid>
+        <Viewbox Stretch="Uniform">
+            <TextBlock x:Name="TextDisplay"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="100"
+                       Foreground="White"
+                       Style="{StaticResource SearchedLyric}"
+                       TextAlignment="Center" />
+        </Viewbox>
+    </Grid>
+</Window>

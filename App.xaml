@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Ark"
              xmlns:viewmodel="clr-namespace:Ark.ViewModels"
+             ShutdownMode="OnMainWindowClose"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
 

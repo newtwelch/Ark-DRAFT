@@ -1,5 +1,6 @@
 ﻿using Ark.ViewModels;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +28,6 @@ namespace Ark.Views
             //Initialize with SongLibrary UserControl
             ContentFrame.Content = new SongLibrary();
 
-            //MainMenu.SelectedIndex = 0;
             MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
         }

@@ -140,6 +140,7 @@
                  Grid.Column="1"
                  ItemContainerStyle="{StaticResource SongLyricsItem}"
                  ItemsSource="{Binding Lyrics}"
+                 SelectionChanged="LyricBox_SelectionChanged"
                  Style="{StaticResource SongLyricsBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

@@ -28,7 +28,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
                     <ScrollViewer x:Name="scrollviewer"
-                                  Margin="0,20,55,20"
+                                  Margin="0 20 55 20"
                                   Padding="{TemplateBinding Padding}"
                                   Background="{TemplateBinding Background}"
                                   Focusable="False">
@@ -36,7 +36,7 @@
                     </ScrollViewer>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility, ElementName=scrollviewer}" Value="Collapsed">
-                            <Setter Property="Margin" Value="0,0,-25,0" />
+                            <Setter Property="Margin" Value="0 0 -25 0" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -48,14 +48,14 @@
     <Style x:Key="SongListItem"
            BasedOn="{StaticResource DefaultItem}"
            TargetType="ListBoxItem">
-        <Setter Property="Padding" Value="20,0,0,0" />
+        <Setter Property="Padding" Value="20 0 0 0" />
         <Setter Property="Margin" Value="-1" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border Name="Border"
-                            Padding="20,10,0,10"
+                            Padding="20 10 0 10"
                             Background="{TemplateBinding Background}"
                             BorderThickness="0"
                             SnapsToDevicePixels="True">
@@ -94,14 +94,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
                     <ScrollViewer x:Name="scrollviewer"
-                                  Margin="20,20,25,20"
+                                  Margin="20 20 25 20"
                                   Padding="{TemplateBinding Padding}"
                                   Focusable="False">
                         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </ScrollViewer>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility, ElementName=scrollviewer}" Value="Collapsed">
-                            <Setter Property="Margin" Value="0,0,-25,0" />
+                            <Setter Property="Margin" Value="0 0 -25 0" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -121,7 +121,7 @@
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border Name="Border"
                             MinHeight="70"
-                            Margin="0,0,0,20"
+                            Margin="0 0 0 20"
                             Background="{StaticResource ContainerDarkBrush}"
                             BorderThickness="0"
                             SnapsToDevicePixels="True">
@@ -160,8 +160,8 @@
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border Name="Border"
                             MinHeight="50"
-                            Margin="0,0,10,0"
-                            Padding="10,0"
+                            Margin="0 0 10 0"
+                            Padding="10 0"
                             Background="{StaticResource ContainerBrush}"
                             BorderThickness="0"
                             SnapsToDevicePixels="True">
