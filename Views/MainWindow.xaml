@@ -71,18 +71,17 @@
 
             <controls:IconRadioButtons x:Name="SongLibrary_RadioButton"
                                        Margin="0 60 0 0"
-                                       Click="navItem_Click"
+                                       Checked="navItem_Checked"
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Music_Selected.png"
-                                       IconSource="pack://application:,,,/Resources/Images/Music_Unselected.png"
-                                       IsChecked="True" />
+                                       IconSource="pack://application:,,,/Resources/Images/Music_Unselected.png" />
             <controls:IconRadioButtons x:Name="Bible_RadioButton"
-                                       Click="navItem_Click"
+                                       Checked="navItem_Checked"
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Bible_Selected.png"
                                        IconSource="pack://application:,,,/Resources/Images/Bible_Unselected.png" />
             <controls:IconRadioButtons x:Name="Message_RadioButton"
-                                       Click="navItem_Click"
+                                       Checked="navItem_Checked"
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Message_Selected.png"
                                        IconSource="pack://application:,,,/Resources/Images/Message_Unselected.png" />

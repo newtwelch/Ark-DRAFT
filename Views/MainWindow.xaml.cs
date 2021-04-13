@@ -26,9 +26,9 @@ namespace Ark.Views
             DataContext = _viewModel;
 
             InitializeComponent();
-            
+
             //Initialize with SongLibrary UserControl
-            ContentFrame.Content = new SongLibrary();
+            SongLibrary_RadioButton.IsChecked = true;
 
             MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
@@ -93,13 +93,13 @@ namespace Ark.Views
 
         #endregion
 
-        private void navItem_Click(object sender, RoutedEventArgs e)
+        private void navItem_Checked(object sender, RoutedEventArgs e)
         {
             if (e.Source is RadioButton rb)
             {
                 switch (rb.Name)
                 {
-                    case "SongLibrary_RadioButton": 
+                    case "SongLibrary_RadioButton":
                         ContentFrame.Content = new SongLibrary();
                         break;
                     case "Bible_RadioButton":
@@ -110,7 +110,6 @@ namespace Ark.Views
                         break;
                 }
             }
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -128,13 +127,13 @@ namespace Ark.Views
             switch (e.HotkeyInfo.Key.ToString())
             {
                 case "Z":
-                    ContentFrame.Content = new SongLibrary();
+                    SongLibrary_RadioButton.IsChecked = true;
                     break;
                 case "X":
-                    ContentFrame.Content = new Bible();
+                    Bible_RadioButton.IsChecked = true;
                     break;
                 case "C":
-                    ContentFrame.Content = new Bible();
+                    Message_RadioButton.IsChecked = true;
                     break;
             }
 
