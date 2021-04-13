@@ -58,6 +58,7 @@ namespace Ark.Views
                     return;
                 SongData selectedItem = (SongData)e.AddedItems[0];
                 _viewModel.SelectedSong = selectedItem;
+                string test = _viewModel.SelectedSong.Sequence;
                 _viewModel.RefreshLyrics();
                 if (LanguageList != null)
                 {
@@ -146,7 +147,6 @@ namespace Ark.Views
                 }
 
                 _viewModel.Lyrics.Remove(lyric);
-                _viewModel.RefreshLocalLyrics();
 
             }
         }

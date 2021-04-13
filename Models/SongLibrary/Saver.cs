@@ -90,6 +90,7 @@ namespace Ark.Models.SongLibrary
             {
                 RawLyrics += lyric.Text;
             }
+            RawLyrics = RawLyrics.TrimEnd();
             #endregion
 
             //SQL Stuff 

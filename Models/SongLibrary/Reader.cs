@@ -296,9 +296,9 @@ namespace Ark.Models.SongLibrary
 
                     foreach (var line in sequencer)
                     {
-                        if (SequencedLyrics.Count < paragraphs.Length)
+                        if (line != "")
                         {
-                            LyricData lyric = Lyrics.Find(x => x.Line == line.ToUpper().Replace("S", ""));
+                            LyricData lyric = Lyrics.Find(x => x.Line.ToUpper() == line.ToUpper().Replace("S", ""));
                             SequencedLyrics.Add(lyric);
                         }
                     }
