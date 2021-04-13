@@ -1,5 +1,4 @@
-﻿using Ark.Models.Helper;
-using Ark.Models.SongLibrary;
+﻿using Ark.Models.SongLibrary;
 using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,7 +26,6 @@ namespace Ark.Views
     {
 
         private SongLibraryViewModel _viewModel;
-        TypeAssistant assistant;
 
         public SongLibrary()
         {
@@ -39,9 +37,6 @@ namespace Ark.Views
 
             SongList.SelectedIndex = 0;
             LanguageList.SelectedIndex = 0;
-
-            assistant = new TypeAssistant();
-            assistant.Idled += assistant_Idled;
         }
 
         private void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -99,19 +94,9 @@ namespace Ark.Views
             _viewModel.RefreshLanguages();
         }
 
-        // Need this for some reason
-        void assistant_Idled(object sender, EventArgs e)
-        {
-            this.Dispatcher.Invoke(
-            new MethodInvoker(() =>
-            {
-            }));
-        }
-
         // Searching for Songs
         private void SongSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //assistant.TextChanged();
             if (SongSearchBox.Text == "")
             {
                 _viewModel.RefreshSongList();
