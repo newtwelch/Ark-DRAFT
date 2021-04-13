@@ -90,11 +90,26 @@
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Message_Selected.png"
                                        IconSource="pack://application:,,,/Resources/Images/Message_Unselected.png" />
-            <TextBox Margin="0 0 0 20"
-                     HorizontalAlignment="Center"
+
+        </DockPanel>
+        <DockPanel Grid.Row="1"
+                   Grid.Column="1"
+                   LastChildFill="False">
+            <TextBox Margin="10 0 0 10"
+                     HorizontalAlignment="Left"
                      Background="Transparent"
                      DockPanel.Dock="Bottom"
-                     FontSize="15"
+                     FontSize="10"
+                     FontStyle="Italic"
+                     FontWeight="Regular"
+                     IsReadOnly="True"
+                     Style="{StaticResource ArkVersion}"
+                     Text="Newt Wellington" />
+            <TextBox Margin="10 0 0 0"
+                     HorizontalAlignment="Left"
+                     Background="Transparent"
+                     DockPanel.Dock="Bottom"
+                     FontSize="25"
                      IsReadOnly="True"
                      Style="{StaticResource ArkVersion}"
                      Text="0.0.1" />

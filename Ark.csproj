@@ -9,6 +9,12 @@
     <Company>Welch Engines</Company>
 	<UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Ark_Logo.ico</ApplicationIcon>
+
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
   </PropertyGroup>
 
   <ItemGroup>

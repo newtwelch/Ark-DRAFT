@@ -77,6 +77,14 @@
         </Style.Triggers>
     </Style>
 
+    <!--  DisplayText THIS IS A TEXTBLOCK BUT IT'S ALL GOOD  -->
+    <Style x:Key="DisplayText"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+    </Style>
+
     <!--  Song Title  -->
     <Style x:Key="SongTitle"
            BasedOn="{StaticResource DefaultText}"

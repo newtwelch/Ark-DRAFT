@@ -47,7 +47,7 @@ namespace Ark.Views
                 Top = Screen.PrimaryScreen.WorkingArea.Top;
                 Left = Screen.PrimaryScreen.WorkingArea.Left;
             }
-        }
+        }   
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Width = SystemParameters.PrimaryScreenWidth;

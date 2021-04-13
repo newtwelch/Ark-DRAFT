@@ -17,13 +17,12 @@
         WindowStyle="None"
         mc:Ignorable="d">
     <Grid>
-        <Viewbox Stretch="Uniform">
+        <Viewbox Margin="50"
+                 Stretch="Uniform">
             <TextBlock x:Name="TextDisplay"
-                       HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontSize="100"
-                       Foreground="White"
-                       Style="{StaticResource SearchedLyric}"
+                       Style="{StaticResource DisplayText}"
                        TextAlignment="Center" />
         </Viewbox>
     </Grid>

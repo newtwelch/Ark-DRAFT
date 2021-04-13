@@ -38,10 +38,12 @@ namespace Ark.Views
 
             InitializeComponent();
 
+            SongSearchBox.Focus();
             SongList.SelectedIndex = 0;
             LanguageList.SelectedIndex = 0;
         }
 
+        // Select Songs
         private void SongList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_viewModel.EditModeChecked)
@@ -149,6 +151,7 @@ namespace Ark.Views
             }
         }
 
+        // Display text on second sreen or Display Window unless you're in edit mode
         private void LyricBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LyricBox.SelectedItem != null && !_viewModel.EditModeChecked)
@@ -160,24 +163,52 @@ namespace Ark.Views
                 DisplayWindow.Instance.Show();
             }
         }
-
+        
+        // Load Hotkeys on UserControl Load
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
             closeDisplay.HotkeyPressed += CloseDisplay;
         }
 
+        // Close Second Window or the Display Window
         private void CloseDisplay(object sender, HotkeyEventArgs e)
         {
             DisplayWindow.Instance.Close();
             LyricBox.SelectedItem = null;
+            if (LyricBox.IsFocused)
+            {
+                int i = LyricBox.SelectedIndex;
+                LyricBox.SelectedIndex = i--;
+            }
         }
 
+        // Clean Hotkey cache(?)
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             closeDisplay.Dispose();
         }
 
+        //Enter Key on Song Search
+        private void SongSearchBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                SongList.SelectedIndex = 0;
+                SongList.Focus();
+            }
+        }
+
+        //Enter Key on Song List
+        private void SongList_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                LyricBox.SelectedIndex = 0;
+                LyricBox.Focus();
+            }
+        }
+        #region Horizontal ScrollWheel
         private void ListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             System.Windows.Controls.ListBox listBox = sender as System.Windows.Controls.ListBox;
@@ -209,5 +240,6 @@ namespace Ark.Views
                 }
             }
         }
+        #endregion
     }
 }
