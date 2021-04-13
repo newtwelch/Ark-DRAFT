@@ -80,7 +80,10 @@
                  ItemContainerStyle="{StaticResource SongListItem}"
                  ItemsSource="{Binding Songs}"
                  SelectionChanged="SongList_SelectionChanged"
-                 Style="{StaticResource SongListBox}">
+                 Style="{StaticResource SongListBox}"
+                 VirtualizingPanel.IsContainerVirtualizable="True"
+                 VirtualizingPanel.IsVirtualizing="True"
+                 VirtualizingPanel.ScrollUnit="Pixel">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Margin="0 7 0 7">
@@ -228,9 +231,12 @@
 
             <!--  Language List  -->
             <ListBox x:Name="LanguageList"
+                     MaxWidth="380"
+                     Padding="-10 0 0 0"
                      Background="Transparent"
                      ItemContainerStyle="{StaticResource SongLanguageItem}"
                      ItemsSource="{Binding SongLanguages}"
+                     PreviewMouseWheel="ListBox_PreviewMouseWheel"
                      SelectionChanged="LanguageList_SelectionChanged"
                      Style="{StaticResource DefaultListBox}"
                      Visibility="{Binding EditModeNotVisible}">
@@ -252,6 +258,7 @@
 
             <!--  Add Language  -->
             <Button x:Name="LanguageButton"
+                    Margin="10 0 0 0"
                     Command="{Binding Add_SongLanguage}"
                     Content="+"
                     Style="{StaticResource TextButtons}"

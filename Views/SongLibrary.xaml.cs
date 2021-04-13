@@ -170,11 +170,44 @@ namespace Ark.Views
         private void CloseDisplay(object sender, HotkeyEventArgs e)
         {
             DisplayWindow.Instance.Close();
+            LyricBox.SelectedItem = null;
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             closeDisplay.Dispose();
+        }
+
+        private void ListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            System.Windows.Controls.ListBox listBox = sender as System.Windows.Controls.ListBox;
+            ScrollViewer scrollviewer = FindVisualChildren<ScrollViewer>(listBox).FirstOrDefault();
+            if (e.Delta > 0)
+                scrollviewer.LineLeft();
+            else
+                scrollviewer.LineRight();
+            e.Handled = true;
+
+        }
+
+        private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
     }
 }

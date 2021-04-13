@@ -7,7 +7,6 @@
            TargetType="Thumb">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Width" Value="15" />
         <Setter Property="IsTabStop" Value="True" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="Template">
@@ -37,12 +36,16 @@
 
     <ControlTemplate x:Key="HorizontalScrollBar"
                      TargetType="{x:Type ScrollBar}">
-        <Track Name="PART_Track"
-               IsDirectionReversed="False">
-            <Track.Thumb>
-                <Thumb Style="{StaticResource scrollBarThumb}" />
-            </Track.Thumb>
-        </Track>
+        <Grid>
+            <Border Height="15"
+                    Background="{StaticResource ThumbHolderBrush}" />
+            <Track Name="PART_Track"
+                   IsDirectionReversed="False">
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource scrollBarThumb}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
     </ControlTemplate>
 
     <!--  ScrollBar  -->
@@ -52,12 +55,13 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="Height" Value="20" />
+                <Setter Property="Margin" Value="0 10 0 -30" />
+                <Setter Property="Height" Value="15" />
                 <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Margin" Value="0 -1 -37 -1" />
+                <Setter Property="Width" Value="15" />
                 <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
             </Trigger>
         </Style.Triggers>

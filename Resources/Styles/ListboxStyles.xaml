@@ -8,6 +8,9 @@
         <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="VirtualizingPanel.IsContainerVirtualizable" Value="True" />
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
         <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
     </Style>
 
@@ -18,6 +21,9 @@
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="FontFamily" Value="/Resources/Fonts/#Gontserrat" />
         <Setter Property="FontSize" Value="20" />
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
     </Style>
@@ -165,7 +171,7 @@
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border Name="Border"
                             MinHeight="50"
-                            Margin="0 0 10 0"
+                            Margin="10 0 0 0"
                             Padding="10 0"
                             Background="{StaticResource ContainerBrush}"
                             BorderThickness="0"
