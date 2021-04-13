@@ -105,29 +105,29 @@ namespace Ark.Views
             this.Dispatcher.Invoke(
             new MethodInvoker(() =>
             {
-                if (SongSearchBox.Text == "")
-                {
-                    _viewModel.RefreshSongList();
-                }
-                else if (SongSearchBox.Text.StartsWith("*"))
-                {
-                    _viewModel.GetSongsBy("Author", SongSearchBox.Text.Replace("*", ""));
-                }
-                else if (SongSearchBox.Text.StartsWith("."))
-                {
-                    _viewModel.GetSongsBy("Lyrics", SongSearchBox.Text.Replace(".", ""));
-                }
-                else
-                {
-                    _viewModel.GetSongsBy("Title", SongSearchBox.Text);
-                }
             }));
         }
 
         // Searching for Songs
         private void SongSearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            assistant.TextChanged();
+            //assistant.TextChanged();
+            if (SongSearchBox.Text == "")
+            {
+                _viewModel.RefreshSongList();
+            }
+            else if (SongSearchBox.Text.StartsWith("*"))
+            {
+                _viewModel.GetSongsBy("Author", SongSearchBox.Text.Replace("*", ""));
+            }
+            else if (SongSearchBox.Text.StartsWith("."))
+            {
+                _viewModel.GetSongsBy("Lyrics", SongSearchBox.Text.Replace(".", ""));
+            }
+            else
+            {
+                _viewModel.GetSongsBy("Title", SongSearchBox.Text);
+            }
         }
 
         // Removing Selected Lyric

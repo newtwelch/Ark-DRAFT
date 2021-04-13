@@ -86,7 +86,8 @@
                                    DockPanel.Dock="Bottom"
                                    Style="{StaticResource SearchedLyric}"
                                    Text="{Binding SearchedLyric}" />
-                        <TextBlock x:Name="SongTitleInList" Text="{Binding Title}" />
+                        <TextBlock x:Name="SongTitleInList"
+                                   Text="{Binding Title}" />
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -116,19 +117,29 @@
                                         Unchecked="EditSongButton_Unchecked" />
 
             <!--  Title and Author  -->
-            <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
-                <TextBox x:Name="SongTitle"
-                         Height="60"
-                         Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
-                         Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
-                         Style="{StaticResource SongTitle}"
-                         Text="{Binding SelectedSong.Title}" />
-                <TextBox x:Name="SongAuthor"
-                         Height="50"
-                         Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
-                         Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
-                         Style="{StaticResource SongAuthor}"
-                         Text="{Binding SelectedSong.Author}" />
+            <StackPanel Background="{StaticResource ContainerDarkBrush}"
+                        DockPanel.Dock="Right"
+                        Orientation="Vertical">
+                <!--  Title  -->
+                <Viewbox Height="60"
+                         Margin="10 0"
+                         Stretch="Uniform">
+                    <TextBox x:Name="SongTitle"
+                             Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
+                             Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
+                             Style="{StaticResource SongTitle}"
+                             Text="{Binding SelectedSong.Title}" />
+                </Viewbox>
+                <!--  Author  -->
+                <Viewbox Height="50"
+                         Margin="10 0"
+                         Stretch="Uniform">
+                    <TextBox x:Name="SongAuthor"
+                             Cursor="{Binding DataContext.EditCursorArrowBeam, ElementName=EditSongButton}"
+                             Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
+                             Style="{StaticResource SongAuthor}"
+                             Text="{Binding SelectedSong.Author}" />
+                </Viewbox>
             </StackPanel>
 
         </DockPanel>
@@ -144,7 +155,8 @@
                  Style="{StaticResource SongLyricsBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel MinHeight="120" LastChildFill="True">
+                    <DockPanel MinHeight="120"
+                               LastChildFill="True">
                         <Button Height="{Binding Height, ElementName=SongLyricText}"
                                 Content="{Binding Line}"
                                 Style="{StaticResource TextButtons}" />
