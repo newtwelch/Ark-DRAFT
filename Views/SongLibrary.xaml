@@ -186,26 +186,27 @@
                                    DockPanel.Dock="Right"
                                    Fill="{StaticResource BackgroundBrush}"
                                    Visibility="{Binding Visibility, ElementName=StanzaButton}" />
-                        <TextBox x:Name="SongLyricText"
-                                 MaxWidth="440"
-                                 Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                                 Cursor="IBeam"
-                                 DockPanel.Dock="Top"
-                                 Focusable="{Binding DataContext.EditModeChecked, ElementName=SongSearchBox}"
-                                 Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                                 Style="{StaticResource SongLyricText}"
-                                 Text="{Binding Text}"
-                                 Visibility="{Binding Visibility, ElementName=StanzaButton}" />
-                        <controls:TextBlockHightlight x:Name="NormalSongLyricText"
-                                                      Padding="0 10 0 10"
-                                                      VerticalAlignment="Center"
-                                                      DockPanel.Dock="Top"
-                                                      HighlightBrush="{StaticResource OrangeBrush}"
-                                                      HighlightPhrase="{Binding ElementName=SongSearchBox, Path=Text}"
-                                                      IgnoreDot="True"
-                                                      Text="{Binding Text}"
-                                                      TextAlignment="Center"
-                                                      Visibility="{Binding Visibility, ElementName=LanguageList}" />
+                        <Grid>
+                            <TextBox x:Name="SongLyricText"
+                                     MaxWidth="440"
+                                     Background="{Binding Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
+                                     Cursor="IBeam"
+                                     DockPanel.Dock="Top"
+                                     Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
+                                     Style="{StaticResource SongLyricText}"
+                                     Text="{Binding Text}"
+                                     Visibility="{Binding Visibility, ElementName=StanzaButton}" />
+                            <controls:TextBlockHightlight x:Name="NormalSongLyricText"
+                                                          Padding="0 10 0 10"
+                                                          VerticalAlignment="Center"
+                                                          DockPanel.Dock="Top"
+                                                          HighlightBrush="{StaticResource OrangeBrush}"
+                                                          HighlightPhrase="{Binding ElementName=SongSearchBox, Path=Text}"
+                                                          IgnoreDot="True"
+                                                          Text="{Binding Text}"
+                                                          TextAlignment="Center"
+                                                          Visibility="{Binding Visibility, ElementName=LanguageList}" />
+                        </Grid>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
