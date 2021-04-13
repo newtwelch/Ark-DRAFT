@@ -1,4 +1,5 @@
-﻿using Ark.Models.SongLibrary;
+﻿using Ark.Models.Hotkeys;
+using Ark.Models.SongLibrary;
 using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace Ark.Views
     {
 
         private SongLibraryViewModel _viewModel;
+
+        private Hotkey closeDisplay; 
 
         public SongLibrary()
         {
@@ -156,6 +159,22 @@ namespace Ark.Views
                 DisplayWindow.Instance.TextDisplay.Text = lyric.Text;
                 DisplayWindow.Instance.Show();
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
+            closeDisplay.HotkeyPressed += CloseDisplay;
+        }
+
+        private void CloseDisplay(object sender, HotkeyEventArgs e)
+        {
+            DisplayWindow.Instance.Close();
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            closeDisplay.Dispose();
         }
     }
 }

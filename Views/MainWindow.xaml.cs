@@ -1,4 +1,5 @@
-﻿using Ark.ViewModels;
+﻿using Ark.Models.Hotkeys;
+using Ark.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Ark.Views
     {
         private MainWindowViewModel _viewModel;
 
+        private Hotkey song, bible, message;
         public object Controls { get; private set; }
 
         public MainWindow()
@@ -107,6 +109,33 @@ namespace Ark.Views
                         ContentFrame.Content = new Bible();
                         break;
                 }
+            }
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            song = new Hotkey(Modifiers.Alt, Keys.Z, this, registerImmediately: true);
+            bible = new Hotkey(Modifiers.Alt, Keys.X, this, registerImmediately: true);
+            message = new Hotkey(Modifiers.Alt, Keys.C, this, registerImmediately: true);
+            song.HotkeyPressed += SwitchTabs;
+            bible.HotkeyPressed += SwitchTabs;
+            message.HotkeyPressed += SwitchTabs;
+        }
+
+        private void SwitchTabs(object sender, HotkeyEventArgs e)
+        {
+            switch (e.HotkeyInfo.Key.ToString())
+            {
+                case "Z":
+                    ContentFrame.Content = new SongLibrary();
+                    break;
+                case "X":
+                    ContentFrame.Content = new Bible();
+                    break;
+                case "C":
+                    ContentFrame.Content = new Bible();
+                    break;
             }
 
         }

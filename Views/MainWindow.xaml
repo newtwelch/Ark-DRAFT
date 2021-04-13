@@ -8,6 +8,7 @@
         Width="1280"
         Height="720"
         AllowsTransparency="True"
+        Loaded="Window_Loaded"
         ResizeMode="CanResize"
         SizeChanged="Window_SizeChanged"
         WindowStartupLocation="CenterScreen"
