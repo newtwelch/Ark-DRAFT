@@ -112,6 +112,11 @@ namespace Ark.Views
             }
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            song.Dispose();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             song = new Hotkey(Modifiers.Alt, Keys.Z, this, registerImmediately: true);

@@ -8,6 +8,7 @@
         Width="1280"
         Height="720"
         AllowsTransparency="True"
+        Closed="Window_Closed"
         Loaded="Window_Loaded"
         ResizeMode="CanResize"
         SizeChanged="Window_SizeChanged"
@@ -66,26 +67,38 @@
         </DockPanel>
 
         <!--  Sidebar NavMenu  -->
-        <StackPanel Grid.Row="1"
-                    Background="{StaticResource ContainerBrush}">
+        <DockPanel Grid.Row="1"
+                   Background="{StaticResource ContainerBrush}"
+                   LastChildFill="False">
 
             <controls:IconRadioButtons x:Name="SongLibrary_RadioButton"
                                        Margin="0 60 0 0"
                                        Checked="navItem_Checked"
+                                       DockPanel.Dock="Top"
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Music_Selected.png"
                                        IconSource="pack://application:,,,/Resources/Images/Music_Unselected.png" />
             <controls:IconRadioButtons x:Name="Bible_RadioButton"
                                        Checked="navItem_Checked"
+                                       DockPanel.Dock="Top"
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Bible_Selected.png"
                                        IconSource="pack://application:,,,/Resources/Images/Bible_Unselected.png" />
             <controls:IconRadioButtons x:Name="Message_RadioButton"
                                        Checked="navItem_Checked"
+                                       DockPanel.Dock="Top"
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Message_Selected.png"
                                        IconSource="pack://application:,,,/Resources/Images/Message_Unselected.png" />
-        </StackPanel>
+            <TextBox Margin="0 0 0 20"
+                     HorizontalAlignment="Center"
+                     Background="Transparent"
+                     DockPanel.Dock="Bottom"
+                     FontSize="15"
+                     IsReadOnly="True"
+                     Style="{StaticResource ArkVersion}"
+                     Text="0.0.1" />
+        </DockPanel>
 
         <Frame x:Name="ContentFrame"
                Grid.Row="1"
