@@ -174,6 +174,8 @@ namespace Ark.Views
         // Close Second Window or the Display Window
         private void CloseDisplay(object sender, HotkeyEventArgs e)
         {
+            DisplayWindow.Instance.BibleText.Visibility = Visibility.Collapsed;
+            DisplayWindow.Instance.HighlightPhrase.Text = "";
             DisplayWindow.Instance.Close();
             LyricBox.SelectedItem = null;
             if (LyricBox.IsFocused)

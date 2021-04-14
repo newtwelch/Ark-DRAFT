@@ -43,5 +43,27 @@ namespace Ark.ViewModels
                 Chapters.Add(chapter);
             }
         }
+        public void GetVerses(int BookNumber, int Chapter)
+        {
+            Verses.Clear();
+            foreach (var chapter in bibleInterface.GetVerses(BookNumber, Chapter))
+            {
+                Verses.Add(chapter);
+            }
+        }
+
+        public void SortBooks(string bookName)
+        {
+            List<BookData> aBooks = bibleInterface.GetBooks();
+
+            Books.Clear();
+            foreach(var book in aBooks)
+            {
+                if (book.Name.Contains(bookName, StringComparison.OrdinalIgnoreCase))
+                {
+                    Books.Add(book);
+                }
+            }
+        }
     }
 }

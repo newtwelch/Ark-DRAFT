@@ -18,15 +18,28 @@
         WindowStyle="None"
         mc:Ignorable="d">
     <Grid>
-        <Viewbox Margin="50"
-                 Stretch="Uniform">
+        <TextBlock x:Name="HighlightPhrase"
+                   Visibility="Collapsed" />
+        <TextBlock x:Name="BibleText"
+                   Margin="0 20 0 0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   FontSize="50"
+                   Style="{StaticResource DisplayText}"
+                   Text="Genesis 1:1"
+                   Visibility="Collapsed" />
+        <Viewbox Stretch="Uniform">
             <controls:TextBlockHightlight x:Name="TextDisplay"
+                                          Width="4000"
                                           VerticalAlignment="Center"
-                                          FontSize="100"
+                                          FontSize="200"
                                           Foreground="{StaticResource UnfocusedBrush}"
                                           HighlightBrush="{StaticResource OrangeBrush}"
+                                          HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
                                           Style="{StaticResource DisplayText}"
-                                          TextAlignment="Center" />
+                                          Text="In the beginning God created the heaven and the earth asd asd"
+                                          TextAlignment="Center"
+                                          TextWrapping="WrapWithOverflow" />
         </Viewbox>
     </Grid>
 </Window>

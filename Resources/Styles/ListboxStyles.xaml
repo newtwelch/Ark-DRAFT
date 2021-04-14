@@ -259,4 +259,44 @@
         </Setter>
     </Style>
 
+    <!--  BibleVerse Item  -->
+    <Style x:Key="BibleVerseItem"
+           BasedOn="{StaticResource DefaultItem}"
+           TargetType="ListBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="Border"
+                            MinHeight="70"
+                            Margin="0 0 0 20"
+                            Background="{StaticResource ContainerDarkBrush}"
+                            BorderThickness="0"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Center" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PrimaryBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                        </Trigger>
+
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
