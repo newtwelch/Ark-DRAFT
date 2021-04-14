@@ -241,5 +241,12 @@ namespace Ark.Views
             }
         }
         #endregion
+
+        private void LyricBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == Key.Down)
+            {
+            }
+        }
     }
 }

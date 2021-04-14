@@ -23,6 +23,7 @@
             <controls:TextBlockHightlight x:Name="TextDisplay"
                                           VerticalAlignment="Center"
                                           FontSize="100"
+                                          Foreground="{StaticResource UnfocusedBrush}"
                                           HighlightBrush="{StaticResource OrangeBrush}"
                                           Style="{StaticResource DisplayText}"
                                           TextAlignment="Center" />

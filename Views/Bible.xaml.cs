@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ark.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,23 @@ namespace Ark.Views
     /// </summary>
     public partial class Bible : UserControl
     {
+        private BibleViewModel _viewModel;
+
         public Bible()
         {
+            _viewModel = new BibleViewModel();
+            DataContext = _viewModel;
+
             InitializeComponent();
+        }
+
+        private void BookList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0)
+                return;
+            BookData selectedItem = (BookData)e.AddedItems[0];
+            _viewModel.SelectedBook = selectedItem;
+            _viewModel.GetChapters(_viewModel.SelectedBook.BookNumber);
         }
     }
 }

@@ -34,6 +34,7 @@ namespace Ark.Views
             DataContext = _viewModel;
 
             InitializeComponent();
+            Topmost = true;
 
             if (Screen.AllScreens.Length > 1)
             {
@@ -50,8 +51,15 @@ namespace Ark.Views
         }   
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Width = SystemParameters.PrimaryScreenWidth;
-            Height = SystemParameters.PrimaryScreenHeight;
+            if(Screen.AllScreens.Length == 1) { 
+                Width = SystemParameters.PrimaryScreenWidth;
+                Height = SystemParameters.PrimaryScreenHeight;
+            }
+            else
+            {
+                Width = Screen.AllScreens[1].Bounds.Width;
+                Height = Screen.AllScreens[1].Bounds.Height;
+            }
         }
 
         public void CloseForced()

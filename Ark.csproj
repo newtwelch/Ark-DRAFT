@@ -9,12 +9,6 @@
     <Company>Welch Engines</Company>
 	<UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Ark_Logo.ico</ApplicationIcon>
-
-    <PublishSingleFile>true</PublishSingleFile>
-    <SelfContained>true</SelfContained>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-
   </PropertyGroup>
 
   <ItemGroup>
@@ -64,6 +58,9 @@
   </ItemGroup>
 	
   <ItemGroup>
+    <None Update="Databases\Bible_English_AKJV.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Databases\SongDatabase.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

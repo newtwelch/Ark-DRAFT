@@ -37,15 +37,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
                     <ScrollViewer x:Name="scrollviewer"
-                                  Margin="0 20 55 20"
+                                  Margin="0 20 30 20"
                                   Padding="{TemplateBinding Padding}"
                                   Background="{TemplateBinding Background}">
                         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </ScrollViewer>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility, ElementName=scrollviewer}"
-                                     Value="Collapsed">
-                            <Setter Property="Margin" Value="0 0 -25 0" />
+                                     Value="Visible">
+                            <Setter TargetName="scrollviewer" Property="Margin" Value="0 20 55 20" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -57,7 +57,6 @@
     <Style x:Key="SongListItem"
            BasedOn="{StaticResource DefaultItem}"
            TargetType="ListBoxItem">
-        <Setter Property="Padding" Value="20 0 0 0" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -101,14 +100,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
                     <ScrollViewer x:Name="scrollviewer"
-                                  Margin="20 20 25 20"
+                                  Margin="20 20 0 20"
                                   Focusable="False">
                         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </ScrollViewer>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility, ElementName=scrollviewer}"
-                                     Value="Collapsed">
-                            <Setter TargetName="scrollviewer" Property="Margin" Value="20 20 0 20" />
+                                     Value="Visible">
+                            <Setter TargetName="scrollviewer" Property="Margin" Value="20 20 25 20" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -192,6 +191,69 @@
 
                     </ControlTemplate.Triggers>
 
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--  BibleBook ListBox  -->
+    <Style x:Key="BibleListBox"
+           BasedOn="{StaticResource DefaultListBox}"
+           TargetType="ListBox">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer x:Name="scrollviewer"
+                                  Margin="0 20 25 20"
+                                  Padding="{TemplateBinding Padding}"
+                                  Background="{TemplateBinding Background}">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </ScrollViewer>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility, ElementName=scrollviewer}"
+                                     Value="Visible">
+                            <Setter TargetName="scrollviewer" Property="Margin" Value="0 20 46 20" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  BibleList Item  -->
+    <Style x:Key="BibleListItem"
+           BasedOn="{StaticResource DefaultItem}"
+           TargetType="ListBoxItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="Border"
+                            Padding="20 10 0 10"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PrimaryBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

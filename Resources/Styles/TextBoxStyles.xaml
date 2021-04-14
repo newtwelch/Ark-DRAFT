@@ -161,4 +161,48 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+
+
+    <!--  Song Search  -->
+    <Style x:Key="BibleSearch"
+           BasedOn="{StaticResource DefaultText}"
+           TargetType="{x:Type TextBox}">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="20 0 0 0" />
+        <!--  Search Watermark [msg to newt: save this :D ]  -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        <Border Background="{StaticResource ContainerDarkBrush}"
+                                BorderThickness="0" />
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="5 0 0 0"
+                                      VerticalAlignment="Center" />
+                        <Label x:Name="WaterMarkLabel"
+                               Padding="20 0 0 0"
+                               VerticalAlignment="Center"
+                               Content="{TemplateBinding Tag}"
+                               Cursor="IBeam"
+                               FontFamily="Arial"
+                               Foreground="{StaticResource UnfocusedBrush}"
+                               Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value="" />
+                                <Condition Property="IsFocused" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="WaterMarkLabel" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

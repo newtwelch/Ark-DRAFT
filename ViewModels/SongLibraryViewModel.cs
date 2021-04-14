@@ -12,10 +12,11 @@ namespace Ark.ViewModels
     public class SongLibraryViewModel : ViewModelBase
     {
         #region SongData
+        public SongInterface songInterface;
+
         //List Of Songs
         public ObservableCollection<SongData> Songs { get; set; }
         public ObservableCollection<SongData> SongLanguages { get; set; }
-        public SongInterface songInterface;
         //The selected Song;
         private SongData _selectedSong;
         public SongData SelectedSong
