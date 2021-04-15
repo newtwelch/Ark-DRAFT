@@ -20,37 +20,42 @@
     <Grid>
         <TextBlock x:Name="HighlightPhrase"
                    Visibility="Collapsed" />
-        <Viewbox Margin="50"
-                 Stretch="Uniform">
-            <DockPanel>
-                <TextBlock x:Name="BibleBookText"
-                           HorizontalAlignment="Center"
-                           DockPanel.Dock="Top"
-                           FontSize="400"
-                           FontWeight="Bold"
-                           Style="{StaticResource DisplayText}"
-                           Text="Genesis 1:1"
-                           TextDecorations="Underline"
-                           Visibility="Collapsed" />
-                <controls:TextBlockHightlight x:Name="BibleDisplay"
-                                              Width="8000"
-                                              FontSize="500"
-                                              HighlightBrush="{StaticResource OrangeBrush}"
-                                              HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
-                                              Style="{StaticResource DisplayText}"
-                                              Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
-                                              TextAlignment="Center"
-                                              TextWrapping="Wrap" />
-                <controls:TextBlockHightlight x:Name="SongDisplay"
-                                              Width="4075"
-                                              FontSize="250"
-                                              HighlightBrush="{StaticResource OrangeBrush}"
-                                              HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
-                                              Style="{StaticResource DisplayText}"
-                                              Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
-                                              TextAlignment="Center"
-                                              TextWrapping="Wrap" />
-            </DockPanel>
-        </Viewbox>
+        <Grid>
+            <Viewbox Stretch="Uniform">
+                <DockPanel>
+                    <TextBlock x:Name="BibleBookText"
+                               HorizontalAlignment="Center"
+                               DockPanel.Dock="Top"
+                               FontFamily="Gontserrat"
+                               FontSize="100"
+                               Style="{StaticResource DisplayText}"
+                               Text="Genesis 1:1"
+                               TextDecorations="Underline"
+                               Visibility="Collapsed" />
+                    <controls:TextBlockHightlight x:Name="BibleDisplay"
+                                                  Width="1920"
+                                                  Margin="100 0 100 100"
+                                                  FontFamily="Gontserrat"
+                                                  FontSize="100"
+                                                  HighlightBrush="{StaticResource OrangeBrush}"
+                                                  HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
+                                                  Style="{StaticResource DisplayText}"
+                                                  Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
+                                                  TextAlignment="Center"
+                                                  TextWrapping="Wrap"
+                                                  Visibility="Collapsed" />
+                    <controls:TextBlockHightlight x:Name="SongDisplay"
+                                                  Margin="100"
+                                                  FontFamily="Gontserrat"
+                                                  FontSize="100"
+                                                  HighlightBrush="{StaticResource OrangeBrush}"
+                                                  HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
+                                                  Style="{StaticResource DisplayText}"
+                                                  Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
+                                                  TextAlignment="Center"
+                                                  TextWrapping="Wrap" />
+                </DockPanel>
+            </Viewbox>
+        </Grid>
     </Grid>
 </Window>
