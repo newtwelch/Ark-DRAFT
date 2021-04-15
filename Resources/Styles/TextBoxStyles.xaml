@@ -35,7 +35,6 @@
                                VerticalAlignment="Center"
                                Content="{TemplateBinding Tag}"
                                Cursor="IBeam"
-                               FontFamily="Arial"
                                Foreground="{StaticResource UnfocusedBrush}"
                                Visibility="Collapsed" />
                     </Grid>
@@ -168,7 +167,7 @@
            BasedOn="{StaticResource DefaultText}"
            TargetType="{x:Type TextBox}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="20 0 0 0" />
+        <Setter Property="Padding" Value="15 0 0 0" />
         <!--  Search Watermark [msg to newt: save this :D ]  -->
         <Setter Property="Template">
             <Setter.Value>
@@ -184,7 +183,6 @@
                                VerticalAlignment="Center"
                                Content="{TemplateBinding Tag}"
                                Cursor="IBeam"
-                               FontFamily="Arial"
                                Foreground="{StaticResource UnfocusedBrush}"
                                Visibility="Collapsed" />
                     </Grid>

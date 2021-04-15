@@ -112,7 +112,7 @@
                      FontSize="25"
                      IsReadOnly="True"
                      Style="{StaticResource ArkVersion}"
-                     Text="0.0.2" />
+                     Text="0.0.3" />
         </DockPanel>
 
         <Frame x:Name="ContentFrame"

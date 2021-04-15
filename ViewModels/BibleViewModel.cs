@@ -25,6 +25,17 @@ namespace Ark.ViewModels
                 _selectedBook = value;
                 OnPropertyChanged("SelectedBook");
             }
+        } 
+        //The selected Book;
+        private ChapterData _selectedChapter;
+        public ChapterData SelectedChapter
+        {
+            get { return _selectedChapter; }
+            set
+            {
+                _selectedChapter = value;
+                OnPropertyChanged("SelectedChapter");
+            }
         }
 
         public BibleViewModel()
@@ -52,7 +63,7 @@ namespace Ark.ViewModels
             }
         }
 
-        public void SortBooks(string bookName)
+        public void FindBooks(string bookName)
         {
             List<BookData> aBooks = bibleInterface.GetBooks();
 
@@ -62,6 +73,19 @@ namespace Ark.ViewModels
                 if (book.Name.Contains(bookName, StringComparison.OrdinalIgnoreCase))
                 {
                     Books.Add(book);
+                }
+            }
+        }
+        public void FindChapters(string chapterNumber)
+        {
+            List<ChapterData> aChapters = bibleInterface.GetChapters(SelectedBook.BookNumber);
+
+            Chapters.Clear();
+            foreach (var chapter in aChapters)
+            {
+                if (chapter.ChapterNumber.ToString().Contains(chapterNumber, StringComparison.OrdinalIgnoreCase))
+                {
+                    Chapters.Add(chapter);
                 }
             }
         }

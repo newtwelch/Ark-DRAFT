@@ -9,8 +9,8 @@
         Title="Display Window"
         d:DataContext="{d:DesignInstance dd:DisplayWindowViewModel,
                                          IsDesignTimeCreatable=True}"
-        d:DesignHeight="720"
-        d:DesignWidth="1280"
+        d:DesignHeight="1080"
+        d:DesignWidth="1920"
         Background="{StaticResource BackgroundBrush}"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
@@ -20,26 +20,37 @@
     <Grid>
         <TextBlock x:Name="HighlightPhrase"
                    Visibility="Collapsed" />
-        <TextBlock x:Name="BibleText"
-                   Margin="0 20 0 0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   FontSize="50"
-                   Style="{StaticResource DisplayText}"
-                   Text="Genesis 1:1"
-                   Visibility="Collapsed" />
-        <Viewbox Stretch="Uniform">
-            <controls:TextBlockHightlight x:Name="TextDisplay"
-                                          Width="4000"
-                                          VerticalAlignment="Center"
-                                          FontSize="200"
-                                          Foreground="{StaticResource UnfocusedBrush}"
-                                          HighlightBrush="{StaticResource OrangeBrush}"
-                                          HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
-                                          Style="{StaticResource DisplayText}"
-                                          Text="In the beginning God created the heaven and the earth asd asd"
-                                          TextAlignment="Center"
-                                          TextWrapping="WrapWithOverflow" />
+        <Viewbox Margin="50"
+                 Stretch="Uniform">
+            <DockPanel>
+                <TextBlock x:Name="BibleBookText"
+                           HorizontalAlignment="Center"
+                           DockPanel.Dock="Top"
+                           FontSize="400"
+                           FontWeight="Bold"
+                           Style="{StaticResource DisplayText}"
+                           Text="Genesis 1:1"
+                           TextDecorations="Underline"
+                           Visibility="Collapsed" />
+                <controls:TextBlockHightlight x:Name="BibleDisplay"
+                                              Width="8000"
+                                              FontSize="500"
+                                              HighlightBrush="{StaticResource OrangeBrush}"
+                                              HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
+                                              Style="{StaticResource DisplayText}"
+                                              Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
+                                              TextAlignment="Center"
+                                              TextWrapping="Wrap" />
+                <controls:TextBlockHightlight x:Name="SongDisplay"
+                                              Width="4075"
+                                              FontSize="250"
+                                              HighlightBrush="{StaticResource OrangeBrush}"
+                                              HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
+                                              Style="{StaticResource DisplayText}"
+                                              Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
+                                              TextAlignment="Center"
+                                              TextWrapping="Wrap" />
+            </DockPanel>
         </Viewbox>
     </Grid>
 </Window>

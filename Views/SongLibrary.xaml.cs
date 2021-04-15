@@ -28,7 +28,7 @@ namespace Ark.Views
 
         private SongLibraryViewModel _viewModel;
 
-        private Hotkey closeDisplay; 
+        private Hotkey closeDisplay;
 
         public SongLibrary()
         {
@@ -159,36 +159,12 @@ namespace Ark.Views
                 LyricData lyric = LyricBox.SelectedItem as LyricData;
                 LyricBox.SelectedItem = lyric;
 
-                DisplayWindow.Instance.TextDisplay.Text = lyric.Text;
+                DisplayWindow.Instance.SongDisplay.Text = lyric.Text;
+                DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Visible;
+                DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Collapsed;
+                DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Collapsed;
                 DisplayWindow.Instance.Show();
             }
-        }
-        
-        // Load Hotkeys on UserControl Load
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
-            closeDisplay.HotkeyPressed += CloseDisplay;
-        }
-
-        // Close Second Window or the Display Window
-        private void CloseDisplay(object sender, HotkeyEventArgs e)
-        {
-            DisplayWindow.Instance.BibleText.Visibility = Visibility.Collapsed;
-            DisplayWindow.Instance.HighlightPhrase.Text = "";
-            DisplayWindow.Instance.Close();
-            LyricBox.SelectedItem = null;
-            if (LyricBox.IsFocused)
-            {
-                int i = LyricBox.SelectedIndex;
-                LyricBox.SelectedIndex = i--;
-            }
-        }
-
-        // Clean Hotkey cache(?)
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            closeDisplay.Dispose();
         }
 
         //Enter Key on Song Search
@@ -198,6 +174,7 @@ namespace Ark.Views
             {
                 SongList.SelectedIndex = 0;
                 SongList.Focus();
+                e.Handled = true;
             }
         }
 
@@ -208,8 +185,10 @@ namespace Ark.Views
             {
                 LyricBox.SelectedIndex = 0;
                 LyricBox.Focus();
+                e.Handled = true;
             }
         }
+
         #region Horizontal ScrollWheel
         private void ListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -244,11 +223,33 @@ namespace Ark.Views
         }
         #endregion
 
-        private void LyricBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        #region HotKeys
+        // Load Hotkeys on UserControl Load
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if(e.Key == Key.Down)
+            closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
+            closeDisplay.HotkeyPressed += CloseDisplay;
+        }
+
+        // Close Second Window or the Display Window
+        private void CloseDisplay(object sender, HotkeyEventArgs e)
+        {
+            DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
+            DisplayWindow.Instance.HighlightPhrase.Text = "";
+            DisplayWindow.Instance.Close();
+            LyricBox.SelectedItem = null;
+            if (LyricBox.IsFocused)
             {
+                int i = LyricBox.SelectedIndex;
+                LyricBox.SelectedIndex = i--;
             }
         }
+
+        // Clean Hotkey cache(?)
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            closeDisplay.Dispose();
+        }
+        #endregion
     }
 }

@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:Ark.Models.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dd="clr-namespace:Ark.ViewModels"
-             xmlns:helpers="clr-namespace:Ark.Model.Helper"
+             xmlns:helpers="clr-namespace:Ark.Models.Helper"
              xmlns:local="clr-namespace:Ark"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              VerticalAlignment="Stretch"
@@ -161,7 +161,6 @@
                  Grid.Column="1"
                  ItemContainerStyle="{StaticResource SongLyricsItem}"
                  ItemsSource="{Binding Lyrics}"
-                 KeyDown="LyricBox_KeyDown"
                  SelectionChanged="LyricBox_SelectionChanged"
                  Style="{StaticResource SongLyricsBox}">
             <ListBox.ItemTemplate>

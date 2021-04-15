@@ -4,23 +4,25 @@
              xmlns:controls="clr-namespace:Ark.Models.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dd="clr-namespace:Ark.ViewModels"
-             xmlns:helpers="clr-namespace:Ark.Model.Helper"
+             xmlns:helpers="clr-namespace:Ark.Models.Helper"
              xmlns:local="clr-namespace:Ark"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              VerticalAlignment="Stretch"
              d:DataContext="{d:DesignInstance dd:BibleViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="1150"
+             Loaded="UserControl_Loaded"
+             Unloaded="UserControl_Unloaded"
              mc:Ignorable="d">
 
     <Grid>
 
         <!--  Grid System  -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".45*" />
+            <ColumnDefinition Width=".35*" />
             <ColumnDefinition Width=".15*" />
-            <ColumnDefinition Width=".1*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width=".15*" />
+            <ColumnDefinition Width=".8*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -28,65 +30,88 @@
             <RowDefinition Height=".1*" />
         </Grid.RowDefinitions>
 
+        <!--  Righty Side of Things  -->
+
+        <!--  Book Search  -->
         <TextBox x:Name="BookSearch"
                  Margin="0 0 20 0"
+                 PreviewKeyDown="Search_KeyDown"
                  Style="{StaticResource BibleSearch}"
                  Tag="Book"
                  TextChanged="Search_TextChanged" />
+
+        <!--  Chapter  -->
         <TextBox x:Name="ChapterSearch"
                  Grid.Column="1"
+                 PreviewKeyDown="Search_KeyDown"
                  Style="{StaticResource BibleSearch}"
-                 Tag="Chap" />
+                 Tag="Chap"
+                 TextChanged="Search_TextChanged" />
+
+
+        <!--  Lefty Side of Things  -->
 
         <DockPanel Grid.Column="3">
+
+            <!--  Verse Search  -->
             <TextBox x:Name="VerseSearch"
                      Width="50"
+                     Padding="0"
+                     HorizontalAlignment="Center"
+                     PreviewKeyDown="Search_KeyDown"
                      Style="{StaticResource BibleSearch}"
-                     Tag="V" />
+                     Tag="V"
+                     TextAlignment="Center"
+                     TextChanged="Search_TextChanged" />
+
+            <!--  Text Search  -->
             <TextBox x:Name="TextSearch"
                      Margin="20 0 0 0"
                      DockPanel.Dock="Right"
+                     PreviewKeyDown="Search_KeyDown"
                      Style="{StaticResource BibleSearch}"
-                     Tag="Search on current Chapter" />
+                     Tag="Search on current Chapter"
+                     TextChanged="Search_TextChanged"
+                     Visibility="Collapsed" />
         </DockPanel>
 
-        <!--  Book  -->
+        <!--  Book List  -->
         <ListBox x:Name="BookList"
                  Grid.Row="1"
                  ItemContainerStyle="{StaticResource BibleListItem}"
                  ItemsSource="{Binding Books}"
+                 PreviewKeyDown="List_PreviewKeyDown"
                  SelectionChanged="BookList_SelectionChanged"
                  Style="{StaticResource BibleListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <controls:TextBlockHightlight x:Name="Books"
                                                   HighlightBrush="{StaticResource OrangeBrush}"
-                                                  IgnoreDot="False"
+                                                  HighlightPhrase="{Binding Text, ElementName=BookSearch}"
                                                   Text="{Binding Name}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!--  Chapter  -->
+        <!--  Chapter List  -->
         <ListBox x:Name="ChapterList"
                  Grid.Row="1"
                  Grid.Column="1"
                  Margin="0 0 -20 0"
                  ItemContainerStyle="{StaticResource BibleListItem}"
                  ItemsSource="{Binding Chapters}"
+                 PreviewKeyDown="List_PreviewKeyDown"
                  SelectionChanged="Chapter_SelectionChanged"
                  Style="{StaticResource BibleListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <controls:TextBlockHightlight x:Name="Chapters"
-                                                  HighlightBrush="{StaticResource OrangeBrush}"
-                                                  IgnoreDot="False"
                                                   Text="{Binding ChapterNumber}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!--  Verse  -->
+        <!--  Verse List  -->
         <ListBox x:Name="VerseList"
                  Grid.Row="1"
                  Grid.Column="3"
@@ -94,13 +119,14 @@
                  Background="Transparent"
                  ItemContainerStyle="{StaticResource BibleVerseItem}"
                  ItemsSource="{Binding Verses}"
+                 PreviewKeyDown="List_PreviewKeyDown"
                  SelectionChanged="VerseList_SelectionChanged"
                  Style="{StaticResource BibleListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel MinHeight="120"
                                LastChildFill="True">
-                        <Button Height="{Binding Height, ElementName=SongLyricText}"
+                        <Button Height="{Binding Height, ElementName=Chapters}"
                                 Content="{Binding VerseNumber}"
                                 Style="{StaticResource TextButtons}" />
                         <Rectangle Width="10"

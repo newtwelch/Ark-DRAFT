@@ -1,4 +1,5 @@
-﻿using Ark.ViewModels;
+﻿using Ark.Models.Hotkeys;
+using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Ark.Views
     {
         private BibleViewModel _viewModel;
 
+        private Hotkey closeDisplay;
+
         public Bible()
         {
             _viewModel = new BibleViewModel();
@@ -30,8 +33,9 @@ namespace Ark.Views
 
             InitializeComponent();
 
-            BookList.SelectedIndex = 1;
-            ChapterList.SelectedIndex = 1;
+            BookList.SelectedIndex = 0;
+            ChapterList.SelectedIndex = 0;
+            BookSearch.Focus();
         }
 
         private void BookList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,6 +56,8 @@ namespace Ark.Views
             if (_viewModel.SelectedBook != null)
             {
                 ChapterData selectedItem = (ChapterData)e.AddedItems[0];
+                _viewModel.SelectedChapter = selectedItem;
+                ChapterList.ScrollIntoView(ChapterList.SelectedItem);
                 _viewModel.GetVerses(_viewModel.SelectedBook.BookNumber, selectedItem.ChapterNumber);
             }
         }
@@ -60,13 +66,15 @@ namespace Ark.Views
         {
             if (VerseList.SelectedItem != null)
             {
+                VerseList.ScrollIntoView(VerseList.SelectedItem);
                 VerseData verse = VerseList.SelectedItem as VerseData;
                 VerseList.SelectedItem = verse;
-                ChapterData chapter = ChapterList.SelectedItem as ChapterData;
 
-                DisplayWindow.Instance.TextDisplay.Text = verse.Text;
-                DisplayWindow.Instance.BibleText.Text = $"{ _viewModel.SelectedBook.Name} {chapter.ChapterNumber}:{verse.VerseNumber}";
-                DisplayWindow.Instance.BibleText.Visibility = Visibility.Visible;
+                DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
+                DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name} {_viewModel.SelectedChapter.ChapterNumber}:{verse.VerseNumber}";
+                DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
+                DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
+                DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
                 DisplayWindow.Instance.Show();
             }
         }
@@ -77,14 +85,159 @@ namespace Ark.Views
             switch (tb.Name)
             {
                 case "BookSearch":
-                    _viewModel.SortBooks(tb.Text);
-                    
+                    _viewModel.FindBooks(tb.Text);
+                    if(BookList.Items.Count == 1)
+                    {
+                        BookList.SelectedIndex = 0;
+                    }
                     break;
                 case "ChapterSearch":
+                    int cindex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber.ToString() == tb.Text);
+                    ChapterList.SelectedIndex = cindex;
                     break;
                 case "VerseSearch":
+                    int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == tb.Text);
+                    VerseList.SelectedIndex = vindex;
                     break;
             }
         }
+
+        private void Search_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+
+            switch (tb.Name)
+            {
+                case "BookSearch":
+                    if (e.Key == Key.Enter)
+                    {
+                        BookList.SelectedIndex = 0;
+                        ChapterSearch.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Down)
+                    {
+                        BookList.Focus();
+                        e.Handled = true;
+                    }
+                    break;
+                case "ChapterSearch":
+                    if (e.Key == Key.Enter)
+                    {
+                        VerseSearch.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Tab)
+                    {
+                        BookSearch.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Down)
+                    {
+                        ChapterList.Focus();
+                        e.Handled = true;
+                    }
+                    break;
+                case "VerseSearch":
+                    if (e.Key == Key.Tab)
+                    {
+                        ChapterSearch.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Enter)
+                    {
+                        int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == tb.Text);
+                        VerseList.SelectedIndex = vindex;
+                        VerseList.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Down)
+                    {
+                        VerseList.Focus();
+                    }
+                    break;
+            }
+
+        }
+        private void List_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            ListBox lb = sender as ListBox;
+
+            switch (lb.Name)
+            {
+                case "BookList":
+                    if (e.Key == Key.Enter)
+                    {
+                        ChapterSearch.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Up && lb.SelectedIndex == 0)
+                    {
+                        lb.SelectedItem = null;
+                        BookSearch.Focus();
+                        e.Handled = true;
+                    }
+                    break;
+                case "ChapterList":
+                    if (e.Key == Key.Enter)
+                    {
+                        VerseSearch.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Up && lb.SelectedIndex == 0)
+                    {
+                        lb.SelectedItem = null;
+                        ChapterSearch.Focus();
+                        e.Handled = true;
+                    }
+                    break;
+                case "VerseList":
+                    int i = lb.Items.Count - 1;
+                    if (e.Key == Key.Down && lb.SelectedIndex == i )
+                    {
+                        ChapterList.SelectedIndex++;
+                        lb.SelectedIndex = 0;
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Up && lb.SelectedIndex == 0 && ChapterList.SelectedIndex != 0)
+                    {
+                        ChapterList.SelectedIndex--;
+                        VerseList.SelectedIndex = VerseList.Items.Count - 1;
+                        VerseList.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Tab)
+                    {
+                        lb.SelectedItem = null;
+                        VerseSearch.Focus();
+                        e.Handled = true;
+                    }
+                    break;
+            }
+        }
+
+        // Load Hotkeys on UserControl Load
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
+            closeDisplay.HotkeyPressed += CloseDisplay;
+        }
+
+        // Close Second Window or the Display Window
+        private void CloseDisplay(object sender, HotkeyEventArgs e)
+        {
+            DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Collapsed;
+            DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Collapsed;
+            DisplayWindow.Instance.HighlightPhrase.Text = "";
+            DisplayWindow.Instance.Close();
+            VerseList.SelectedItem = null;
+        }
+
+        // Clean Hotkey cache(?)
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            closeDisplay.Dispose();
+        }
+
     }
 }
