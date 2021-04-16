@@ -40,7 +40,6 @@
                                                   HighlightBrush="{StaticResource OrangeBrush}"
                                                   HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
                                                   Style="{StaticResource DisplayText}"
-                                                  Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
                                                   TextAlignment="Center"
                                                   TextWrapping="Wrap"
                                                   Visibility="Collapsed" />
@@ -51,7 +50,6 @@
                                                   HighlightBrush="{StaticResource OrangeBrush}"
                                                   HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
                                                   Style="{StaticResource DisplayText}"
-                                                  Text="The windows of Heaven are open, The blessings are falling today, There's joy, joy, joy in my heart, Since Jesus made everything right; I gave Him my old tattered garment, He gave me a robe of pure white, I'm feasting today on the Manna, And that's why I'm happy today."
                                                   TextAlignment="Center"
                                                   TextWrapping="Wrap" />
                 </DockPanel>

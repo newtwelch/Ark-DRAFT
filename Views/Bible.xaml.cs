@@ -2,8 +2,10 @@
 using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +28,8 @@ namespace Ark.Views
 
         private Hotkey closeDisplay;
 
+        private ObservableCollection<string> smallVerse;
+ 
         public Bible()
         {
             _viewModel = new BibleViewModel();
@@ -66,10 +70,33 @@ namespace Ark.Views
         {
             if (VerseList.SelectedItem != null)
             {
+                // Verse Selection Stuff
                 VerseList.ScrollIntoView(VerseList.SelectedItem);
                 VerseData verse = VerseList.SelectedItem as VerseData;
                 VerseList.SelectedItem = verse;
 
+                // Cut the Verse into Sizeable Chunks
+                            // First Split The Verse in 7 words
+                string[] versePortions = Regex.Split(verse.Text, @"\s+");
+                int nElements;
+                smallVerse = new ObservableCollection<string>();
+                for (int i = 0; i < versePortions.Length; i += 7)
+                {
+                    if (i + 3 < versePortions.Length)
+                    {
+                        nElements = 7;
+                    }
+                    else
+                    {
+                        nElements = versePortions.Length - i;
+                    }
+
+                    smallVerse.Add(versePortions.Skip(i).Take(nElements).Aggregate((current, next) => current + " " + next));
+                }
+
+                smallVerseList.ItemsSource = smallVerse;   
+
+                // Display stuff on the Second Window
                 DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
                 DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name} {_viewModel.SelectedChapter.ChapterNumber}:{verse.VerseNumber}";
                 DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
@@ -77,6 +104,18 @@ namespace Ark.Views
                 DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
                 DisplayWindow.Instance.Show();
             }
+        }
+
+        private void smallVerseList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0)
+                return;
+            if (_viewModel.SelectedBook != null)
+            {
+                string selectedItem = (string)e.AddedItems[0];
+                DisplayWindow.Instance.BibleDisplay.HighlightPhrase = selectedItem;
+            }
+
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)

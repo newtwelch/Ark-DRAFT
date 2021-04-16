@@ -14,7 +14,6 @@
              Loaded="UserControl_Loaded"
              Unloaded="UserControl_Unloaded"
              mc:Ignorable="d">
-
     <Grid>
 
         <!--  Grid System  -->
@@ -107,6 +106,24 @@
                 <DataTemplate>
                     <controls:TextBlockHightlight x:Name="Chapters"
                                                   Text="{Binding ChapterNumber}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!--  Chapter List  -->
+        <ListBox x:Name="smallVerseList"
+                 Grid.Row="1"
+                 Grid.Column="2"
+                 Margin="0 0 -20 0"
+                 AlternationCount="1000"
+                 ItemContainerStyle="{StaticResource BibleListItem}"
+                 PreviewKeyDown="List_PreviewKeyDown"
+                 SelectionChanged="smallVerseList_SelectionChanged"
+                 Style="{StaticResource BibleListBox}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <controls:TextBlockHightlight x:Name="Chapters"
+                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
