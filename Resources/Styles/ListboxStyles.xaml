@@ -301,4 +301,71 @@
         </Setter>
     </Style>
 
+    <!--  smallVerse List  -->
+    <Style x:Key="smallVerseList"
+           BasedOn="{StaticResource DefaultListBox}"
+           TargetType="ListBox">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer x:Name="scrollviewer"
+                                  Margin="0 20 20 20"
+                                  Padding="{TemplateBinding Padding}"
+                                  Background="{TemplateBinding Background}">
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </ScrollViewer>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility, ElementName=scrollviewer}"
+                                     Value="Visible">
+                            <Setter TargetName="scrollviewer" Property="Margin" Value="0 20 51 20" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  smallVerseList Item  -->
+    <Style x:Key="smallVerseListItem"
+           BasedOn="{StaticResource DefaultItem}"
+           TargetType="ListBoxItem">
+        <Setter Property="Background" Value="{StaticResource ContainerBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Name="Border"
+                            Width="50"
+                            Height="50"
+                            Margin="0 0 0 10"
+                            HorizontalAlignment="Right"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PrimaryBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -110,22 +110,23 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <!--  Chapter List  -->
+        <!--  Small Verse List  -->
         <ListBox x:Name="smallVerseList"
                  Grid.Row="1"
                  Grid.Column="2"
-                 Margin="0 0 -20 0"
+                 Margin="0 0 -10 0"
                  AlternationCount="1000"
-                 ItemContainerStyle="{StaticResource BibleListItem}"
+                 Background="Transparent"
+                 ItemContainerStyle="{StaticResource smallVerseListItem}"
                  PreviewKeyDown="List_PreviewKeyDown"
                  SelectionChanged="smallVerseList_SelectionChanged"
-                 Style="{StaticResource BibleListBox}">
+                 Style="{StaticResource smallVerseList}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:TextBlockHightlight x:Name="Chapters"
-                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}" />
+                    <controls:TextBlockHightlight Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
+
         </ListBox>
 
         <!--  Verse List  -->

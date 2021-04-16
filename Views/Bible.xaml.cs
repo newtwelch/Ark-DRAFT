@@ -80,11 +80,11 @@ namespace Ark.Views
                 string[] versePortions = Regex.Split(verse.Text, @"\s+");
                 int nElements;
                 smallVerse = new ObservableCollection<string>();
-                for (int i = 0; i < versePortions.Length; i += 7)
+                for (int i = 0; i < versePortions.Length; i += 12)
                 {
-                    if (i + 3 < versePortions.Length)
+                    if (i + 12 < versePortions.Length)
                     {
-                        nElements = 7;
+                        nElements = 12;
                     }
                     else
                     {
@@ -151,6 +151,7 @@ namespace Ark.Views
                     if (e.Key == Key.Enter)
                     {
                         BookList.SelectedIndex = 0;
+                        ChapterSearch.Text = "";
                         ChapterSearch.Focus();
                         e.Handled = true;
                     }
@@ -163,6 +164,7 @@ namespace Ark.Views
                 case "ChapterSearch":
                     if (e.Key == Key.Enter)
                     {
+                        VerseSearch.Text = "";
                         VerseSearch.Focus();
                         e.Handled = true;
                     }
@@ -183,7 +185,18 @@ namespace Ark.Views
                         ChapterSearch.Focus();
                         e.Handled = true;
                     }
-                    if (e.Key == Key.Enter)
+                    if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
+                    {
+                        if (VerseList.SelectedItem == null)
+                        {
+                            int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == tb.Text);
+                            VerseList.SelectedIndex = vindex;
+                        }
+                        smallVerseList.SelectedIndex = 0;
+                        smallVerseList.Focus();
+                        e.Handled = true;
+                    }
+                    else if (e.Key == Key.Enter)
                     {
                         int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == tb.Text);
                         VerseList.SelectedIndex = vindex;
@@ -236,13 +249,38 @@ namespace Ark.Views
                     {
                         ChapterList.SelectedIndex++;
                         lb.SelectedIndex = 0;
-                        e.Handled = true;
                     }
                     if (e.Key == Key.Up && lb.SelectedIndex == 0 && ChapterList.SelectedIndex != 0)
                     {
                         ChapterList.SelectedIndex--;
                         VerseList.SelectedIndex = VerseList.Items.Count - 1;
                         VerseList.Focus();
+                        e.Handled = true;
+                    }
+                    if (e.Key == Key.Tab)
+                    {
+                        lb.SelectedItem = null;
+                        VerseSearch.Focus();
+                        e.Handled = true;
+                    }
+                    break;
+                case "smallVerseList":
+                    int idx = lb.Items.Count - 1;
+                    if (e.Key == Key.Down && lb.SelectedIndex == idx)
+                    {
+                        VerseList.SelectedIndex++;
+                        smallVerseList.Focus();
+                        if(VerseList.SelectedIndex == VerseList.Items.Count - 1)
+                        {
+                            ChapterList.SelectedIndex++;
+                            VerseList.SelectedIndex = 0;
+                        }
+                    }
+                    if (e.Key == Key.Up && lb.SelectedIndex == 0 && VerseList.SelectedIndex != 0)
+                    {
+                        VerseList.SelectedIndex--;
+                        smallVerseList.SelectedIndex = smallVerseList.Items.Count - 1;
+                        smallVerseList.Focus();
                         e.Handled = true;
                     }
                     if (e.Key == Key.Tab)
