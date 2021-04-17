@@ -1,21 +1,11 @@
 ﻿using Ark.Models.Hotkeys;
 using Ark.ViewModels;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Ark.Views
 {
@@ -26,7 +16,7 @@ namespace Ark.Views
     {
         private BibleViewModel _viewModel;
 
-        private Hotkey closeDisplay;
+        private Hotkey closeDisplay, switchLanguage;
 
         private ObservableCollection<string> smallVerse;
  
@@ -113,6 +103,7 @@ namespace Ark.Views
             if (_viewModel.SelectedBook != null)
             {
                 string selectedItem = (string)e.AddedItems[0];
+                ENGLISH.Tag = selectedItem;
                 DisplayWindow.Instance.BibleDisplay.HighlightPhrase = selectedItem;
             }
 
@@ -263,6 +254,12 @@ namespace Ark.Views
                         VerseSearch.Focus();
                         e.Handled = true;
                     }
+                    if (e.Key == Key.Enter)
+                    {
+                        smallVerseList.SelectedIndex = 0;
+                        smallVerseList.Focus();
+                        e.Handled = true;
+                    }
                     break;
                 case "smallVerseList":
                     int idx = lb.Items.Count - 1;
@@ -297,7 +294,9 @@ namespace Ark.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
+            switchLanguage = new Hotkey(Modifiers.Shift, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
             closeDisplay.HotkeyPressed += CloseDisplay;
+            switchLanguage.HotkeyPressed += SwitchLanguage;
         }
 
         // Close Second Window or the Display Window
@@ -309,12 +308,71 @@ namespace Ark.Views
             DisplayWindow.Instance.Close();
             VerseList.SelectedItem = null;
         }
+        private void SwitchLanguage(object sender, HotkeyEventArgs e)
+        {
+            if (ENGLISH.IsChecked == true)
+            {
+                TAGALOG.IsChecked = true;
+            }
+            else
+            {
+                ENGLISH.IsChecked = true;
+            }
+            VerseList.Focus();
+        }
 
         // Clean Hotkey cache(?)
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             closeDisplay.Dispose();
+            switchLanguage.Dispose();
         }
 
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            BookData book = BookList.SelectedItem as BookData;
+            ChapterData chapter = ChapterList.SelectedItem as ChapterData;
+            VerseData verse = VerseList.SelectedItem as VerseData;
+
+            if (e.Source is RadioButton rb)
+            {
+                switch (rb.Name)
+                {
+                    case "ENGLISH":
+                        _viewModel.ChangeLanguage("ENGLISH");
+                        if(book != null)
+                        {
+                            BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == book.BookNumber);
+                        }
+                        if (chapter != null)
+                        {
+                            ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == chapter.ChapterNumber);
+                        }
+                        if (verse != null)
+                        {
+                            VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
+                            VerseList.Focus();
+                        }
+                        break;
+                    case "TAGALOG":
+                        int iT = VerseList.SelectedIndex;
+                        _viewModel.ChangeLanguage("TAGALOG");
+                        if (book != null)
+                        {
+                            BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == book.BookNumber);
+                        }
+                        if (chapter != null)
+                        {
+                            ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == chapter.ChapterNumber);
+                        }
+                        if (verse != null)
+                        {
+                            VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
+                            VerseList.Focus();
+                        }
+                        break;
+                }
+            }
+        }
     }
 }

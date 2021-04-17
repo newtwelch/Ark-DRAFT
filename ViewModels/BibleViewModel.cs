@@ -89,5 +89,15 @@ namespace Ark.ViewModels
                 }
             }
         }
+
+        public void ChangeLanguage(string Language)
+        {
+            bibleInterface.ChangeLanguage(Language);
+            Books.Clear();
+            foreach(var book in bibleInterface.GetBooks())
+            {
+                Books.Add(book);
+            }
+        }
     }
 }

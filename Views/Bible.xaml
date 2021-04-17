@@ -123,7 +123,8 @@
                  Style="{StaticResource smallVerseList}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:TextBlockHightlight Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}" />
+                    <controls:TextBlockHightlight x:Name="phrase"
+                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -154,16 +155,34 @@
                                                       Padding="20"
                                                       VerticalAlignment="Center"
                                                       HighlightBrush="{StaticResource OrangeBrush}"
+                                                      HighlightPhrase="{Binding Tag, ElementName=ENGLISH}"
                                                       IgnoreDot="False"
                                                       Text="{Binding Text}"
-                                                      TextAlignment="Justify"
+                                                      TextAlignment="Left"
                                                       TextWrapping="Wrap" />
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-
+        <StackPanel Grid.Row="2"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="2"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+            <RadioButton x:Name="ENGLISH"
+                         Margin="0 0 10 0"
+                         Checked="RadioButton_Checked"
+                         Content="ENGLISH"
+                         DockPanel.Dock="Top"
+                         GroupName="LanguageItems"
+                         IsChecked="True" />
+            <RadioButton x:Name="TAGALOG"
+                         Checked="RadioButton_Checked"
+                         Content="TAGALOG"
+                         DockPanel.Dock="Top"
+                         GroupName="LanguageItems" />
+        </StackPanel>
     </Grid>
 
 </UserControl>

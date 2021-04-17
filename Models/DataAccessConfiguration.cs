@@ -5,7 +5,8 @@ namespace Ark
     class DataAccessConfiguration
     {
         public static readonly string ConnectionString;
-        public static readonly string ConnectionStringXML;
+        public static readonly string ConnectionStringXMLENG;
+        public static readonly string ConnectionStringXMLTAG;
 
         static DataAccessConfiguration()
         {
@@ -15,7 +16,10 @@ namespace Ark
 
 
             relativePath = @"Databases\Bible_English_AKJV.xml";
-            ConnectionStringXML = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+            ConnectionStringXMLENG = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+
+            relativePath = @"Databases\Bible_Tagalog_ADB.xml";
+            ConnectionStringXMLTAG = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
         }
     }
 }

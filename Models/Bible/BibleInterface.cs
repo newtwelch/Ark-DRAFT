@@ -10,7 +10,21 @@ namespace Ark
 
         public BibleInterface() 
         {
-            bible = XElement.Load(DataAccessConfiguration.ConnectionStringXML); 
+            bible = XElement.Load(DataAccessConfiguration.ConnectionStringXMLENG); 
+        }
+
+        //Change Language
+        public void ChangeLanguage(string language)
+        {
+            switch (language)
+            {
+                case "ENGLISH":
+                    bible = XElement.Load(DataAccessConfiguration.ConnectionStringXMLENG);
+                    break;
+                case "TAGALOG":
+                    bible = XElement.Load(DataAccessConfiguration.ConnectionStringXMLTAG);
+                    break;
+            }
         }
 
         //get books list
