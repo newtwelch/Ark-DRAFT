@@ -154,7 +154,7 @@ namespace Ark.Views
         // Display text on second sreen or Display Window unless you're in edit mode
         private void LyricBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (LyricBox.SelectedItem != null && !_viewModel.EditModeChecked)
+            if (LyricBox.SelectedItem != null && !_viewModel.EditModeChecked && !DisplayWindow.Instance.isBlank)
             {
                 LyricData lyric = LyricBox.SelectedItem as LyricData;
                 LyricBox.SelectedItem = lyric;

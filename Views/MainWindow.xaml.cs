@@ -10,14 +10,11 @@ using System.Windows.Media.Imaging;
 
 namespace Ark.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private MainWindowViewModel _viewModel;
 
-        private Hotkey song, bible, message;
+        private Hotkey song, bible, message, blankDisplayWindow;
         public object Controls { get; private set; }
 
         public MainWindow()
@@ -115,6 +112,7 @@ namespace Ark.Views
         private void Window_Closed(object sender, EventArgs e)
         {
             song.Dispose();
+            blankDisplayWindow.Dispose();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -122,11 +120,26 @@ namespace Ark.Views
             song = new Hotkey(Modifiers.Alt, Keys.Z, this, registerImmediately: true);
             bible = new Hotkey(Modifiers.Alt, Keys.X, this, registerImmediately: true);
             message = new Hotkey(Modifiers.Alt, Keys.C, this, registerImmediately: true);
+            blankDisplayWindow = new Hotkey(Modifiers.Shift, Keys.B, this, registerImmediately: true);
             song.HotkeyPressed += SwitchTabs;
             bible.HotkeyPressed += SwitchTabs;
             message.HotkeyPressed += SwitchTabs;
+            blankDisplayWindow.HotkeyPressed += BlankDisplayWindow;
         }
-
+        private void BlankDisplayWindow(object sender, HotkeyEventArgs e)
+        {
+            if (!DisplayWindow.Instance.isBlank)
+            {
+                DisplayWindow.Instance.isBlank = true;
+                DisplayWindow.Instance.Visibility = Visibility.Collapsed; 
+                Logo.Source = new BitmapImage(new Uri(@"pack://application:,,,/Ark_LogoBW.ico", UriKind.Absolute));
+            }
+            else
+            {
+                DisplayWindow.Instance.isBlank = false;
+                Logo.Source = new BitmapImage(new Uri(@"pack://application:,,,/Ark_Logo.ico", UriKind.Absolute));
+            }
+        }
         private void SwitchTabs(object sender, HotkeyEventArgs e)
         {
             switch (e.HotkeyInfo.Key.ToString())

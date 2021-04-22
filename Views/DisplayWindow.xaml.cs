@@ -17,12 +17,13 @@ using System.Windows.Shapes;
 
 namespace Ark.Views
 {
-
     public partial class DisplayWindow : Window
     {
         private DisplayWindowViewModel _viewModel;
         private bool forceClose;
         public static DisplayWindow Instance { get; private set; }
+
+        public bool isBlank;
 
         static DisplayWindow()
         {

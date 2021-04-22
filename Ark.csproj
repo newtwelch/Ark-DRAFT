@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <None Remove="Ark_Logo.ico" />
+    <None Remove="Ark_LogoBW.ico" />
     <None Remove="Resources\Fonts\GONTSERRAT-BOLD.TTF" />
     <None Remove="Resources\Fonts\GONTSERRAT-BOLDITALIC.TTF" />
     <None Remove="Resources\Fonts\GONTSERRAT-ITALIC.TTF" />
@@ -34,6 +35,9 @@
   <ItemGroup>
     <Resource Include="Ark_Logo.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ark_LogoBW.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Fonts\GONTSERRAT-BOLD.TTF" />
     <Resource Include="Resources\Fonts\GONTSERRAT-BOLDITALIC.TTF" />

@@ -44,7 +44,8 @@
                    Background="{StaticResource ContainerDarkBrush}"
                    LastChildFill="False">
             <!--  Logo  -->
-            <Image Width="27"
+            <Image x:Name="Logo"
+                   Width="27"
                    Height="27"
                    Margin="10 0 0 0"
                    Panel.ZIndex="10"
@@ -89,7 +90,8 @@
                                        DockPanel.Dock="Top"
                                        GroupName="NavItems"
                                        HoverIconSource="pack://application:,,,/Resources/Images/Message_Selected.png"
-                                       IconSource="pack://application:,,,/Resources/Images/Message_Unselected.png" />
+                                       IconSource="pack://application:,,,/Resources/Images/Message_Unselected.png"
+                                       Visibility="Collapsed" />
 
         </DockPanel>
         <DockPanel Grid.Row="1"

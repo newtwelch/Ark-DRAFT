@@ -66,33 +66,24 @@ namespace Ark.Views
                 VerseList.SelectedItem = verse;
 
                 // Cut the Verse into Sizeable Chunks
-                            // First Split The Verse in 7 words
-                string[] versePortions = Regex.Split(verse.Text, @"\s+");
-                int nElements;
+                string[] versePortions = Regex.Split(verse.Text, @"(?<=[\.,;:!\?])\s+");
                 smallVerse = new ObservableCollection<string>();
-                for (int i = 0; i < versePortions.Length; i += 12)
+                foreach (string sentence in versePortions)
                 {
-                    if (i + 12 < versePortions.Length)
-                    {
-                        nElements = 12;
-                    }
-                    else
-                    {
-                        nElements = versePortions.Length - i;
-                    }
-
-                    smallVerse.Add(versePortions.Skip(i).Take(nElements).Aggregate((current, next) => current + " " + next));
+                    smallVerse.Add(sentence);
                 }
-
-                smallVerseList.ItemsSource = smallVerse;   
+                smallVerseList.ItemsSource = smallVerse;
 
                 // Display stuff on the Second Window
-                DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
-                DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name} {_viewModel.SelectedChapter.ChapterNumber}:{verse.VerseNumber}";
-                DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
-                DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
-                DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
-                DisplayWindow.Instance.Show();
+                if (!DisplayWindow.Instance.isBlank)
+                {
+                    DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
+                    DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name} {_viewModel.SelectedChapter.ChapterNumber}:{verse.VerseNumber}";
+                    DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
+                    DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
+                    DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
+                    DisplayWindow.Instance.Show();
+                }
             }
         }
 
@@ -306,7 +297,6 @@ namespace Ark.Views
             DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Collapsed;
             DisplayWindow.Instance.HighlightPhrase.Text = "";
             DisplayWindow.Instance.Close();
-            VerseList.SelectedItem = null;
         }
         private void SwitchLanguage(object sender, HotkeyEventArgs e)
         {
