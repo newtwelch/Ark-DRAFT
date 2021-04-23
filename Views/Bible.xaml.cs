@@ -259,13 +259,17 @@ namespace Ark.Views
                     int idx = lb.Items.Count - 1;
                     if (e.Key == Key.Down && lb.SelectedIndex == idx)
                     {
-                        VerseList.SelectedIndex++;
-                        smallVerseList.Focus();
-                        if(VerseList.SelectedIndex == VerseList.Items.Count - 1)
+                        int t = VerseList.Items.Count - 1;
+                        if (VerseList.SelectedIndex == t)
                         {
                             ChapterList.SelectedIndex++;
                             VerseList.SelectedIndex = 0;
                         }
+                        else
+                        {
+                            VerseList.SelectedIndex++;
+                        }
+                        smallVerseList.Focus();
                     }
                     if (e.Key == Key.Up && lb.SelectedIndex == 0 && VerseList.SelectedIndex != 0)
                     {

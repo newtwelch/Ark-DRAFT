@@ -165,7 +165,7 @@
                  Style="{StaticResource SongLyricsBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel MinHeight="120"
+                    <DockPanel MinHeight="100"
                                LastChildFill="True">
                         <Button Height="{Binding Height, ElementName=SongLyricText}"
                                 Content="{Binding Line}"

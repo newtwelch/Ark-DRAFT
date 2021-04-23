@@ -15,7 +15,7 @@ namespace Ark
             ConnectionString = string.Format("Data Source={0};Version=3;", absolutePath);
 
 
-            relativePath = @"Databases\Bible_English_AKJV.xml";
+            relativePath = @"Databases\Bible_English_TMB.xml";
             ConnectionStringXMLENG = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
 
             relativePath = @"Databases\Bible_Tagalog_ADB.xml";

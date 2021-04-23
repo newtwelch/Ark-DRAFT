@@ -71,14 +71,14 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <None Update="Databases\Bible_English_AKJV.xml">
+    <None Update="Databases\Bible_English_TMB.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Databases\Bible_Tagalog_ADB.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Databases\SongDatabase.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 	

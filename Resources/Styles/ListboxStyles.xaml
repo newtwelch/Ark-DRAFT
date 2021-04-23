@@ -123,13 +123,14 @@
            TargetType="ListBoxItem">
         <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="0 0 0 10" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border Name="Border"
                             MinHeight="70"
-                            Margin="0 0 0 20"
+                            Margin="0 0 0 10"
                             Background="{StaticResource ContainerDarkBrush}"
                             BorderThickness="0"
                             SnapsToDevicePixels="True">
@@ -273,7 +274,7 @@
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border Name="Border"
                             MinHeight="70"
-                            Margin="0 0 0 20"
+                            Margin="0 0 0 10"
                             Background="{StaticResource ContainerDarkBrush}"
                             BorderThickness="0"
                             SnapsToDevicePixels="True">
