@@ -161,6 +161,7 @@ namespace Ark.ViewModels
             SelectedSong = Songs[Songs.Count - 1];
             RefreshLanguages();
             RefreshLyrics();
+            Lyrics.Add(new LyricData() { Text = "First Stanza", Line = "1", Type = LyricType.Stanza });
             // For some reason this helps with auto selecting last index when a song is created
             // I should look for a more proper solution to this!
             EditModeChecked = true;
@@ -170,16 +171,17 @@ namespace Ark.ViewModels
         // Add Song Language
         public void AddSongLanguage(object sender)
         {
-            songInterface.CreateSongLanguage(SelectedSong);
-            RefreshSongList();
-            SelectedSong = Songs[Songs.Count - 1];
-            RefreshLanguages();
-            RefreshLyrics();
-            // For some reason this helps with auto selecting last index when a song is created
-            // I should look for a more proper solution to this!
-            EditModeChecked = true;
-            EditModeChecked = false;
-            EditModeChecked = true;
+            if (SelectedSong != null)
+            {
+                songInterface.CreateSongLanguage(SelectedSong);
+                RefreshSongList();
+                SelectedSong = Songs[Songs.Count - 1];
+                RefreshLanguages();
+                RefreshLyrics();
+                // For some reason this helps with auto selecting last index when a song is created
+                // I should look for a more proper solution to this!
+                EditModeChecked = true;
+            }
         }
         public void AddLyric(object sender)
         {
@@ -247,7 +249,10 @@ namespace Ark.ViewModels
         {
             songInterface.DeleteSong(SelectedSong.SongID);
             SelectedSong = null;
+            EditModeChecked = false;
             RefreshSongList();
+            Lyrics.Clear();
+            SongLanguages.Clear();
         }
 
         // Save Song

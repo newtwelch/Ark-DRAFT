@@ -91,13 +91,16 @@ namespace Ark.Views
         // Save Song
         private void EditSongButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            _viewModel.SelectedSong.Language = LanguageTextBox.Text;
-            int songID = _viewModel.SelectedSong.SongID;
-            _viewModel.SaveSong();
-            _viewModel.RefreshSongList();
-            int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
-            SongList.SelectedIndex = index;
-            _viewModel.RefreshLanguages();
+            if (_viewModel.SelectedSong != null)
+            {
+                _viewModel.SelectedSong.Language = LanguageTextBox.Text;
+                int songID = _viewModel.SelectedSong.SongID;
+                _viewModel.SaveSong();
+                _viewModel.RefreshSongList();
+                int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
+                SongList.SelectedIndex = index;
+                _viewModel.RefreshLanguages();
+            }
         }
 
         // Searching for Songs

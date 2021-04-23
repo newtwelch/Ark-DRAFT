@@ -70,7 +70,10 @@ namespace Ark.Views
                 smallVerse = new ObservableCollection<string>();
                 foreach (string sentence in versePortions)
                 {
-                    smallVerse.Add(sentence);
+                    if (sentence != "")
+                    {
+                        smallVerse.Add(sentence);
+                    }
                 }
                 smallVerseList.ItemsSource = smallVerse;
 
@@ -308,7 +311,6 @@ namespace Ark.Views
             {
                 ENGLISH.IsChecked = true;
             }
-            VerseList.Focus();
         }
 
         // Clean Hotkey cache(?)
@@ -330,38 +332,28 @@ namespace Ark.Views
                 {
                     case "ENGLISH":
                         _viewModel.ChangeLanguage("ENGLISH");
-                        if(book != null)
-                        {
-                            BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == book.BookNumber);
-                        }
-                        if (chapter != null)
-                        {
-                            ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == chapter.ChapterNumber);
-                        }
-                        if (verse != null)
-                        {
-                            VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
-                            VerseList.Focus();
-                        }
                         break;
                     case "TAGALOG":
-                        int iT = VerseList.SelectedIndex;
                         _viewModel.ChangeLanguage("TAGALOG");
-                        if (book != null)
-                        {
-                            BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == book.BookNumber);
-                        }
-                        if (chapter != null)
-                        {
-                            ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == chapter.ChapterNumber);
-                        }
-                        if (verse != null)
-                        {
-                            VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
-                            VerseList.Focus();
-                        }
                         break;
                 }
+
+                if (book != null)
+                {
+                    BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == book.BookNumber);
+                }
+                if (chapter != null)
+                {
+                    ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == chapter.ChapterNumber);
+                }
+                if (verse != null)
+                {
+                    // This is a cheat, Had to do this for listbox behavior stuff
+                    ChapterList.Focus();
+                    VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
+                    VerseList.Focus();
+                }
+
             }
         }
     }
