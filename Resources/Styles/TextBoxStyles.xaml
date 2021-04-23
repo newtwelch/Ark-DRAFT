@@ -126,6 +126,27 @@
         </Style.Triggers>
     </Style>
 
+    <!--  Song Title  -->
+    <Style x:Key="RawLyrics"
+           BasedOn="{StaticResource DefaultText}"
+           TargetType="{x:Type TextBox}">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="{StaticResource UnfocusedBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Padding" Value="20" />
+        <!--  Fancy Hover  -->
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding DataContext.EditModeChecked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:SongLibrary}}}" Value="True" />
+                    <Condition Binding="{Binding ElementName=SongTitle, Path=IsMouseOver}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground" Value="{StaticResource FocusedBrush}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <!--  Song Lyrics  -->
     <Style x:Key="SongLyricText"
            BasedOn="{StaticResource DefaultText}"

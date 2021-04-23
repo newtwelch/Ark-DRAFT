@@ -60,9 +60,9 @@ namespace Ark.Models.SongLibrary
         }
 
         // Save Song
-        public void SaveSong(SongData selectedSong)
+        public void SaveSong(SongData selectedSong, bool overrideRawLyric)
         {
-            saver.SaveSong(selectedSong);
+            saver.SaveSong(selectedSong, overrideRawLyric);
         }
     }
 }

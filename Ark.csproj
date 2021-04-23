@@ -24,6 +24,8 @@
     <None Remove="Resources\Images\Edit_Unselected.png" />
     <None Remove="Resources\Images\Erase_Selected.png" />
     <None Remove="Resources\Images\Erase_Unselected.png" />
+    <None Remove="Resources\Images\Lyric_Selected.png" />
+    <None Remove="Resources\Images\Lyric_Unselected.png" />
     <None Remove="Resources\Images\Message_Selected.png" />
     <None Remove="Resources\Images\Message_Unselected.png" />
     <None Remove="Resources\Images\Music_Selected.png" />
@@ -50,6 +52,8 @@
     <Resource Include="Resources\Images\Edit_Unselected.png" />
     <Resource Include="Resources\Images\Erase_Selected.png" />
     <Resource Include="Resources\Images\Erase_Unselected.png" />
+    <Resource Include="Resources\Images\Lyric_Selected.png" />
+    <Resource Include="Resources\Images\Lyric_Unselected.png" />
     <Resource Include="Resources\Images\Message_Selected.png" />
     <Resource Include="Resources\Images\Message_Unselected.png" />
     <Resource Include="Resources\Images\Music_Selected.png" />
@@ -74,7 +78,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Databases\SongDatabase.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 	

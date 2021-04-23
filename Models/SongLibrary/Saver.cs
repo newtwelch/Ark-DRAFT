@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Ark.Models.SongLibrary
 {
     public class Saver
     {
-        public void SaveSong(SongData selectedSong)
+        public void SaveSong(SongData selectedSong, bool overrideRawLyric)
         {
 
             string Title = selectedSong.Title; // Title of selected song - for saving
@@ -85,12 +86,28 @@ namespace Ark.Models.SongLibrary
                 RawLyricsList.Add(bridge);
             }
 
-            // Combine all the text in Raw Lyrics List
-            foreach (LyricData lyric in RawLyricsList)
+            if (!overrideRawLyric)
             {
-                RawLyrics += lyric.Text;
+                // Combine all the text in Raw Lyrics List
+                foreach (LyricData lyric in RawLyricsList)
+                {
+                    RawLyrics += lyric.Text;
+                }
+                RawLyrics = RawLyrics.TrimEnd();
             }
-            RawLyrics = RawLyrics.TrimEnd();
+            else
+            {
+                RawLyrics = selectedSong.RawLyric;
+                string[] paragraphs = Array.FindAll(Regex.Split(RawLyrics, "(\r?\n){2,}", RegexOptions.Multiline), p => !String.IsNullOrWhiteSpace(p));
+                if (paragraphs.Count() > RawLyricsList.Count())
+                {
+                    Sequence = "o";
+                }
+                else
+                {
+                    Sequence = selectedSong.Sequence;
+                }
+            }
             #endregion
 
             //SQL Stuff 

@@ -256,10 +256,10 @@ namespace Ark.ViewModels
         }
 
         // Save Song
-        public void SaveSong()
+        public void SaveSong(bool overrideRawLyric)
         {
             SelectedSong.Lyrics = Lyrics.ToList();
-            songInterface.SaveSong(SelectedSong);
+            songInterface.SaveSong(SelectedSong, overrideRawLyric);
         }
 
         // Get Song By

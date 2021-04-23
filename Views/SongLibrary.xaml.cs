@@ -93,9 +93,11 @@ namespace Ark.Views
         {
             if (_viewModel.SelectedSong != null)
             {
+                RawLyricToggle.IsChecked = false;
+
                 _viewModel.SelectedSong.Language = LanguageTextBox.Text;
                 int songID = _viewModel.SelectedSong.SongID;
-                _viewModel.SaveSong();
+                _viewModel.SaveSong(false);
                 _viewModel.RefreshSongList();
                 int index = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
                 SongList.SelectedIndex = index;
@@ -254,5 +256,30 @@ namespace Ark.Views
             closeDisplay.Dispose();
         }
         #endregion
+
+        private void RawLyricToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            // Set Visibility for Raw Lyric Editor to VISIBLE
+            RawLyrics.Visibility = Visibility.Visible;
+            Sequence.Visibility = Visibility.Visible;
+            // And the lyricBox Collapsed
+            LyricBox.Visibility = Visibility.Collapsed;
+            _viewModel.SaveSong(true);
+            _viewModel.RefreshLyrics();
+        }
+
+        private void RawLyricToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Set Visibility for Raw Lyric Editor to COLLAPSED
+            RawLyrics.Visibility = Visibility.Collapsed;
+            Sequence.Visibility = Visibility.Collapsed;
+            // And the lyricBox Visible
+            LyricBox.Visibility = Visibility.Visible;
+            _viewModel.SelectedSong.RawLyric = RawLyrics.Text;
+            _viewModel.SelectedSong.Sequence = Sequence.Text;
+            _viewModel.SaveSong(true);
+            _viewModel.RefreshLyrics();
+
+        }
     }
 }

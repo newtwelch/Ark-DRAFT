@@ -213,6 +213,32 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <DockPanel Grid.Row="2"
+                   Grid.Column="1"
+                   Margin="20 20 0 20"
+                   VerticalAlignment="Stretch">
+            <!--  Raw Lyrics  -->
+            <TextBox x:Name="Sequence"
+                     Height="50"
+                     Margin="0 0 0 10"
+                     Padding="20 10 20 10"
+                     AcceptsReturn="True"
+                     DockPanel.Dock="Top"
+                     Style="{StaticResource RawLyrics}"
+                     Text="{Binding SelectedSong.Sequence}"
+                     Visibility="Collapsed" />
+            <TextBox x:Name="RawLyrics"
+                     Grid.Row="2"
+                     Grid.Column="1"
+                     AcceptsReturn="True"
+                     DockPanel.Dock="Bottom"
+                     Style="{StaticResource RawLyrics}"
+                     Text="{Binding SelectedSong.RawLyric}"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
+                     Visibility="Collapsed" />
+        </DockPanel>
+
         <!--  Button  -->
         <StackPanel Grid.Row="3"
                     Grid.RowSpan="2"
@@ -285,18 +311,28 @@
         </StackPanel>
 
         <!--  Language TextBox [ change language name here ]  -->
-        <TextBox x:Name="LanguageTextBox"
-                 Grid.Row="3"
-                 Grid.RowSpan="2"
-                 Grid.Column="1"
-                 Height="50"
-                 Margin="20 0 0 0"
-                 Padding="20 0"
-                 HorizontalAlignment="Right"
-                 VerticalAlignment="Top"
-                 Style="{StaticResource DefaultText}"
-                 Text="{Binding SelectedSong.Language}"
-                 Visibility="{Binding EditModeVisible}" />
-
+        <StackPanel Grid.Row="3"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+            <controls:IconToggleButtons x:Name="RawLyricToggle"
+                                        Height="50"
+                                        Background="{DynamicResource ContainerBrush}"
+                                        Checked="RawLyricToggle_Checked"
+                                        HoverIconSource="pack://application:,,,/Resources/Images/Lyric_Selected.png"
+                                        IconSource="pack://application:,,,/Resources/Images/Lyric_Unselected.png"
+                                        Unchecked="RawLyricToggle_Unchecked"
+                                        Visibility="{Binding EditModeVisible}" />
+            <TextBox x:Name="LanguageTextBox"
+                     Height="50"
+                     Margin="20 0 0 0"
+                     Padding="20 0"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Style="{StaticResource DefaultText}"
+                     Text="{Binding SelectedSong.Language}"
+                     Visibility="{Binding EditModeVisible}" />
+        </StackPanel>
     </Grid>
 </UserControl>
