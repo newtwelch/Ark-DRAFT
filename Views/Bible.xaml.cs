@@ -1,5 +1,7 @@
-﻿using Ark.Models.Hotkeys;
+﻿using Ark.Models.Helper;
+using Ark.Models.Hotkeys;
 using Ark.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,6 +20,8 @@ namespace Ark.Views
 
         private Hotkey closeDisplay, switchLanguage;
 
+        private TypeAssistant assistant;
+
         private ObservableCollection<string> smallVerse;
  
         public Bible()
@@ -27,9 +31,38 @@ namespace Ark.Views
 
             InitializeComponent();
 
+            assistant = new TypeAssistant();
+            assistant.Idled += assistant_Idled;
+
             BookList.SelectedIndex = 0;
             ChapterList.SelectedIndex = 0;
             BookSearch.Focus();
+        }
+        void assistant_Idled(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(
+            new System.Windows.Forms.MethodInvoker(() =>
+            {
+                if (ChapterSearch.IsFocused && ChapterSearch.Text != "")
+                {
+                    VerseSearch.Focus();
+                }
+                if (TextSearch.IsFocused)
+                {
+                    if (TextSearch.Text.StartsWith("."))
+                    {
+                        _viewModel.FindText(TextSearch.Text.TrimStart('.'), "Global");
+                        VerseList.Visibility = Visibility.Collapsed;
+                        BibleDataList.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        _viewModel.FindText(TextSearch.Text, "Local");
+                        VerseList.Visibility = Visibility.Visible;
+                        BibleDataList.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }));
         }
 
         private void BookList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -77,14 +110,14 @@ namespace Ark.Views
                 }
                 smallVerseList.ItemsSource = smallVerse;
 
+                DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
+                DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name} {_viewModel.SelectedChapter.ChapterNumber}:{verse.VerseNumber}";
+
                 // Display stuff on the Second Window
                 if (!DisplayWindow.Instance.isBlank)
                 {
-                    DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
-                    DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name} {_viewModel.SelectedChapter.ChapterNumber}:{verse.VerseNumber}";
                     DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
                     DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
-                    DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
                     DisplayWindow.Instance.Show();
                 }
             }
@@ -105,23 +138,36 @@ namespace Ark.Views
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
+            assistant.TextChanged();
+
             TextBox tb = sender as TextBox;
+
             switch (tb.Name)
             {
                 case "BookSearch":
                     _viewModel.FindBooks(tb.Text);
-                    if(BookList.Items.Count == 1)
+                    if (BookList.Items.Count == 1)
                     {
                         BookList.SelectedIndex = 0;
+                        ChapterSearch.Focus();
+                    }
+                    break;
+                case "TextSearch":
+                    if (tb.Text == "")
+                    {
+                        _viewModel.GetVerses(_viewModel.SelectedBook.BookNumber, _viewModel.SelectedChapter.ChapterNumber);
+                        _viewModel.GetBibleData();
+                        VerseList.Visibility = Visibility.Visible;
+                        BibleDataList.Visibility = Visibility.Collapsed;
                     }
                     break;
                 case "ChapterSearch":
-                    int cindex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber.ToString() == tb.Text);
-                    ChapterList.SelectedIndex = cindex;
+                        int cindex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber.ToString() == ChapterSearch.Text);
+                        ChapterList.SelectedIndex = cindex;
                     break;
                 case "VerseSearch":
-                    int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == tb.Text);
-                    VerseList.SelectedIndex = vindex;
+                        int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == VerseSearch.Text);
+                        VerseList.SelectedIndex = vindex;
                     break;
             }
         }
@@ -295,13 +341,13 @@ namespace Ark.Views
             switchLanguage = new Hotkey(Modifiers.Shift, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
             closeDisplay.HotkeyPressed += CloseDisplay;
             switchLanguage.HotkeyPressed += SwitchLanguage;
+            DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
+            DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
         }
 
         // Close Second Window or the Display Window
         private void CloseDisplay(object sender, HotkeyEventArgs e)
         {
-            DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Collapsed;
-            DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Collapsed;
             DisplayWindow.Instance.HighlightPhrase.Text = "";
             DisplayWindow.Instance.Close();
         }
@@ -320,6 +366,8 @@ namespace Ark.Views
         // Clean Hotkey cache(?)
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+            DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Collapsed;
+            DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Collapsed;
             closeDisplay.Dispose();
             switchLanguage.Dispose();
         }

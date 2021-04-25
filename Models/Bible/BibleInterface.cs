@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
+using System;
 
 namespace Ark
 {
@@ -13,7 +14,7 @@ namespace Ark
             bible = XElement.Load(DataAccessConfiguration.ConnectionStringXMLENG); 
         }
 
-        //Change Language
+        // Change Language
         public void ChangeLanguage(string language)
         {
             switch (language)
@@ -27,12 +28,29 @@ namespace Ark
             }
         }
 
-        //get books list
+        // Find Verses
+        public List<BibleData> GetAllBibleData()
+        {
+            List<BibleData> list = new List<BibleData>();
+
+            var queryBook = from b in bible.Descendants("VERS") select b;
+
+            foreach(var q in queryBook)
+            {
+                list.Add(new BibleData() { VerseData = new VerseData() { Text = q.Value, VerseNumber = int.Parse(q.Attribute("vnumber").Value) },
+                                           ChapterData = new ChapterData() { ChapterNumber = int.Parse(q.Parent.Attribute("cnumber").Value) }
+                });
+            }
+
+            return list;
+        }
+
+        // Get books list
         public List<BookData> GetBooks() 
         {
             List<BookData> list = new List<BookData>();
 
-            foreach (var q in bible.Elements()) 
+            foreach (var q in bible.Elements())
             {
                 
                 list.Add(
@@ -46,7 +64,7 @@ namespace Ark
             return list;
         }
 
-        //get chapters list 
+        // Get chapters list 
         public List<ChapterData> GetChapters(int bookNo)
         {
             List<ChapterData> list = new List<ChapterData>();
@@ -66,7 +84,7 @@ namespace Ark
             return list;
         }
 
-        //get verses list 
+        // Get verses list 
         public List<VerseData> GetVerses(int bookNo,int chapNo)
         {
             List<VerseData> list = new List<VerseData>();

@@ -121,7 +121,6 @@ namespace Ark.ViewModels
                 SongLanguages = new ObservableCollection<SongData>(songInterface.GetAllLanguages(SelectedSong));
                 SelectedSong.Lyrics = Lyrics.ToList();
             }
-
         }
 
         // Refresh Lyric
@@ -134,6 +133,7 @@ namespace Ark.ViewModels
             }
             SelectedSong.Lyrics = Lyrics.ToList();
         }  
+
         public void RefreshLocalLyrics()
         {
             List<LyricData> store = Lyrics.ToList();
@@ -143,6 +143,7 @@ namespace Ark.ViewModels
                 Lyrics.Add(lyric);
             }
         }
+
         // Refresh Languages
         public void RefreshLanguages()
         {
@@ -165,9 +166,8 @@ namespace Ark.ViewModels
             // For some reason this helps with auto selecting last index when a song is created
             // I should look for a more proper solution to this!
             EditModeChecked = true;
-            EditModeChecked = false;
-            EditModeChecked = true;
         }
+
         // Add Song Language
         public void AddSongLanguage(object sender)
         {
@@ -183,6 +183,7 @@ namespace Ark.ViewModels
                 EditModeChecked = true;
             }
         }
+
         public void AddLyric(object sender)
         {
             switch (sender.ToString())
@@ -244,6 +245,7 @@ namespace Ark.ViewModels
 
             }
         }
+
         // Delete Song
         public void DeleteSong(object sender)
         {

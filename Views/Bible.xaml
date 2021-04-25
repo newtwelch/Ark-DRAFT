@@ -33,7 +33,7 @@
 
         <!--  Book Search  -->
         <TextBox x:Name="BookSearch"
-                 Margin="0 0 20 0"
+                 Margin="0,0,20,0"
                  PreviewKeyDown="Search_KeyDown"
                  Style="{StaticResource BibleSearch}"
                  Tag="Book"
@@ -65,13 +65,12 @@
 
             <!--  Text Search  -->
             <TextBox x:Name="TextSearch"
-                     Margin="20 0 0 0"
+                     Margin="20,0,0,0"
                      DockPanel.Dock="Right"
                      PreviewKeyDown="Search_KeyDown"
                      Style="{StaticResource BibleSearch}"
                      Tag="Search on current Chapter"
-                     TextChanged="Search_TextChanged"
-                     Visibility="Collapsed" />
+                     TextChanged="Search_TextChanged" />
         </DockPanel>
 
         <!--  Book List  -->
@@ -96,7 +95,7 @@
         <ListBox x:Name="ChapterList"
                  Grid.Row="1"
                  Grid.Column="1"
-                 Margin="0 0 -20 0"
+                 Margin="0,0,-20,0"
                  ItemContainerStyle="{StaticResource BibleListItem}"
                  ItemsSource="{Binding Chapters}"
                  PreviewKeyDown="List_PreviewKeyDown"
@@ -114,7 +113,7 @@
         <ListBox x:Name="smallVerseList"
                  Grid.Row="1"
                  Grid.Column="2"
-                 Margin="0 0 -10 0"
+                 Margin="0,0,-10,0"
                  AlternationCount="1000"
                  Background="Transparent"
                  ItemContainerStyle="{StaticResource smallVerseListItem}"
@@ -134,7 +133,7 @@
         <ListBox x:Name="VerseList"
                  Grid.Row="1"
                  Grid.Column="3"
-                 Margin="0 0 -25 0"
+                 Margin="0,0,-25,0"
                  Background="Transparent"
                  ItemContainerStyle="{StaticResource BibleVerseItem}"
                  ItemsSource="{Binding Verses}"
@@ -145,13 +144,13 @@
                 <DataTemplate>
                     <DockPanel MinHeight="120"
                                LastChildFill="True">
-                        <Button Height="{Binding Height, ElementName=Chapters}"
+                        <Button Height="{Binding Height, ElementName=Verses}"
                                 Content="{Binding VerseNumber}"
                                 Style="{StaticResource TextButtons}" />
                         <Rectangle Width="10"
                                    DockPanel.Dock="Left"
                                    Fill="{StaticResource BackgroundBrush}" />
-                        <controls:TextBlockHightlight x:Name="Chapters"
+                        <controls:TextBlockHightlight x:Name="Verses"
                                                       Padding="20"
                                                       VerticalAlignment="Center"
                                                       HighlightBrush="{StaticResource OrangeBrush}"
@@ -165,13 +164,48 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <ListBox x:Name="BibleDataList"
+                 Grid.Row="1"
+                 Grid.Column="3"
+                 Margin="0,0,-25,0"
+                 Background="Transparent"
+                 ItemContainerStyle="{StaticResource BibleVerseItem}"
+                 ItemsSource="{Binding BibleData}"
+                 PreviewKeyDown="List_PreviewKeyDown"
+                 SelectionChanged="VerseList_SelectionChanged"
+                 Style="{StaticResource BibleListBox}"
+                 Visibility="Collapsed">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel MinHeight="120"
+                               LastChildFill="True">
+                        <Button Height="{Binding Height, ElementName=Text}"
+                                Content="{Binding VerseData.VerseNumber}"
+                                Style="{StaticResource TextButtons}" />
+                        <Rectangle Width="10"
+                                   DockPanel.Dock="Left"
+                                   Fill="{StaticResource BackgroundBrush}" />
+                        <controls:TextBlockHightlight x:Name="Text"
+                                                      Padding="20"
+                                                      VerticalAlignment="Center"
+                                                      HighlightBrush="{StaticResource OrangeBrush}"
+                                                      HighlightPhrase="{Binding Tag, ElementName=ENGLISH}"
+                                                      IgnoreDot="False"
+                                                      Text="{Binding VerseData.Text}"
+                                                      TextAlignment="Left"
+                                                      TextWrapping="Wrap" />
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
         <StackPanel Grid.Row="2"
                     Grid.Column="3"
                     Grid.ColumnSpan="2"
                     VerticalAlignment="Top"
                     Orientation="Horizontal">
             <RadioButton x:Name="ENGLISH"
-                         Margin="0 0 10 0"
+                         Margin="0,0,10,0"
                          Checked="RadioButton_Checked"
                          Content="ENGLISH"
                          DockPanel.Dock="Top"

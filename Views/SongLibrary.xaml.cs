@@ -159,16 +159,18 @@ namespace Ark.Views
         // Display text on second sreen or Display Window unless you're in edit mode
         private void LyricBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (LyricBox.SelectedItem != null && !_viewModel.EditModeChecked && !DisplayWindow.Instance.isBlank)
+            LyricData lyric = LyricBox.SelectedItem as LyricData;
+            LyricBox.SelectedItem = lyric;
+            
+           
+            if (lyric != null && !_viewModel.EditModeChecked)
             {
-                LyricData lyric = LyricBox.SelectedItem as LyricData;
-                LyricBox.SelectedItem = lyric;
-
                 DisplayWindow.Instance.SongDisplay.Text = lyric.Text;
-                DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Visible;
-                DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Collapsed;
-                DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Collapsed;
-                DisplayWindow.Instance.Show();
+                if (!DisplayWindow.Instance.isBlank)
+                {
+                    DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Visible;
+                    DisplayWindow.Instance.Show();
+                }
             }
         }
 
@@ -234,26 +236,23 @@ namespace Ark.Views
         {
             closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
             closeDisplay.HotkeyPressed += CloseDisplay;
+            DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Visible;
         }
 
         // Close Second Window or the Display Window
         private void CloseDisplay(object sender, HotkeyEventArgs e)
         {
-            DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
             DisplayWindow.Instance.HighlightPhrase.Text = "";
             DisplayWindow.Instance.Close();
             LyricBox.SelectedItem = null;
-            if (LyricBox.IsFocused)
-            {
-                int i = LyricBox.SelectedIndex;
-                LyricBox.SelectedIndex = i--;
-            }
+            LyricBox.Focus();
         }
 
         // Clean Hotkey cache(?)
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             closeDisplay.Dispose();
+            DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
         }
         #endregion
 

@@ -12,6 +12,8 @@ namespace Ark.ViewModels
 
         public BibleInterface bibleInterface;
 
+        public ObservableCollection<BibleData> BibleData { get; set; }
+
         public ObservableCollection<BookData> Books { get; set; }
         public ObservableCollection<ChapterData> Chapters { get; set; }
         public ObservableCollection<VerseData> Verses { get; set; }
@@ -41,6 +43,7 @@ namespace Ark.ViewModels
         public BibleViewModel()
         {
             bibleInterface = new BibleInterface();
+            BibleData = new ObservableCollection<BibleData>(bibleInterface.GetAllBibleData());
             Books = new ObservableCollection<BookData>(bibleInterface.GetBooks());
             Chapters = new ObservableCollection<ChapterData>(bibleInterface.GetChapters(1));
             Verses = new ObservableCollection<VerseData>(bibleInterface.GetVerses(1, 1));
@@ -60,6 +63,14 @@ namespace Ark.ViewModels
             foreach (var chapter in bibleInterface.GetVerses(BookNumber, Chapter))
             {
                 Verses.Add(chapter);
+            }
+        }
+        public void GetBibleData()
+        {
+            BibleData.Clear();
+            foreach (var data in bibleInterface.GetAllBibleData())
+            {
+                BibleData.Add(data);
             }
         }
 
@@ -90,6 +101,28 @@ namespace Ark.ViewModels
             }
         }
 
+        public void FindText(string Text, string Type)
+        {
+            switch (Type)
+            {
+                case "Local":
+                    List<VerseData> temp = Verses.Where(x => x.Text.Contains(Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                    Verses.Clear();
+                    foreach(var verse in temp)
+                    {
+                        Verses.Add(verse);
+                    }
+                    break;
+                case "Global":
+                    List<BibleData> gtemp = BibleData.Where(x => x.VerseData.Text.Contains(Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                    BibleData.Clear();
+                    foreach (var bdata in gtemp)
+                    {
+                        BibleData.Add(bdata);
+                    }
+                    break;
+            }
+        }
         public void ChangeLanguage(string Language)
         {
             bibleInterface.ChangeLanguage(Language);

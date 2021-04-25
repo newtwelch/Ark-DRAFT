@@ -11,6 +11,10 @@
     <ApplicationIcon>Ark_Logo.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Ark_Logo.ico" />
     <None Remove="Ark_LogoBW.ico" />
@@ -30,7 +34,6 @@
     <None Remove="Resources\Images\Message_Unselected.png" />
     <None Remove="Resources\Images\Music_Selected.png" />
     <None Remove="Resources\Images\Music_Unselected.png" />
-    <None Remove="Resources\Images\SplashScreen.png" />
     <None Remove="Resources\Images\Tag_Selected.png" />
     <None Remove="Resources\Images\Tag_Unselected.png" />
   </ItemGroup>
@@ -64,10 +67,6 @@
 	
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite" Version="1.0.113.7" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <SplashScreen Include="Resources\Images\SplashScreen.png" />
   </ItemGroup>
 	
   <ItemGroup>

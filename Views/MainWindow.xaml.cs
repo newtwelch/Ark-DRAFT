@@ -112,6 +112,8 @@ namespace Ark.Views
         private void Window_Closed(object sender, EventArgs e)
         {
             song.Dispose();
+            bible.Dispose();
+            message.Dispose();
             blankDisplayWindow.Dispose();
         }
 
@@ -131,12 +133,13 @@ namespace Ark.Views
             if (!DisplayWindow.Instance.isBlank)
             {
                 DisplayWindow.Instance.isBlank = true;
-                DisplayWindow.Instance.Visibility = Visibility.Collapsed; 
+                DisplayWindow.Instance.Close();
                 Logo.Source = new BitmapImage(new Uri(@"pack://application:,,,/Ark_LogoBW.ico", UriKind.Absolute));
             }
             else
             {
                 DisplayWindow.Instance.isBlank = false;
+                DisplayWindow.Instance.Show();
                 Logo.Source = new BitmapImage(new Uri(@"pack://application:,,,/Ark_Logo.ico", UriKind.Absolute));
             }
         }
