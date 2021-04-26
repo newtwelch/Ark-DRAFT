@@ -33,7 +33,7 @@
 
         <!--  Book Search  -->
         <TextBox x:Name="BookSearch"
-                 Margin="0,0,20,0"
+                 Margin="0 0 20 0"
                  PreviewKeyDown="Search_KeyDown"
                  Style="{StaticResource BibleSearch}"
                  Tag="Book"
@@ -43,6 +43,7 @@
         <TextBox x:Name="ChapterSearch"
                  Grid.Column="1"
                  PreviewKeyDown="Search_KeyDown"
+                 PreviewTextInput="Numbers_PreviewTextInput"
                  Style="{StaticResource BibleSearch}"
                  Tag="Chap"
                  TextChanged="Search_TextChanged" />
@@ -58,6 +59,7 @@
                      Padding="0"
                      HorizontalAlignment="Center"
                      PreviewKeyDown="Search_KeyDown"
+                     PreviewTextInput="Numbers_PreviewTextInput"
                      Style="{StaticResource BibleSearch}"
                      Tag="V"
                      TextAlignment="Center"
@@ -65,7 +67,7 @@
 
             <!--  Text Search  -->
             <TextBox x:Name="TextSearch"
-                     Margin="20,0,0,0"
+                     Margin="20 0 0 0"
                      DockPanel.Dock="Right"
                      PreviewKeyDown="Search_KeyDown"
                      Style="{StaticResource BibleSearch}"
@@ -95,7 +97,7 @@
         <ListBox x:Name="ChapterList"
                  Grid.Row="1"
                  Grid.Column="1"
-                 Margin="0,0,-20,0"
+                 Margin="0 0 -20 0"
                  ItemContainerStyle="{StaticResource BibleListItem}"
                  ItemsSource="{Binding Chapters}"
                  PreviewKeyDown="List_PreviewKeyDown"
@@ -113,7 +115,7 @@
         <ListBox x:Name="smallVerseList"
                  Grid.Row="1"
                  Grid.Column="2"
-                 Margin="0,0,-10,0"
+                 Margin="0 0 -10 0"
                  AlternationCount="1000"
                  Background="Transparent"
                  ItemContainerStyle="{StaticResource smallVerseListItem}"
@@ -133,7 +135,7 @@
         <ListBox x:Name="VerseList"
                  Grid.Row="1"
                  Grid.Column="3"
-                 Margin="0,0,-25,0"
+                 Margin="0 0 -25 0"
                  Background="Transparent"
                  ItemContainerStyle="{StaticResource BibleVerseItem}"
                  ItemsSource="{Binding Verses}"
@@ -164,10 +166,31 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <TextBlock x:Name="Searching"
+                   Grid.Row="1"
+                   Grid.Column="3"
+                   Margin="0 10 0 0"
+                   FontSize="25"
+                   Foreground="{StaticResource OrangeBrush}"
+                   Style="{StaticResource DisplayText}"
+                   Text="Searching..."
+                   Visibility="Collapsed" />
+
+        <TextBlock x:Name="Empty"
+                   Grid.Row="1"
+                   Grid.Column="3"
+                   Margin="0 10 0 0"
+                   FontSize="25"
+                   Foreground="{StaticResource RedBrush}"
+                   Style="{StaticResource DisplayText}"
+                   Text="Oops, no items matched ._."
+                   TextAlignment="Center"
+                   Visibility="Collapsed" />
+
         <ListBox x:Name="BibleDataList"
                  Grid.Row="1"
                  Grid.Column="3"
-                 Margin="0,0,-25,0"
+                 Margin="0 0 -25 0"
                  Background="Transparent"
                  ItemContainerStyle="{StaticResource BibleVerseItem}"
                  ItemsSource="{Binding BibleData}"
@@ -179,9 +202,28 @@
                 <DataTemplate>
                     <DockPanel MinHeight="120"
                                LastChildFill="True">
-                        <Button Height="{Binding Height, ElementName=Text}"
-                                Content="{Binding VerseData.VerseNumber}"
-                                Style="{StaticResource TextButtons}" />
+                        <Button Width="100"
+                                Height="{Binding Height, ElementName=Text}"
+                                Style="{StaticResource TextButtons}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Width="100"
+                                               Padding="10"
+                                               FontSize="17"
+                                               Foreground="{StaticResource UnfocusedBrush}"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}:{2}">
+                                                <Binding Path="BookData.Name" />
+                                                <Binding Path="ChapterData.ChapterNumber" />
+                                                <Binding Path="VerseData.VerseNumber" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
                         <Rectangle Width="10"
                                    DockPanel.Dock="Left"
                                    Fill="{StaticResource BackgroundBrush}" />
@@ -205,7 +247,7 @@
                     VerticalAlignment="Top"
                     Orientation="Horizontal">
             <RadioButton x:Name="ENGLISH"
-                         Margin="0,0,10,0"
+                         Margin="0 0 10 0"
                          Checked="RadioButton_Checked"
                          Content="ENGLISH"
                          DockPanel.Dock="Top"

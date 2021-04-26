@@ -52,7 +52,15 @@ namespace Ark.Views
                     if (TextSearch.Text.StartsWith("."))
                     {
                         _viewModel.FindText(TextSearch.Text.TrimStart('.'), "Global");
-                        VerseList.Visibility = Visibility.Collapsed;
+                        if(BibleDataList.Items.Count == 0)
+                        {
+                            Empty.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Empty.Visibility = Visibility.Collapsed;
+                        }
+                        Searching.Visibility = Visibility.Collapsed;
                         BibleDataList.Visibility = Visibility.Visible;
                     }
                     else
@@ -61,6 +69,7 @@ namespace Ark.Views
                         VerseList.Visibility = Visibility.Visible;
                         BibleDataList.Visibility = Visibility.Collapsed;
                     }
+                    ENGLISH.Tag = TextSearch.Text.TrimStart('.');
                 }
             }));
         }
@@ -139,6 +148,7 @@ namespace Ark.Views
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             assistant.TextChanged();
+            Empty.Visibility = Visibility.Collapsed;
 
             TextBox tb = sender as TextBox;
 
@@ -156,9 +166,16 @@ namespace Ark.Views
                     if (tb.Text == "")
                     {
                         _viewModel.GetVerses(_viewModel.SelectedBook.BookNumber, _viewModel.SelectedChapter.ChapterNumber);
-                        _viewModel.GetBibleData();
                         VerseList.Visibility = Visibility.Visible;
                         BibleDataList.Visibility = Visibility.Collapsed;
+                        Searching.Visibility = Visibility.Collapsed;
+                        ENGLISH.Tag = "";
+                    }
+                    else if (tb.Text.StartsWith("."))
+                    {
+                        _viewModel.BibleData.Clear();
+                        VerseList.Visibility = Visibility.Collapsed;
+                        Searching.Visibility = Visibility.Visible;
                     }
                     break;
                 case "ChapterSearch":
@@ -170,6 +187,7 @@ namespace Ark.Views
                         VerseList.SelectedIndex = vindex;
                     break;
             }
+            //e.Handled = true;
         }
 
         private void Search_KeyDown(object sender, KeyEventArgs e)
@@ -338,7 +356,7 @@ namespace Ark.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
-            switchLanguage = new Hotkey(Modifiers.Shift, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
+            switchLanguage = new Hotkey(Modifiers.Alt, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
             closeDisplay.HotkeyPressed += CloseDisplay;
             switchLanguage.HotkeyPressed += SwitchLanguage;
             DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
@@ -372,6 +390,18 @@ namespace Ark.Views
             switchLanguage.Dispose();
         }
 
+        #region numberOnly
+        private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
+        private static bool IsTextAllowed(string text)
+        {
+            return !_regex.IsMatch(text);
+        }
+
+        private void Numbers_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
+        #endregion
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             BookData book = BookList.SelectedItem as BookData;

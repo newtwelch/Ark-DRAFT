@@ -16,6 +16,8 @@ namespace Ark.ViewModels
 
         public ObservableCollection<BookData> Books { get; set; }
         public ObservableCollection<ChapterData> Chapters { get; set; }
+
+        private List<VerseData> localVerse;
         public ObservableCollection<VerseData> Verses { get; set; }
         //The selected Book;
         private BookData _selectedBook;
@@ -43,10 +45,11 @@ namespace Ark.ViewModels
         public BibleViewModel()
         {
             bibleInterface = new BibleInterface();
-            BibleData = new ObservableCollection<BibleData>(bibleInterface.GetAllBibleData());
+            BibleData = new ObservableCollection<BibleData>(bibleInterface.GetAllBibleData(""));
             Books = new ObservableCollection<BookData>(bibleInterface.GetBooks());
             Chapters = new ObservableCollection<ChapterData>(bibleInterface.GetChapters(1));
             Verses = new ObservableCollection<VerseData>(bibleInterface.GetVerses(1, 1));
+            localVerse = new List<VerseData>(Verses);
         }
 
         public void GetChapters(int BookNumber)
@@ -64,14 +67,8 @@ namespace Ark.ViewModels
             {
                 Verses.Add(chapter);
             }
-        }
-        public void GetBibleData()
-        {
-            BibleData.Clear();
-            foreach (var data in bibleInterface.GetAllBibleData())
-            {
-                BibleData.Add(data);
-            }
+            localVerse.Clear();
+            localVerse = Verses.ToList();
         }
 
         public void FindBooks(string bookName)
@@ -106,7 +103,7 @@ namespace Ark.ViewModels
             switch (Type)
             {
                 case "Local":
-                    List<VerseData> temp = Verses.Where(x => x.Text.Contains(Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                    List<VerseData> temp = localVerse.Where(x => x.Text.Contains(Text, StringComparison.OrdinalIgnoreCase)).ToList();
                     Verses.Clear();
                     foreach(var verse in temp)
                     {
@@ -114,9 +111,7 @@ namespace Ark.ViewModels
                     }
                     break;
                 case "Global":
-                    List<BibleData> gtemp = BibleData.Where(x => x.VerseData.Text.Contains(Text, StringComparison.OrdinalIgnoreCase)).ToList();
-                    BibleData.Clear();
-                    foreach (var bdata in gtemp)
+                    foreach (var bdata in bibleInterface.GetAllBibleData(Text))
                     {
                         BibleData.Add(bdata);
                     }
