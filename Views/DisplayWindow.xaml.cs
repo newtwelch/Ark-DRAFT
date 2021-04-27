@@ -35,24 +35,10 @@ namespace Ark.Views
             DataContext = _viewModel;
 
             InitializeComponent();
-            Topmost = true;
-
-            if (Screen.AllScreens.Length > 1)
-            {
-                Screen s = Screen.AllScreens[1];
-                System.Drawing.Rectangle r = s.WorkingArea;
-                Top = r.Top;
-                Left = r.Left;
-            }
-            else
-            {
-                Top = Screen.PrimaryScreen.WorkingArea.Top;
-                Left = Screen.PrimaryScreen.WorkingArea.Left;
-            }
         }   
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(Screen.AllScreens.Length == 1) { 
+            if (Screen.AllScreens.Length == 1) { 
                 Width = SystemParameters.PrimaryScreenWidth;
                 Height = SystemParameters.PrimaryScreenHeight;
             }
@@ -79,6 +65,23 @@ namespace Ark.Views
                 Visibility = Visibility.Collapsed;
                 e.Cancel = true;
             }
+        }
+
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Screen.AllScreens.Length > 1)
+            {
+                Screen s = Screen.AllScreens[1];
+                System.Drawing.Rectangle r = s.WorkingArea;
+                Top = r.Top;
+                Left = r.Left;
+            }
+            else
+            {
+                Top = Screen.PrimaryScreen.WorkingArea.Top;
+                Left = Screen.PrimaryScreen.WorkingArea.Left;
+            }
+
         }
     }
 }

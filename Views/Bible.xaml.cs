@@ -66,6 +66,14 @@ namespace Ark.Views
                     else
                     {
                         _viewModel.FindText(TextSearch.Text, "Local");
+                        if (VerseList.Items.Count == 0)
+                        {
+                            Empty.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            Empty.Visibility = Visibility.Collapsed;
+                        }
                         VerseList.Visibility = Visibility.Visible;
                         BibleDataList.Visibility = Visibility.Collapsed;
                     }

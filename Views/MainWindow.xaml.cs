@@ -122,7 +122,7 @@ namespace Ark.Views
             song = new Hotkey(Modifiers.Alt, Keys.Z, this, registerImmediately: true);
             bible = new Hotkey(Modifiers.Alt, Keys.X, this, registerImmediately: true);
             message = new Hotkey(Modifiers.Alt, Keys.C, this, registerImmediately: true);
-            blankDisplayWindow = new Hotkey(Modifiers.Shift, Keys.B, this, registerImmediately: true);
+            blankDisplayWindow = new Hotkey(Modifiers.Alt, Keys.W, this, registerImmediately: true);
             song.HotkeyPressed += SwitchTabs;
             bible.HotkeyPressed += SwitchTabs;
             message.HotkeyPressed += SwitchTabs;
