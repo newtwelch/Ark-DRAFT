@@ -78,7 +78,7 @@ namespace Ark.ViewModels
             Books.Clear();
             foreach(var book in aBooks)
             {
-                if (book.Name.Contains(bookName, StringComparison.OrdinalIgnoreCase))
+                if (book.Name.Replace(" ", "").Contains(bookName.Replace(" ",""), StringComparison.OrdinalIgnoreCase))
                 {
                     Books.Add(book);
                 }

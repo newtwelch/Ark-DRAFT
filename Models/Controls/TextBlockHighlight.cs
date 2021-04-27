@@ -118,11 +118,10 @@ namespace Ark.Models.Controls
                 {
                     tb.Inlines.Add(
                         oldFind > 0
-                            ? tb.GetRunForText(text.Substring(oldFind, text.Length - oldFind), false)
+                            ? new Run(text.Substring(oldFind, text.Length - oldFind))
                             : new Run(text));
                     break;
                 }
-
                 if (oldFind == find)
                 {
                     tb.Inlines.Add(tb.GetRunForText(text.Substring(oldFind, searchTextLength), true));
@@ -131,7 +130,7 @@ namespace Ark.Models.Controls
                     continue;
                 }
 
-                tb.Inlines.Add(tb.GetRunForText(text.Substring(oldFind, find - oldFind), false));
+                tb.Inlines.Add(new Run(text.Substring(oldFind, find - oldFind)));
             }
         }
 
