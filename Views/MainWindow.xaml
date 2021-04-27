@@ -118,10 +118,12 @@
                      Text="0.0.3" />
         </DockPanel>
 
-        <ContentControl x:Name="ContentFrame"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="40 40 40 0" />
+        <Frame x:Name="ContentFrame"
+               Grid.Row="1"
+               Grid.Column="1"
+               Margin="40 40 40 0"
+               Navigating="ContentFrame_Navigating"
+               NavigationUIVisibility="Hidden" />
     </Grid>
 
 </Window>

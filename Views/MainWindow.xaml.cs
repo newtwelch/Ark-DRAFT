@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace Ark.Views
 {
@@ -167,6 +168,20 @@ namespace Ark.Views
         }
 
         private const int GWL_STYLE = -16; //WPF's Message code for Title Bar's Style 
+
+        private void ContentFrame_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Forward)
+            {
+                e.Cancel = true;
+            }
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                e.Cancel = true;
+            }
+
+        }
+
         private const int WS_SYSMENU = 0x80000; //WPF's Message code for System Menu
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
