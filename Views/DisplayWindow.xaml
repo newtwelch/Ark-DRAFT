@@ -33,26 +33,26 @@
                                Text="Genesis 1:1"
                                TextDecorations="Underline"
                                Visibility="Collapsed" />
-                    <controls:TextBlockHightlight x:Name="BibleDisplay"
-                                                  Width="1920"
-                                                  Margin="100 0 100 100"
-                                                  FontFamily="Gontserrat"
-                                                  FontSize="100"
-                                                  HighlightBrush="{StaticResource OrangeBrush}"
-                                                  HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
-                                                  Style="{StaticResource DisplayText}"
-                                                  TextAlignment="Center"
-                                                  TextWrapping="Wrap"
-                                                  Visibility="Collapsed" />
-                    <controls:TextBlockHightlight x:Name="SongDisplay"
-                                                  Margin="100"
-                                                  FontFamily="Gontserrat"
-                                                  FontSize="100"
-                                                  HighlightBrush="{StaticResource OrangeBrush}"
-                                                  HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
-                                                  Style="{StaticResource DisplayText}"
-                                                  TextAlignment="Center"
-                                                  TextWrapping="Wrap" />
+                    <controls:TextBlockHighlight x:Name="BibleDisplay"
+                                                 Width="1920"
+                                                 Margin="100 0 100 100"
+                                                 FontFamily="Gontserrat"
+                                                 FontSize="100"
+                                                 HighlightBrush="{StaticResource OrangeBrush}"
+                                                 HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
+                                                 Style="{StaticResource DisplayText}"
+                                                 TextAlignment="Center"
+                                                 TextWrapping="Wrap"
+                                                 Visibility="Collapsed" />
+                    <controls:TextBlockHighlight x:Name="SongDisplay"
+                                                 Margin="100"
+                                                 FontFamily="Gontserrat"
+                                                 FontSize="100"
+                                                 HighlightBrush="{StaticResource OrangeBrush}"
+                                                 HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
+                                                 Style="{StaticResource DisplayText}"
+                                                 TextAlignment="Center"
+                                                 TextWrapping="Wrap" />
                 </DockPanel>
             </Viewbox>
         </Grid>

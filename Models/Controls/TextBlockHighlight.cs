@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace Ark.Models.Controls
 {
-    public class TextBlockHightlight : TextBlock
+    public class TextBlockHighlight : TextBlock
     {
         #region Properties
 
@@ -16,9 +16,20 @@ namespace Ark.Models.Controls
             set { SetValue(TextProperty, value); }
         }
 
+        private static readonly DependencyPropertyKey MatchCountPropertyKey
+            = DependencyProperty.RegisterReadOnly("MatchCount", typeof(int), typeof(TextBlockHighlight),
+                new PropertyMetadata(0));
+
+        public static readonly DependencyProperty MatchCountProperty
+            = MatchCountPropertyKey.DependencyProperty;
+
+        public static readonly DependencyProperty HighlightTextProperty =
+            DependencyProperty.Register("HighlightText", typeof(string), typeof(TextBlockHighlight),
+                new PropertyMetadata(string.Empty, UpdateHighlighting));
+
         public new static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string),
-            typeof(TextBlockHightlight), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender,
+            typeof(TextBlockHighlight), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(UpdateHighlighting)));
 
         public string HighlightPhrase
@@ -29,7 +40,7 @@ namespace Ark.Models.Controls
 
         public static readonly DependencyProperty HighlightPhraseProperty =
             DependencyProperty.Register("HighlightPhrase", typeof(string),
-            typeof(TextBlockHightlight), new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.AffectsRender,
+            typeof(TextBlockHighlight), new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(UpdateHighlighting)));
 
         public Brush HighlightBrush
@@ -40,7 +51,7 @@ namespace Ark.Models.Controls
 
         public static readonly DependencyProperty HighlightBrushProperty =
             DependencyProperty.Register("HighlightBrush", typeof(Brush),
-            typeof(TextBlockHightlight), new FrameworkPropertyMetadata(Brushes.Yellow, FrameworkPropertyMetadataOptions.AffectsRender,
+            typeof(TextBlockHighlight), new FrameworkPropertyMetadata(Brushes.Yellow, FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(UpdateHighlighting)));
 
         public bool IsCaseSensitive
@@ -55,21 +66,27 @@ namespace Ark.Models.Controls
             set { SetValue(IsCaseSensitiveProperty, value); }
         }
 
+        public int MatchCount
+        {
+            get => (int)GetValue(MatchCountProperty);
+            protected set => SetValue(MatchCountPropertyKey, value);
+        }
+
         public static readonly DependencyProperty IsCaseSensitiveProperty =
             DependencyProperty.Register("IsCaseSensitive", typeof(bool),
-            typeof(TextBlockHightlight), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender,
+            typeof(TextBlockHighlight), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(UpdateHighlighting)));
 
         private static void UpdateHighlighting(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ApplyHighlight(d as TextBlockHightlight);
+            ApplyHighlight(d as TextBlockHighlight);
         }
 
         #endregion
 
         #region Members
 
-        private static void ApplyHighlight(TextBlockHightlight tb)
+        private static void ApplyHighlight(TextBlockHighlight tb)
         {
             string highlightPhrase = tb.HighlightPhrase;
             string text = tb.Text;
@@ -79,41 +96,53 @@ namespace Ark.Models.Controls
                 highlightPhrase = highlightPhrase.Replace(".", "");
             }
 
-            if (String.IsNullOrEmpty(highlightPhrase))
+            if (tb == null)
+                return;
+            tb.Inlines.Clear();
+            tb.SetValue(MatchCountPropertyKey, 0);
+            if (tb == null || string.IsNullOrWhiteSpace(text)) return;
+            if (string.IsNullOrWhiteSpace(highlightPhrase))
             {
-                tb.Inlines.Clear();
-
-                tb.Inlines.Add(text);
+                var completeRun = new Run(text);
+                tb.Inlines.Add(completeRun);
+                return;
             }
 
-            else
+            var find = 0;
+            var searchTextLength = highlightPhrase.Length;
+            while (true)
             {
-                int index = text.IndexOf(highlightPhrase, (tb.IsCaseSensitive) ? StringComparison.InvariantCultureIgnoreCase : StringComparison.OrdinalIgnoreCase);
-
-                tb.Inlines.Clear();
-
-                if (index < 0) //if highlightPhrase doesn't exist in text
-                    tb.Inlines.Add(text); //add text, with no background highlighting, to tb.Inlines
-
-                else
+                var oldFind = find;
+                find = text.IndexOf(highlightPhrase, find, StringComparison.InvariantCultureIgnoreCase);
+                if (find == -1)
                 {
-                    if (index > 0) //if highlightPhrase occurs after start of text
-                        tb.Inlines.Add(text.Substring(0, index)); //add the text that exists before highlightPhrase, with no background highlighting, to tb.Inlines
-
-                    //add the highlightPhrase, using substring to get the casing as it appears in text, with a background, to tb.Inlines
-                    tb.Inlines.Add(new Run(text.Substring(index, highlightPhrase.Length))
-                    {
-                        Foreground = tb.HighlightBrush
-                    });
-
-                    index += highlightPhrase.Length; //move index to the end of the matched highlightPhrase
-
-                    if (index < text.Length) //if the end of the matched highlightPhrase occurs before the end of text
-                        tb.Inlines.Add(text.Substring(index)); //add the text that exists after highlightPhrase, with no background highlighting, to tb.Inlines
+                    tb.Inlines.Add(
+                        oldFind > 0
+                            ? tb.GetRunForText(text.Substring(oldFind, text.Length - oldFind), false)
+                            : new Run(text));
+                    break;
                 }
+
+                if (oldFind == find)
+                {
+                    tb.Inlines.Add(tb.GetRunForText(text.Substring(oldFind, searchTextLength), true));
+                    tb.SetValue(MatchCountPropertyKey, tb.MatchCount + 1);
+                    find = find + searchTextLength;
+                    continue;
+                }
+
+                tb.Inlines.Add(tb.GetRunForText(text.Substring(oldFind, find - oldFind), false));
             }
         }
 
+        private Run GetRunForText(string text, bool isHighlighted)
+        {
+            var textRun = new Run(text)
+            {
+                Foreground = isHighlighted ? HighlightBrush : Foreground
+            };
+            return textRun;
+        }
         #endregion
     }
 }

@@ -2,9 +2,11 @@
 using Ark.ViewModels;
 using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -127,6 +129,10 @@ namespace Ark.Views
             bible.HotkeyPressed += SwitchTabs;
             message.HotkeyPressed += SwitchTabs;
             blankDisplayWindow.HotkeyPressed += BlankDisplayWindow;
+
+
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
         }
         private void BlankDisplayWindow(object sender, HotkeyEventArgs e)
         {
@@ -159,5 +165,13 @@ namespace Ark.Views
             }
 
         }
+
+        private const int GWL_STYLE = -16; //WPF's Message code for Title Bar's Style 
+        private const int WS_SYSMENU = 0x80000; //WPF's Message code for System Menu
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
     }
 }

@@ -23,7 +23,7 @@ namespace Ark.Views
         private TypeAssistant assistant;
 
         private ObservableCollection<string> smallVerse;
- 
+
         public Bible()
         {
             _viewModel = new BibleViewModel();
@@ -52,7 +52,7 @@ namespace Ark.Views
                     if (TextSearch.Text.StartsWith("."))
                     {
                         _viewModel.FindText(TextSearch.Text.TrimStart('.'), "Global");
-                        if(BibleDataList.Items.Count == 0)
+                        if (BibleDataList.Items.Count == 0)
                         {
                             Empty.Visibility = Visibility.Visible;
                         }
@@ -108,35 +108,51 @@ namespace Ark.Views
 
         private void VerseList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (VerseList.SelectedItem != null)
+            if (VerseList.SelectedItem != null || BibleDataList.SelectedItem != null)
             {
-                // Verse Selection Stuff
-                VerseList.ScrollIntoView(VerseList.SelectedItem);
-                VerseData verse = VerseList.SelectedItem as VerseData;
-                VerseList.SelectedItem = verse;
-
-                // Cut the Verse into Sizeable Chunks
-                string[] versePortions = Regex.Split(verse.Text, @"(?<=[\.,;:!\?])\s+");
-                smallVerse = new ObservableCollection<string>();
-                foreach (string sentence in versePortions)
+                if (VerseList.Visibility == Visibility.Visible)
                 {
-                    if (sentence != "")
+                    // Verse Selection Stuff
+                    ENGLISH.Tag = "";
+                    VerseList.ScrollIntoView(VerseList.SelectedItem);
+                    VerseData verse = VerseList.SelectedItem as VerseData;
+
+                    // Cut the Verse into Sizeable Chunks
+                    string[] versePortions = Regex.Split(verse.Text, @"(?<=[\.,;:!\?])\s+");
+                    smallVerse = new ObservableCollection<string>();
+                    foreach (string sentence in versePortions)
                     {
-                        smallVerse.Add(sentence);
+                        if (sentence != "") 
+                        {
+                            smallVerse.Add(sentence);
+                        }
                     }
+                    smallVerseList.ItemsSource = smallVerse;
+
+                    DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
+                    DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name } { _viewModel.SelectedChapter.ChapterNumber }:{ verse.VerseNumber }";
                 }
-                smallVerseList.ItemsSource = smallVerse;
-
-                DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
-                DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name} {_viewModel.SelectedChapter.ChapterNumber}:{verse.VerseNumber}";
-
-                // Display stuff on the Second Window
-                if (!DisplayWindow.Instance.isBlank)
+                else if(BibleDataList.Visibility == Visibility.Visible)
                 {
-                    DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
-                    DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
-                    DisplayWindow.Instance.Show();
+                    // Verse Selection Stuff
+                    BibleDataList.ScrollIntoView(BibleDataList.SelectedItem);
+                    BibleData bibleData = BibleDataList.SelectedItem as BibleData;
+                    VerseData verse = bibleData.VerseData;
+                    ChapterData chapter = bibleData.ChapterData;
+                    BookData book = bibleData.BookData;
+
+
+                    DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
+                    DisplayWindow.Instance.BibleBookText.Text = $"{ book.Name } { chapter.ChapterNumber }:{ verse.VerseNumber }";
                 }
+
+            }
+            // Display stuff on the Second Window
+            if (!DisplayWindow.Instance.isBlank)
+            {
+                DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
+                DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
+                DisplayWindow.Instance.Show();
             }
         }
 
@@ -150,7 +166,6 @@ namespace Ark.Views
                 ENGLISH.Tag = selectedItem;
                 DisplayWindow.Instance.BibleDisplay.HighlightPhrase = selectedItem;
             }
-
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -187,12 +202,9 @@ namespace Ark.Views
                     }
                     break;
                 case "ChapterSearch":
-                        int cindex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber.ToString() == ChapterSearch.Text);
-                        ChapterList.SelectedIndex = cindex;
-                    break;
-                case "VerseSearch":
-                        int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == VerseSearch.Text);
-                        VerseList.SelectedIndex = vindex;
+                    TextSearch.Text = "";
+                    int cindex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber.ToString() == ChapterSearch.Text);
+                    ChapterList.SelectedIndex = cindex;
                     break;
             }
             //e.Handled = true;
@@ -244,11 +256,8 @@ namespace Ark.Views
                     }
                     if (Keyboard.Modifiers == ModifierKeys.Shift && e.Key == Key.Enter)
                     {
-                        if (VerseList.SelectedItem == null)
-                        {
-                            int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == tb.Text);
-                            VerseList.SelectedIndex = vindex;
-                        }
+                        int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == tb.Text);
+                        VerseList.SelectedIndex = vindex;
                         smallVerseList.SelectedIndex = 0;
                         smallVerseList.Focus();
                         e.Handled = true;
@@ -263,6 +272,7 @@ namespace Ark.Views
                     if (e.Key == Key.Down)
                     {
                         VerseList.Focus();
+                        e.Handled = true;
                     }
                     break;
             }
@@ -302,7 +312,7 @@ namespace Ark.Views
                     break;
                 case "VerseList":
                     int i = lb.Items.Count - 1;
-                    if (e.Key == Key.Down && lb.SelectedIndex == i )
+                    if (e.Key == Key.Down && lb.SelectedIndex == i)
                     {
                         ChapterList.SelectedIndex++;
                         lb.SelectedIndex = 0;
@@ -376,6 +386,9 @@ namespace Ark.Views
         {
             DisplayWindow.Instance.HighlightPhrase.Text = "";
             DisplayWindow.Instance.Close();
+            smallVerseList.SelectedItem = null;
+            ENGLISH.Tag = "";
+            VerseList.Focus();
         }
         private void SwitchLanguage(object sender, HotkeyEventArgs e)
         {
@@ -445,6 +458,21 @@ namespace Ark.Views
                 }
 
             }
+        }
+        private void BibleData_Click(object sender, RoutedEventArgs e)
+        {
+            BibleDataList.Visibility = Visibility.Collapsed;
+            VerseList.Visibility = Visibility.Visible;
+            Button button = sender as Button;
+            BibleData bibleData = button.DataContext as BibleData;
+
+            TextSearch.Text = "";
+
+            BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == bibleData.BookData.BookNumber);
+            ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == bibleData.ChapterData.ChapterNumber);
+            VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == bibleData.VerseData.VerseNumber);
+
+            VerseList.Focus();
         }
     }
 }

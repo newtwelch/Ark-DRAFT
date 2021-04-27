@@ -85,10 +85,10 @@
                  Style="{StaticResource BibleListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:TextBlockHightlight x:Name="Books"
-                                                  HighlightBrush="{StaticResource OrangeBrush}"
-                                                  HighlightPhrase="{Binding Text, ElementName=BookSearch}"
-                                                  Text="{Binding Name}" />
+                    <controls:TextBlockHighlight x:Name="Books"
+                                                 HighlightBrush="{StaticResource OrangeBrush}"
+                                                 HighlightPhrase="{Binding Text, ElementName=BookSearch}"
+                                                 Text="{Binding Name}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -105,8 +105,8 @@
                  Style="{StaticResource BibleListBox}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:TextBlockHightlight x:Name="Chapters"
-                                                  Text="{Binding ChapterNumber}" />
+                    <controls:TextBlockHighlight x:Name="Chapters"
+                                                 Text="{Binding ChapterNumber}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -124,8 +124,8 @@
                  Style="{StaticResource smallVerseList}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:TextBlockHightlight x:Name="phrase"
-                                                  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}" />
+                    <controls:TextBlockHighlight x:Name="phrase"
+                                                 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -152,15 +152,15 @@
                         <Rectangle Width="10"
                                    DockPanel.Dock="Left"
                                    Fill="{StaticResource BackgroundBrush}" />
-                        <controls:TextBlockHightlight x:Name="Verses"
-                                                      Padding="20"
-                                                      VerticalAlignment="Center"
-                                                      HighlightBrush="{StaticResource OrangeBrush}"
-                                                      HighlightPhrase="{Binding Tag, ElementName=ENGLISH}"
-                                                      IgnoreDot="False"
-                                                      Text="{Binding Text}"
-                                                      TextAlignment="Left"
-                                                      TextWrapping="Wrap" />
+                        <controls:TextBlockHighlight x:Name="Verses"
+                                                     Padding="20"
+                                                     VerticalAlignment="Center"
+                                                     HighlightBrush="{StaticResource OrangeBrush}"
+                                                     HighlightPhrase="{Binding Tag, ElementName=ENGLISH}"
+                                                     IgnoreDot="False"
+                                                     Text="{Binding Text}"
+                                                     TextAlignment="Left"
+                                                     TextWrapping="Wrap" />
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -204,6 +204,7 @@
                                LastChildFill="True">
                         <Button Width="100"
                                 Height="{Binding Height, ElementName=Text}"
+                                Click="BibleData_Click"
                                 Style="{StaticResource TextButtons}">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
@@ -227,15 +228,15 @@
                         <Rectangle Width="10"
                                    DockPanel.Dock="Left"
                                    Fill="{StaticResource BackgroundBrush}" />
-                        <controls:TextBlockHightlight x:Name="Text"
-                                                      Padding="20"
-                                                      VerticalAlignment="Center"
-                                                      HighlightBrush="{StaticResource OrangeBrush}"
-                                                      HighlightPhrase="{Binding Tag, ElementName=ENGLISH}"
-                                                      IgnoreDot="False"
-                                                      Text="{Binding VerseData.Text}"
-                                                      TextAlignment="Left"
-                                                      TextWrapping="Wrap" />
+                        <controls:TextBlockHighlight x:Name="Text"
+                                                     Padding="20"
+                                                     VerticalAlignment="Center"
+                                                     HighlightBrush="{StaticResource OrangeBrush}"
+                                                     HighlightPhrase="{Binding Tag, ElementName=ENGLISH}"
+                                                     IgnoreDot="False"
+                                                     Text="{Binding VerseData.Text}"
+                                                     TextAlignment="Left"
+                                                     TextWrapping="Wrap" />
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
