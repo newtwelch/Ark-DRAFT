@@ -45,6 +45,7 @@ namespace Ark.Views
             {
                 if (ChapterSearch.IsFocused && ChapterSearch.Text != "")
                 {
+                    VerseSearch.Text = "";
                     VerseSearch.Focus();
                 }
                 if (TextSearch.IsFocused)
@@ -108,9 +109,11 @@ namespace Ark.Views
 
         private void VerseList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (VerseList.SelectedItem != null || BibleDataList.SelectedItem != null)
+            if (e.AddedItems.Count == 0)
+                return;
+            if (VerseList.Visibility == Visibility.Visible)
             {
-                if (VerseList.Visibility == Visibility.Visible)
+                if (VerseList.SelectedItem != null)
                 {
                     // Verse Selection Stuff
                     ENGLISH.Tag = "";
@@ -122,7 +125,7 @@ namespace Ark.Views
                     smallVerse = new ObservableCollection<string>();
                     foreach (string sentence in versePortions)
                     {
-                        if (sentence != "") 
+                        if (sentence != "")
                         {
                             smallVerse.Add(sentence);
                         }
@@ -132,7 +135,10 @@ namespace Ark.Views
                     DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
                     DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name } { _viewModel.SelectedChapter.ChapterNumber }:{ verse.VerseNumber }";
                 }
-                else if(BibleDataList.Visibility == Visibility.Visible)
+            }
+            else if (BibleDataList.Visibility == Visibility.Visible)
+            {
+                if (BibleDataList.SelectedItem != null)
                 {
                     // Verse Selection Stuff
                     BibleDataList.ScrollIntoView(BibleDataList.SelectedItem);
@@ -145,8 +151,9 @@ namespace Ark.Views
                     DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
                     DisplayWindow.Instance.BibleBookText.Text = $"{ book.Name } { chapter.ChapterNumber }:{ verse.VerseNumber }";
                 }
-
             }
+
+            
             // Display stuff on the Second Window
             if (!DisplayWindow.Instance.isBlank)
             {
@@ -205,6 +212,7 @@ namespace Ark.Views
                     TextSearch.Text = "";
                     int cindex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber.ToString() == ChapterSearch.Text);
                     ChapterList.SelectedIndex = cindex;
+                    VerseList.SelectedItem = null;
                     break;
             }
             //e.Handled = true;
@@ -327,6 +335,7 @@ namespace Ark.Views
                     if (e.Key == Key.Tab)
                     {
                         lb.SelectedItem = null;
+                        ChapterList.Focus();
                         VerseSearch.Focus();
                         e.Handled = true;
                     }
