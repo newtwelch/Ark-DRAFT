@@ -449,14 +449,13 @@ namespace Ark.Views
                         _viewModel.ChangeLanguage("TAGALOG");
                         break;
                 }
-
-                if (book != null)
+                if (_viewModel.SelectedBook != null)
                 {
-                    BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == book.BookNumber);
+                    BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == _viewModel.SelectedBook.BookNumber);
                 }
-                if (chapter != null)
+                if (_viewModel.SelectedChapter != null)
                 {
-                    ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == chapter.ChapterNumber);
+                    ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == _viewModel.SelectedChapter.ChapterNumber);
                 }
                 if (verse != null)
                 {

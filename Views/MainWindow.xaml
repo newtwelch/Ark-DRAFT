@@ -107,7 +107,7 @@
                      FontWeight="Regular"
                      IsReadOnly="True"
                      Style="{StaticResource ArkVersion}"
-                     Text="Newt Wellington" />
+                     Text="N.M Welch Engine" />
             <TextBox Margin="10 0 0 0"
                      HorizontalAlignment="Left"
                      Background="Transparent"
@@ -115,7 +115,7 @@
                      FontSize="25"
                      IsReadOnly="True"
                      Style="{StaticResource ArkVersion}"
-                     Text="0.0.3" />
+                     Text="0.0.4" />
         </DockPanel>
 
         <Frame x:Name="ContentFrame"

@@ -245,7 +245,6 @@ namespace Ark.Views
             DisplayWindow.Instance.HighlightPhrase.Text = "";
             DisplayWindow.Instance.Close();
             LyricBox.SelectedItem = null;
-            LyricBox.Focus();
         }
 
         // Clean Hotkey cache(?)

@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
     <Authors>Newt Welch</Authors>
     <Company>Welch Engines</Company>
 	<UseWindowsForms>true</UseWindowsForms>
@@ -34,6 +34,7 @@
     <None Remove="Resources\Images\Message_Unselected.png" />
     <None Remove="Resources\Images\Music_Selected.png" />
     <None Remove="Resources\Images\Music_Unselected.png" />
+    <None Remove="Resources\Images\SplashScreen.png" />
     <None Remove="Resources\Images\Tag_Selected.png" />
     <None Remove="Resources\Images\Tag_Unselected.png" />
   </ItemGroup>
@@ -43,7 +44,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Ark_LogoBW.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Fonts\GONTSERRAT-BOLD.TTF" />
     <Resource Include="Resources\Fonts\GONTSERRAT-BOLDITALIC.TTF" />
@@ -67,6 +68,10 @@
 	
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite" Version="1.0.113.7" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <SplashScreen Include="Resources\Images\SplashScreen.png" />
   </ItemGroup>
 	
   <ItemGroup>
