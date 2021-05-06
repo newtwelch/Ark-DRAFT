@@ -18,7 +18,7 @@ namespace Ark.Views
     {
         private BibleViewModel _viewModel;
 
-        private Hotkey closeDisplay, switchLanguage;
+        private Hotkey closeDisplay, switchLanguage, focusSearch, focusSearchSpecific;
 
         private TypeAssistant assistant;
 
@@ -153,7 +153,6 @@ namespace Ark.Views
                 }
             }
 
-            
             // Display stuff on the Second Window
             if (!DisplayWindow.Instance.isBlank)
             {
@@ -219,6 +218,7 @@ namespace Ark.Views
                     TextSearch.Text = "";
                     int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == VerseSearch.Text);
                     VerseList.SelectedIndex = vindex;
+                    VerseList.Focus();
                     break;
             }
             //e.Handled = true;
@@ -389,9 +389,14 @@ namespace Ark.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
-            switchLanguage = new Hotkey(Modifiers.Alt, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
+            switchLanguage = new Hotkey(Modifiers.Ctrl, Models.Hotkeys.Keys.D, Window.GetWindow(this), registerImmediately: true);
+            focusSearch = new Hotkey(Modifiers.Alt, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
+            focusSearchSpecific = new Hotkey(Modifiers.Ctrl | Modifiers.Alt, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
             closeDisplay.HotkeyPressed += CloseDisplay;
             switchLanguage.HotkeyPressed += SwitchLanguage;
+            focusSearch.HotkeyPressed += FocusSearch;
+            focusSearchSpecific.HotkeyPressed += FocusSearchSpecific;
+
             DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
             DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;
         }
@@ -405,6 +410,19 @@ namespace Ark.Views
             ENGLISH.Tag = "";
             VerseList.Focus();
         }
+        // Put focus on the search box, Book Search
+        private void FocusSearch(object sender, HotkeyEventArgs e)
+        {
+            BookSearch.Text = "";
+            BookSearch.Focus();
+        }
+        // Put focus on the search box, Entire Bible Search
+        private void FocusSearchSpecific(object sender, HotkeyEventArgs e)
+        {
+            TextSearch.Text = "";
+            TextSearch.Focus();
+        }
+        // Switch Language
         private void SwitchLanguage(object sender, HotkeyEventArgs e)
         {
             if (ENGLISH.IsChecked == true)
@@ -424,6 +442,8 @@ namespace Ark.Views
             DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Collapsed;
             closeDisplay.Dispose();
             switchLanguage.Dispose();
+            focusSearch.Dispose();
+            focusSearchSpecific.Dispose();
         }
 
         #region numberOnly

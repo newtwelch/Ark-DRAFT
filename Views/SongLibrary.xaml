@@ -161,6 +161,7 @@
                  Grid.Column="1"
                  ItemContainerStyle="{StaticResource SongLyricsItem}"
                  ItemsSource="{Binding Lyrics}"
+                 KeyDown="LyricBox_KeyDown"
                  SelectionChanged="LyricBox_SelectionChanged"
                  Style="{StaticResource SongLyricsBox}">
             <ListBox.ItemTemplate>

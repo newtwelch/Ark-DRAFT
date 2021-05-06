@@ -19,7 +19,7 @@ namespace Ark.Views
 
         private SongLibraryViewModel _viewModel;
 
-        private Hotkey closeDisplay;
+        private Hotkey closeDisplay, focusSearch, switchLanguage;
 
         public SongLibrary()
         {
@@ -226,7 +226,11 @@ namespace Ark.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             closeDisplay = new Hotkey(Modifiers.NoMod, Models.Hotkeys.Keys.Escape, Window.GetWindow(this), registerImmediately: true);
+            focusSearch = new Hotkey(Modifiers.Alt, Models.Hotkeys.Keys.S, Window.GetWindow(this), registerImmediately: true);
+            switchLanguage = new Hotkey(Modifiers.Ctrl, Models.Hotkeys.Keys.D, Window.GetWindow(this), registerImmediately: true);
             closeDisplay.HotkeyPressed += CloseDisplay;
+            focusSearch.HotkeyPressed += FocusSearch;
+            switchLanguage.HotkeyPressed += SwitchLanguage;
             DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Visible;
         }
 
@@ -238,13 +242,65 @@ namespace Ark.Views
             LyricBox.SelectedItem = null;
         }
 
+        // Switching Language 
+        private void SwitchLanguage(object sender, HotkeyEventArgs e)
+        {
+            if (LanguageList.SelectedIndex == LanguageList.Items.Count - 1)
+            {
+                LanguageList.SelectedIndex = 0;
+            }
+            else
+            {
+                LanguageList.SelectedIndex++;
+            }
+            LyricBox.Focus();
+        }
+        // Focus on Song Search Box
+        private void FocusSearch(object sender, HotkeyEventArgs e)
+        {
+            SongSearchBox.Text = "";
+            SongSearchBox.Focus();
+        }
+
         // Clean Hotkey cache(?)
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             closeDisplay.Dispose();
+            focusSearch.Dispose();
+            switchLanguage.Dispose();
             DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Collapsed;
         }
         #endregion
+
+        private void LyricBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key >= Key.D1 && e.Key <= Key.D9) || (e.Key >= Key.NumPad1 && e.Key <= Key.NumPad9))
+            {
+                int lindex = LyricBox.Items.Cast<LyricData>().ToList().FindIndex(x => x.Line == e.Key.ToString().Replace("D", "").Replace("NumPad", ""));
+                LyricBox.SelectedIndex = lindex;
+                LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+                e.Handled = true;
+            }
+            else if(e.Key == Key.D0 || e.Key == Key.NumPad0)
+            {
+                LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+                while (true)
+                {
+                    LyricBox.SelectedIndex++;
+                    LyricData selectedLyric = LyricBox.SelectedItem as LyricData;
+                    if (selectedLyric.Line == "C")
+                    {
+                        break;
+                    }
+                    if(!_viewModel.Lyrics.Any(x => x.Line == "C"))
+                    {
+                        break;
+                    }
+                }
+                LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+            }
+            LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+        }
 
         private void RawLyricToggle_Checked(object sender, RoutedEventArgs e)
         {
