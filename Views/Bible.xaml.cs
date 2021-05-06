@@ -189,6 +189,7 @@ namespace Ark.Views
                     if (BookList.Items.Count == 1)
                     {
                         BookList.SelectedIndex = 0;
+                        ChapterSearch.Text = "";
                         ChapterSearch.Focus();
                     }
                     break;
@@ -213,6 +214,11 @@ namespace Ark.Views
                     int cindex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber.ToString() == ChapterSearch.Text);
                     ChapterList.SelectedIndex = cindex;
                     VerseList.SelectedItem = null;
+                    break;
+                case "VerseSearch":
+                    TextSearch.Text = "";
+                    int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == VerseSearch.Text);
+                    VerseList.SelectedIndex = vindex;
                     break;
             }
             //e.Handled = true;
@@ -432,6 +438,7 @@ namespace Ark.Views
             e.Handled = !IsTextAllowed(e.Text);
         }
         #endregion
+
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             BookData book = BookList.SelectedItem as BookData;
@@ -444,25 +451,42 @@ namespace Ark.Views
                 {
                     case "ENGLISH":
                         _viewModel.ChangeLanguage("ENGLISH");
+                        if (_viewModel.SelectedBook != null)
+                        {
+                            BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == _viewModel.SelectedBook.BookNumber);
+                        }
+                        if (_viewModel.SelectedChapter != null)
+                        {
+                            ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == _viewModel.SelectedChapter.ChapterNumber);
+                        }
+                        if (verse != null)
+                        {
+                            // This is a cheat, Had to do this for listbox behavior stuff
+                            ChapterList.Focus();
+                            // End of Cheat Kek
+                            VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
+                            VerseList.Focus();
+                        }
                         break;
                     case "TAGALOG":
                         _viewModel.ChangeLanguage("TAGALOG");
+                        if (_viewModel.SelectedBook != null)
+                        {
+                            BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == _viewModel.SelectedBook.BookNumber);
+                        }
+                        if (_viewModel.SelectedChapter != null)
+                        {
+                            ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == _viewModel.SelectedChapter.ChapterNumber);
+                        }
+                        if (verse != null)
+                        {
+                            // This is a cheat, Had to do this for listbox behavior stuff
+                            ChapterList.Focus();
+                            // End of Cheat Kek
+                            VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
+                            VerseList.Focus();
+                        }
                         break;
-                }
-                if (_viewModel.SelectedBook != null)
-                {
-                    BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == _viewModel.SelectedBook.BookNumber);
-                }
-                if (_viewModel.SelectedChapter != null)
-                {
-                    ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == _viewModel.SelectedChapter.ChapterNumber);
-                }
-                if (verse != null)
-                {
-                    // This is a cheat, Had to do this for listbox behavior stuff
-                    ChapterList.Focus();
-                    VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == verse.VerseNumber);
-                    VerseList.Focus();
                 }
 
             }

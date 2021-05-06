@@ -18,9 +18,9 @@
 
         <!--  Grid System  -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".35*" />
+            <ColumnDefinition Width=".30*" />
             <ColumnDefinition Width=".15*" />
-            <ColumnDefinition Width=".15*" />
+            <ColumnDefinition Width=".1*" />
             <ColumnDefinition Width=".8*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -159,7 +159,7 @@
                                                      HighlightPhrase="{Binding Tag, ElementName=ENGLISH}"
                                                      IgnoreDot="False"
                                                      Text="{Binding Text}"
-                                                     TextAlignment="Left"
+                                                     TextAlignment="Justify"
                                                      TextWrapping="Wrap" />
                     </DockPanel>
                 </DataTemplate>
