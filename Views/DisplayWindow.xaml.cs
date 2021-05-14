@@ -49,6 +49,7 @@ namespace Ark.Views
             }
         }
 
+        // Closing Thingy
         public void CloseForced()
         {
             forceClose = true;

@@ -17,7 +17,7 @@ namespace Ark.Views
     {
         private MainWindowViewModel _viewModel;
 
-        private Hotkey song, bible, message, blankDisplayWindow;
+        private Hotkey song, bible, message, blankDisplayWindow, historyWindow;
         public object Controls { get; private set; }
 
         public MainWindow()
@@ -79,18 +79,18 @@ namespace Ark.Views
                 return GetParentWindow(parentObject);
             }
         }
+
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.BorderThickness = new System.Windows.Thickness(7);
-            }
-            else
-            {
-                this.BorderThickness = new System.Windows.Thickness(0);
-            }
+            //if (this.WindowState == WindowState.Maximized)
+            //{
+            //    this.BorderThickness = new System.Windows.Thickness(7);
+            //}
+            //else
+            //{
+            //    this.BorderThickness = new System.Windows.Thickness(0);
+            //}
         }
-
         #endregion
 
         private void navItem_Checked(object sender, RoutedEventArgs e)
@@ -118,6 +118,7 @@ namespace Ark.Views
             bible.Dispose();
             message.Dispose();
             blankDisplayWindow.Dispose();
+            historyWindow.Dispose();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -126,6 +127,8 @@ namespace Ark.Views
             bible = new Hotkey(Modifiers.Alt, Keys.X, this, registerImmediately: true);
             message = new Hotkey(Modifiers.Alt, Keys.C, this, registerImmediately: true);
             blankDisplayWindow = new Hotkey(Modifiers.Alt, Keys.W, this, registerImmediately: true);
+            historyWindow = new Hotkey(Modifiers.Alt, Keys.H, this, registerImmediately: true);
+            historyWindow.HotkeyPressed += History;
             song.HotkeyPressed += SwitchTabs;
             bible.HotkeyPressed += SwitchTabs;
             message.HotkeyPressed += SwitchTabs;
@@ -135,7 +138,26 @@ namespace Ark.Views
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
         }
-        private void BlankDisplayWindow(object sender, HotkeyEventArgs e)
+        private void History(object sender, HotkeyEventArgs e)
+        {
+            if (!HistoryWindow.Instance.IsVisible)
+            {
+                HistoryWindow.Instance.Show();
+            }
+            else
+            {
+                if (HistoryWindow.Instance.WindowState == WindowState.Minimized)
+                {
+                    HistoryWindow.Instance.WindowState = WindowState.Normal;
+                }
+                else
+                {
+                    HistoryWindow.Instance.Close();
+                }
+            }
+
+        }
+            private void BlankDisplayWindow(object sender, HotkeyEventArgs e)
         {
             if (!DisplayWindow.Instance.isBlank)
             {

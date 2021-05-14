@@ -48,6 +48,10 @@ namespace Ark.Views
                     VerseSearch.Text = "";
                     VerseSearch.Focus();
                 }
+                if (VerseSearch.IsFocused && VerseSearch.Text != "")
+                {
+                    VerseList.Focus();
+                }
                 if (TextSearch.IsFocused)
                 {
                     if (TextSearch.Text.StartsWith("."))
@@ -121,7 +125,7 @@ namespace Ark.Views
                     VerseData verse = VerseList.SelectedItem as VerseData;
 
                     // Cut the Verse into Sizeable Chunks
-                    string[] versePortions = Regex.Split(verse.Text, @"(?<=[\.,;:!\?])\s+");
+                    string[] versePortions = Regex.Split(verse.Text, @"[.!?][\s]{1,2}(?=[A-Z])");
                     smallVerse = new ObservableCollection<string>();
                     foreach (string sentence in versePortions)
                     {
@@ -218,7 +222,6 @@ namespace Ark.Views
                     TextSearch.Text = "";
                     int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == VerseSearch.Text);
                     VerseList.SelectedIndex = vindex;
-                    VerseList.Focus();
                     break;
             }
             //e.Handled = true;
