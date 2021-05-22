@@ -10,22 +10,38 @@ namespace Ark.Models
     public class History
     {
         public static SongData SelectedSong;
-        public static BookData SelectedBook;
-        public static ChapterData SelectedChapter;
-        public static VerseData SelectedVerse;
-        
-        public static List<SongData> SongLibraryHistory { get; set; }
-        public static List<BibleData> BibleHistory { get; set; }
 
-        public static void AddSong(SongData song)
+        public BookData SelectedBook;
+        public ChapterData SelectedChapter;
+        public VerseData SelectedVerse;
+
+        public List<SongData> SongLibraryHistory;
+        public List<BibleData> BibleHistory;
+        public static History Instance { get; private set; }
+
+        static History()
+        {
+            Instance = new History();
+        }
+
+        private History()
+        {
+            SelectedBook = new BookData();
+            SelectedChapter = new ChapterData();
+            SelectedVerse = new VerseData();
+
+            SongLibraryHistory = new List<SongData>();
+            BibleHistory = new List<BibleData>();
+        }
+
+        public void AddSong(SongData song)
         {
             SongLibraryHistory.Add(song);
         }
 
-        public static void AddBible(BibleData bibleData)
+        public void AddBible(BibleData bibleData)
         {
             BibleHistory.Add(bibleData);
         }
-
     }
 }

@@ -8,13 +8,10 @@
         Title="Ark"
         Width="1280"
         Height="720"
-        MinWidth="1000"
-        MinHeight="500"
         AllowsTransparency="True"
         Closed="Window_Closed"
         Loaded="Window_Loaded"
         ResizeMode="CanResize"
-        SizeChanged="Window_SizeChanged"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         mc:Ignorable="d">
@@ -51,21 +48,20 @@
                    Width="27"
                    Height="27"
                    Margin="10 0 0 0"
-                   Panel.ZIndex="10"
                    DockPanel.Dock="Left"
                    Source="pack://application:,,,/Ark_Logo.ico" />
 
             <!--  Buttons  -->
-            <Button Background="#E74545"
-                    Click="CloseButton_Click"
+            <Button Name="CloseButton"
+                    Background="#E74545"
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowButtons}" />
-            <Button Background="#E59432"
-                    Click="MaximizeButton_Click"
+            <Button Name="MaximizeButton"
+                    Background="#E59432"
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowButtons}" />
-            <Button Background="#40E75D"
-                    Click="MinimizeButton_Click"
+            <Button Name="MinimizeButton"
+                    Background="#40E75D"
                     DockPanel.Dock="Right"
                     Style="{StaticResource WindowButtons}" />
         </DockPanel>

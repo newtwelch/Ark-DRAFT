@@ -1,4 +1,5 @@
-﻿using Ark.ViewModels;
+﻿using Ark.Models.SongLibrary;
+using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,14 +17,12 @@ using System.Windows.Shapes;
 
 namespace Ark.Views
 {
-    /// <summary>
-    /// Interaction logic for HistoryWindow.xaml
-    /// </summary>
     public partial class HistoryWindow : Window
     {
         private HistoryWindowViewModel _viewModel;
         private bool forceClose;
         public static HistoryWindow Instance { get; private set; }
+
 
         public bool isBlank;
 
@@ -40,6 +39,7 @@ namespace Ark.Views
         }
 
         //Closing Thingy
+        #region Closing Thingy
         public void CloseForced()
         {
             forceClose = true;
@@ -57,6 +57,7 @@ namespace Ark.Views
                 e.Cancel = true;
             }
         }
+        #endregion
 
         #region Window Buttons
         //Close le Window
@@ -92,5 +93,9 @@ namespace Ark.Views
             }
         }
         #endregion
+
+        private void SongHistoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
     }
 }
