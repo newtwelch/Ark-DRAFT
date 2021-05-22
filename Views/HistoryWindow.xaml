@@ -33,11 +33,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
         <!--  Custom Window  -->
         <DockPanel Grid.Row="0"
                    Grid.ColumnSpan="2"
@@ -56,52 +51,8 @@
         </DockPanel>
 
         <!--  Song List  -->
-        <ListBox x:Name="SongHistoryList"
+        <ListBox x:Name="HistoryList"
                  Grid.Row="1"
-                 Grid.Column="0"
-                 ItemContainerStyle="{StaticResource SongListItem}"
-                 ItemsSource="{Binding Songs}"
-                 SelectionChanged="SongHistoryList_SelectionChanged"
-                 Style="{StaticResource DefaultListBox}"
-                 VirtualizingPanel.IsContainerVirtualizable="True"
-                 VirtualizingPanel.IsVirtualizing="True"
-                 VirtualizingPanel.ScrollUnit="Pixel">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel Margin="0 7 0 7">
-                        <TextBlock Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                                   DockPanel.Dock="Bottom"
-                                   Style="{StaticResource SearchedLyric}"
-                                   Text="{Binding SearchedLyric}" />
-                        <controls:TextBlockHighlight x:Name="SongTitleInList"
-                                                     HighlightBrush="{StaticResource OrangeBrush}"
-                                                     HighlightPhrase="{Binding ElementName=SongSearchBox, Path=Text}"
-                                                     IgnoreDot="False"
-                                                     Text="{Binding Title}" />
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-        </ListBox>
-
-        <!--  Bible List  -->
-        <ListBox x:Name="BibleHistoryList"
-                 Grid.Row="1"
-                 Grid.Column="1"
                  ItemContainerStyle="{StaticResource SongListItem}"
                  ItemsSource="{Binding Songs}"
                  Style="{StaticResource DefaultListBox}"
@@ -123,12 +74,6 @@
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
         </ListBox>
 
     </Grid>

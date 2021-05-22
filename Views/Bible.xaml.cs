@@ -1,5 +1,4 @@
-﻿using Ark.Models;
-using Ark.Models.Helper;
+﻿using Ark.Models.Helper;
 using Ark.Models.Hotkeys;
 using Ark.ViewModels;
 using System;
@@ -125,13 +124,8 @@ namespace Ark.Views
                     VerseList.ScrollIntoView(VerseList.SelectedItem);
                     VerseData verse = VerseList.SelectedItem as VerseData;
 
-                    // Add to History
-                    History.Instance.AddBible(new BibleData() { BookData = BookList.SelectedItem as BookData,
-                                                       ChapterData = ChapterList.SelectedItem as ChapterData,
-                                                       VerseData = verse });
-
                     // Cut the Verse into Sizeable Chunks
-                    string[] versePortions = Regex.Split(verse.Text, @"(?<=[\.,;:!\?])\s+");
+                    string[] versePortions = Regex.Split(verse.Text, @"[.!?][\s]{1,2}(?=[A-Z])");
                     smallVerse = new ObservableCollection<string>();
                     foreach (string sentence in versePortions)
                     {

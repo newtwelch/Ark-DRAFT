@@ -98,7 +98,6 @@ namespace Ark.Models.Controls
 
             if (tb == null)
                 return;
-
             tb.Inlines.Clear();
             tb.SetValue(MatchCountPropertyKey, 0);
             if (tb == null || string.IsNullOrWhiteSpace(text)) return;
