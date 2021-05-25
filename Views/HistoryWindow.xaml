@@ -8,11 +8,11 @@
         xmlns:local="clr-namespace:Ark.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="History Window"
-        Width="800"
+        Width="400"
         Height="450"
+        d:DataContext="{d:DesignInstance dd:HistoryWindowViewModel}"
         AllowsTransparency="True"
-        ResizeMode="NoResize"
-        ShowActivated="False"
+        ResizeMode="CanResizeWithGrip"
         WindowStyle="None"
         mc:Ignorable="d">
 
@@ -35,7 +35,6 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <!--  Custom Window  -->
@@ -56,79 +55,27 @@
         </DockPanel>
 
         <!--  Song List  -->
-        <ListBox x:Name="SongHistoryList"
+        <ListBox x:Name="HistoryList"
                  Grid.Row="1"
                  Grid.Column="0"
+                 Margin="20 0 -5 20"
                  ItemContainerStyle="{StaticResource SongListItem}"
-                 ItemsSource="{Binding Songs}"
-                 SelectionChanged="SongHistoryList_SelectionChanged"
-                 Style="{StaticResource DefaultListBox}"
+                 ItemsSource="{Binding HistoryObjects}"
+                 SelectedValue="{Binding Object}"
+                 SelectedValuePath="Value"
+                 SelectionChanged="HistoryList_SelectionChanged"
+                 Style="{StaticResource SongListBox}"
                  VirtualizingPanel.IsContainerVirtualizable="True"
                  VirtualizingPanel.IsVirtualizing="True"
                  VirtualizingPanel.ScrollUnit="Pixel">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Margin="0 7 0 7">
-                        <TextBlock Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                                   DockPanel.Dock="Bottom"
-                                   Style="{StaticResource SearchedLyric}"
-                                   Text="{Binding SearchedLyric}" />
-                        <controls:TextBlockHighlight x:Name="SongTitleInList"
-                                                     HighlightBrush="{StaticResource OrangeBrush}"
-                                                     HighlightPhrase="{Binding ElementName=SongSearchBox, Path=Text}"
-                                                     IgnoreDot="False"
-                                                     Text="{Binding Title}" />
+                        <TextBlock x:Name="SongTitleInList"
+                                   Text="{Binding Key}" />
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-        </ListBox>
-
-        <!--  Bible List  -->
-        <ListBox x:Name="BibleHistoryList"
-                 Grid.Row="1"
-                 Grid.Column="1"
-                 ItemContainerStyle="{StaticResource SongListItem}"
-                 ItemsSource="{Binding Songs}"
-                 Style="{StaticResource DefaultListBox}"
-                 VirtualizingPanel.IsContainerVirtualizable="True"
-                 VirtualizingPanel.IsVirtualizing="True"
-                 VirtualizingPanel.ScrollUnit="Pixel">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel Margin="0 7 0 7">
-                        <TextBlock Cursor="{Binding Cursor, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}}"
-                                   DockPanel.Dock="Bottom"
-                                   Style="{StaticResource SearchedLyric}"
-                                   Text="{Binding SearchedLyric}" />
-                        <controls:TextBlockHighlight x:Name="SongTitleInList"
-                                                     HighlightBrush="{StaticResource OrangeBrush}"
-                                                     HighlightPhrase="{Binding ElementName=SongSearchBox, Path=Text}"
-                                                     IgnoreDot="False"
-                                                     Text="{Binding Title}" />
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
-            <ListBoxItem>asdasd</ListBoxItem>
         </ListBox>
 
     </Grid>

@@ -9,14 +9,9 @@ namespace Ark.Models
 {
     public class History
     {
-        public static SongData SelectedSong;
+        public static event EventHandler<Object> HistoryEvent;
+        public static event EventHandler<Object> AddToHistory;
 
-        public BookData SelectedBook;
-        public ChapterData SelectedChapter;
-        public VerseData SelectedVerse;
-
-        public List<SongData> SongLibraryHistory;
-        public List<BibleData> BibleHistory;
         public static History Instance { get; private set; }
 
         static History()
@@ -26,22 +21,15 @@ namespace Ark.Models
 
         private History()
         {
-            SelectedBook = new BookData();
-            SelectedChapter = new ChapterData();
-            SelectedVerse = new VerseData();
-
-            SongLibraryHistory = new List<SongData>();
-            BibleHistory = new List<BibleData>();
         }
 
-        public void AddSong(SongData song)
+        public void HistoryChange(Object obj)
         {
-            SongLibraryHistory.Add(song);
+            HistoryEvent?.Invoke(this, obj);
         }
-
-        public void AddBible(BibleData bibleData)
+        public void AddHistory(Object obj)
         {
-            BibleHistory.Add(bibleData);
+            AddToHistory?.Invoke(this, obj);
         }
     }
 }

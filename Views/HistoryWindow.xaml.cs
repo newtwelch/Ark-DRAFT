@@ -1,4 +1,5 @@
-﻿using Ark.Models.SongLibrary;
+﻿using Ark.Models;
+using Ark.Models.SongLibrary;
 using Ark.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,20 @@ namespace Ark.Views
     {
         private HistoryWindowViewModel _viewModel;
         private bool forceClose;
-        public static HistoryWindow Instance { get; private set; }
-
 
         public bool isBlank;
 
-        static HistoryWindow()
+        private static HistoryWindow _defInstance;
+        public static HistoryWindow Instance
         {
-            Instance = new HistoryWindow();
+            get
+            {
+                if (null == _defInstance)
+                {
+                    _defInstance = new HistoryWindow();
+                }
+                return _defInstance;
+            }
         }
         private HistoryWindow()
         {
@@ -36,6 +43,7 @@ namespace Ark.Views
             DataContext = _viewModel;
 
             InitializeComponent();
+
         }
 
         //Closing Thingy
@@ -94,8 +102,10 @@ namespace Ark.Views
         }
         #endregion
 
-        private void SongHistoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void HistoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
+            History.Instance.HistoryChange(HistoryList.SelectedValue);
         }
     }
 }

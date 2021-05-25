@@ -126,7 +126,7 @@ namespace Ark.Views
                     VerseData verse = VerseList.SelectedItem as VerseData;
 
                     // Add to History
-                    History.Instance.AddBible(new BibleData() { BookData = BookList.SelectedItem as BookData,
+                    History.Instance.AddHistory(new BibleData() { BookData = BookList.SelectedItem as BookData,
                                                        ChapterData = ChapterList.SelectedItem as ChapterData,
                                                        VerseData = verse });
 
@@ -144,6 +144,7 @@ namespace Ark.Views
 
                     DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
                     DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name } { _viewModel.SelectedChapter.ChapterNumber }:{ verse.VerseNumber }";
+
                 }
             }
             else if (BibleDataList.Visibility == Visibility.Visible)

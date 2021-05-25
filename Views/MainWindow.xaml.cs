@@ -264,10 +264,6 @@ namespace Ark.Views
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
         }
-        private void HistoryWindowItemClicked(object sender)
-        {
-            Debug.WriteLine("test");
-        }
         private void History(object sender, HotkeyEventArgs e)
         {
             if (!HistoryWindow.Instance.IsVisible)

@@ -1,4 +1,5 @@
-﻿using Ark.Models.Hotkeys;
+﻿using Ark.Models;
+using Ark.Models.Hotkeys;
 using Ark.Models.SongLibrary;
 using Ark.ViewModels;
 using System;
@@ -18,6 +19,8 @@ namespace Ark.Views
     {
 
         private SongLibraryViewModel _viewModel;
+
+        private bool addedToHistory;
 
         private Hotkey closeDisplay, focusSearch, switchLanguage;
 
@@ -58,6 +61,8 @@ namespace Ark.Views
                     int index = LanguageList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == songID);
                     LanguageList.SelectedIndex = index;
                 }
+
+                addedToHistory = false;
             }
         }
 
@@ -76,6 +81,7 @@ namespace Ark.Views
                 SongList.SelectedIndex = index;
                 SongList.ScrollIntoView(SongList.SelectedItem);
                 _viewModel.RefreshLyrics();
+
             }
         }
 
@@ -152,7 +158,13 @@ namespace Ark.Views
         {
             LyricData lyric = LyricBox.SelectedItem as LyricData;
             LyricBox.SelectedItem = lyric;
-            
+
+            if (!addedToHistory)
+            {
+                SongData song = SongList.SelectedItem as SongData;
+                History.Instance.AddHistory(song);
+                addedToHistory = true;
+            }
            
             if (lyric != null && !_viewModel.EditModeChecked)
             {
