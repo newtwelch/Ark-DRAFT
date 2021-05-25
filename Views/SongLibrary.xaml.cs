@@ -34,7 +34,6 @@ namespace Ark.Views
 
             History.HistoryEventII += HistoryEvent;
 
-            SongSearchBox.Focus();
             SongList.SelectedIndex = 0;
             LanguageList.SelectedIndex = 0;
         }
@@ -45,8 +44,10 @@ namespace Ark.Views
                 SongSearchBox.Text = "";
                 SongData song = (SongData)obj;
                 SongList.SelectedIndex = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == song.SongID);
-                addedToHistory = false;
+                LyricBox.SelectedItem = null;
+                History.Instance.shouldAdd = true;
             }
+            SongList.Focus();
         }
 
         // Select Songs
@@ -256,6 +257,9 @@ namespace Ark.Views
             closeDisplay.HotkeyPressed += CloseDisplay;
             focusSearch.HotkeyPressed += FocusSearch;
             switchLanguage.HotkeyPressed += SwitchLanguage;
+            
+            SongSearchBox.Focus();
+
             DisplayWindow.Instance.SongDisplay.Visibility = Visibility.Visible;
         }
 

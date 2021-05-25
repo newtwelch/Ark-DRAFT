@@ -16,6 +16,7 @@ namespace Ark.ViewModels
         public List<BibleData> BibleHistory { get; set; }
 
         private BibleData prevBible;
+        private SongData prevSong;
 
         public ObservableDictionary<string, Object> HistoryObjects { get; set; }
 
@@ -23,41 +24,50 @@ namespace Ark.ViewModels
         {
             HistoryObjects = new ObservableDictionary<string, Object>();
             BibleHistory = new List<BibleData>();
-            prevBible = new BibleData();
+            
+            prevBible = new BibleData() { BookData = new BookData(),
+                                          ChapterData = new ChapterData(),
+                                           VerseData = new VerseData()};
+            prevSong = new SongData();
 
             History.AddToHistory += AddToHistory;
 
-            //SongData bloop = new SongData() { Title = "Above All" };
-
-            //BookData testing = new BookData() { Name = "Genesis" };
-            //BibleData bleep = new BibleData() { BookData = testing,
-            //                                    ChapterData = new ChapterData() { ChapterNumber = 1 },
-            //                                    VerseData = new VerseData() { VerseNumber = 1 }
-            //};
-
-            //HistoryObjects.Add(bloop.Title, bloop);
-            //HistoryObjects.Add($"{ bleep.BookData.Name } { bleep.ChapterData.ChapterNumber }:{ bleep.VerseData.VerseNumber } ", bleep);
         }
 
         public void AddToHistory(object sender, object obj)
         {
-            if(obj is SongData)
+            if (obj is SongData)
             {
                 SongData song = (SongData)obj;
-                int i = HistoryObjects.Count;
-                HistoryObjects.Add($"[{i++}] {song.Title}", song);
-                HistoryObjects.Move(HistoryObjects.Count - 1, 0);
+                if (song.SongID == prevSong.SongID)
+                {
+                }
+                else
+                {
+                    int i = HistoryObjects.Count;
+                    HistoryObjects.Add($"[{i++}] {song.Title}", song);
+                    HistoryObjects.Move(HistoryObjects.Count - 1, 0);
+                    prevSong = song;
+                }
             }
-            else if(obj is BibleData)
+            else if (obj is BibleData)
             {
                 BibleData bible = (BibleData)obj;
-                prevBible = bible;
-                BibleHistory.Add(bible);
-                int i = BibleHistory.Count;
-                HistoryObjects.Add($"{ bible.BookData.Name } { bible.ChapterData.ChapterNumber }:{ bible.VerseData.VerseNumber }                                               {i++}",
-                    bible);
-                HistoryObjects.Move(HistoryObjects.Count - 1, 0);
 
+                if (bible.BookData.BookNumber == prevBible.BookData.BookNumber &&
+                    bible.ChapterData.ChapterNumber == prevBible.ChapterData.ChapterNumber &&
+                    bible.VerseData.VerseNumber == prevBible.VerseData.VerseNumber)
+                {
+                }
+                else
+                {
+                    prevBible = bible;
+                    BibleHistory.Add(bible);
+                    int i = BibleHistory.Count;
+                    HistoryObjects.Add($"{ bible.BookData.Name } { bible.ChapterData.ChapterNumber }:{ bible.VerseData.VerseNumber }                                               {i++}",
+                        bible);
+                    HistoryObjects.Move(HistoryObjects.Count - 1, 0);
+                }
             }
         }
     }

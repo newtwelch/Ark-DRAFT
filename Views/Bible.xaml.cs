@@ -50,6 +50,8 @@ namespace Ark.Views
                 BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == bible.BookData.BookNumber);
                 ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == bible.ChapterData.ChapterNumber);
                 VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == bible.VerseData.VerseNumber);
+
+                VerseList.Focus();
             }
         }
 

@@ -53,11 +53,16 @@ namespace Ark.Views
 
             MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+
+            HistoryWindow.Instance.Show();
+            HistoryWindow.Instance.Close();
         }
 
         private void HistoryEvent(object sender, object e)
         {
-            if(e is BibleData)
+            this.Focus();
+
+            if (e is BibleData)
             {
                 Bible_RadioButton.IsChecked = true;
                 Ark.Models.History.Instance.HistoryChangeII(e);
