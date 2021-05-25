@@ -50,7 +50,6 @@ namespace Ark.ViewModels
             }
             else if(obj is BibleData)
             {
-
                 BibleData bible = (BibleData)obj;
                 prevBible = bible;
                 BibleHistory.Add(bible);

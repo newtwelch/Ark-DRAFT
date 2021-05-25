@@ -35,10 +35,24 @@ namespace Ark.Views
             assistant = new TypeAssistant();
             assistant.Idled += assistant_Idled;
 
+            History.HistoryEventII += HistoryEvent;
+
             BookList.SelectedIndex = 0;
             ChapterList.SelectedIndex = 0;
             BookSearch.Focus();
         }
+        private void HistoryEvent(object sender, object obj)
+        {
+            if (obj is BibleData)
+            {
+                BibleData bible = (BibleData)obj;
+
+                BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == bible.BookData.BookNumber);
+                ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == bible.ChapterData.ChapterNumber);
+                VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == bible.VerseData.VerseNumber);
+            }
+        }
+
         void assistant_Idled(object sender, EventArgs e)
         {
             this.Dispatcher.Invoke(
@@ -126,9 +140,12 @@ namespace Ark.Views
                     VerseData verse = VerseList.SelectedItem as VerseData;
 
                     // Add to History
-                    History.Instance.AddHistory(new BibleData() { BookData = BookList.SelectedItem as BookData,
-                                                       ChapterData = ChapterList.SelectedItem as ChapterData,
-                                                       VerseData = verse });
+                    History.Instance.AddHistory(new BibleData()
+                        {
+                            BookData = BookList.SelectedItem as BookData,
+                            ChapterData = ChapterList.SelectedItem as ChapterData,
+                            VerseData = verse
+                        });
 
                     // Cut the Verse into Sizeable Chunks
                     string[] versePortions = Regex.Split(verse.Text, @"(?<=[\.,;:!\?])\s+");
@@ -144,7 +161,7 @@ namespace Ark.Views
 
                     DisplayWindow.Instance.BibleDisplay.Text = verse.Text;
                     DisplayWindow.Instance.BibleBookText.Text = $"{ _viewModel.SelectedBook.Name } { _viewModel.SelectedChapter.ChapterNumber }:{ verse.VerseNumber }";
-
+;
                 }
             }
             else if (BibleDataList.Visibility == Visibility.Visible)

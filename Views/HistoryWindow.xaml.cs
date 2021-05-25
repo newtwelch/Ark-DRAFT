@@ -24,7 +24,7 @@ namespace Ark.Views
         private bool forceClose;
 
         public bool isBlank;
-
+        
         private static HistoryWindow _defInstance;
         public static HistoryWindow Instance
         {
@@ -104,8 +104,8 @@ namespace Ark.Views
 
         private void HistoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            History.Instance.HistoryChange(HistoryList.SelectedValue);
+            History.Instance.shouldAdd = false;
+            History.Instance.HistoryChangeI(HistoryList.SelectedValue);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Ark.Models;
 using Ark.Models.Hotkeys;
+using Ark.Models.SongLibrary;
 using Ark.ViewModels;
 using System;
 using System.ComponentModel;
@@ -22,6 +23,8 @@ namespace Ark.Views
         private Hotkey song, bible, message, blankDisplayWindow, historyWindow;
         public object Controls { get; private set; }
 
+        private UserControl SongLibrary, Bible, TheTable;
+
         public MainWindow()
         {
             _viewModel = new MainWindowViewModel();
@@ -35,6 +38,10 @@ namespace Ark.Views
                 HwndSource.FromHwnd(handle).AddHook(new HwndSourceHook(WindowProc));
             };
 
+            SongLibrary = new SongLibrary();
+            Bible = new Bible();
+            TheTable = new TheTable();
+
             //Initialize with SongLibrary UserControl
             SongLibrary_RadioButton.IsChecked = true;
 
@@ -42,8 +49,24 @@ namespace Ark.Views
             MaximizeButton.Click += (s, e) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             CloseButton.Click += (s, e) => Close();
 
+            Ark.Models.History.HistoryEventI += HistoryEvent;
+
             MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+        }
+
+        private void HistoryEvent(object sender, object e)
+        {
+            if(e is BibleData)
+            {
+                Bible_RadioButton.IsChecked = true;
+                Ark.Models.History.Instance.HistoryChangeII(e);
+            }
+            else if(e is SongData)
+            {
+                SongLibrary_RadioButton.IsChecked = true;
+                Ark.Models.History.Instance.HistoryChangeII(e);
+            }
         }
 
         #region Window Buttons
@@ -226,13 +249,13 @@ namespace Ark.Views
                 switch (rb.Name)
                 {
                     case "SongLibrary_RadioButton":
-                        ContentFrame.Content = new SongLibrary();
+                        ContentFrame.Content = SongLibrary;
                         break;
                     case "Bible_RadioButton":
-                        ContentFrame.Content = new Bible();
+                        ContentFrame.Content = Bible;
                         break;
                     case "Message_RadioButton":
-                        ContentFrame.Content = new TheTable();
+                        ContentFrame.Content = TheTable;
                         break;
                 }
             }
@@ -259,7 +282,6 @@ namespace Ark.Views
             bible.HotkeyPressed += SwitchTabs;
             message.HotkeyPressed += SwitchTabs;
             blankDisplayWindow.HotkeyPressed += BlankDisplayWindow;
-
 
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);

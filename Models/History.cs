@@ -9,8 +9,11 @@ namespace Ark.Models
 {
     public class History
     {
-        public static event EventHandler<Object> HistoryEvent;
+        public static event EventHandler<Object> HistoryEventI;
+        public static event EventHandler<Object> HistoryEventII;
         public static event EventHandler<Object> AddToHistory;
+
+        public bool shouldAdd = true;
 
         public static History Instance { get; private set; }
 
@@ -23,13 +26,22 @@ namespace Ark.Models
         {
         }
 
-        public void HistoryChange(Object obj)
+        public void HistoryChangeI(Object obj)
         {
-            HistoryEvent?.Invoke(this, obj);
+            HistoryEventI?.Invoke(this, obj);
+        }
+        public void HistoryChangeII(Object obj)
+        {
+            HistoryEventII?.Invoke(this, obj);
+            
         }
         public void AddHistory(Object obj)
         {
-            AddToHistory?.Invoke(this, obj);
+            if (shouldAdd)
+            {
+                AddToHistory?.Invoke(this, obj);
+            }
+            shouldAdd = true;
         }
     }
 }

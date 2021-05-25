@@ -32,9 +32,21 @@ namespace Ark.Views
 
             InitializeComponent();
 
+            History.HistoryEventII += HistoryEvent;
+
             SongSearchBox.Focus();
             SongList.SelectedIndex = 0;
             LanguageList.SelectedIndex = 0;
+        }
+        private void HistoryEvent(object sender, object obj)
+        {
+            if (obj is SongData)
+            {
+                SongSearchBox.Text = "";
+                SongData song = (SongData)obj;
+                SongList.SelectedIndex = SongList.Items.Cast<SongData>().ToList().FindIndex(x => x.SongID == song.SongID);
+                addedToHistory = false;
+            }
         }
 
         // Select Songs
@@ -161,6 +173,7 @@ namespace Ark.Views
 
             if (!addedToHistory)
             {
+                History.Instance.shouldAdd = true;
                 SongData song = SongList.SelectedItem as SongData;
                 History.Instance.AddHistory(song);
                 addedToHistory = true;
