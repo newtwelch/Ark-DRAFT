@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
     <Authors>Newt Welch</Authors>
     <Company>Welch Engines</Company>
 	<UseWindowsForms>true</UseWindowsForms>

@@ -45,7 +45,11 @@ namespace Ark.ViewModels
                 else
                 {
                     int i = HistoryObjects.Count;
-                    HistoryObjects.Add($"[{i++}] {song.Title}", song);
+                    // This is weird but it's brilliant and I'm keeping it
+                    HistoryObjects.Add($"[♪] {song.Title}                                             " +
+                        $"                                                                            " +
+                        $"                                                                       {i++}", 
+                        song);
                     HistoryObjects.Move(HistoryObjects.Count - 1, 0);
                     prevSong = song;
                 }
@@ -64,7 +68,11 @@ namespace Ark.ViewModels
                     prevBible = bible;
                     BibleHistory.Add(bible);
                     int i = BibleHistory.Count;
-                    HistoryObjects.Add($"{ bible.BookData.Name } { bible.ChapterData.ChapterNumber }:{ bible.VerseData.VerseNumber }                                               {i++}",
+                    // This is also weird haha but me keeping it
+                    HistoryObjects.Add($"(†) { bible.BookData.Name } { bible.ChapterData.ChapterNumber }:{ bible.VerseData.VerseNumber }" +
+                        $"                                                                                                              " +
+                        $"                                                                                                              " +
+                        $"                                                                                                         {i++}",
                         bible);
                     HistoryObjects.Move(HistoryObjects.Count - 1, 0);
                 }
