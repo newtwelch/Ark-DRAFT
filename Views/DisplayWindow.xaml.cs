@@ -76,11 +76,15 @@ namespace Ark.Views
                 System.Drawing.Rectangle r = s.WorkingArea;
                 Top = r.Top;
                 Left = r.Left;
+                Width = Screen.AllScreens[1].Bounds.Width;
+                Height = Screen.AllScreens[1].Bounds.Height;
             }
             else
             {
                 Top = Screen.PrimaryScreen.WorkingArea.Top;
                 Left = Screen.PrimaryScreen.WorkingArea.Left;
+                Width = SystemParameters.PrimaryScreenWidth;
+                Height = SystemParameters.PrimaryScreenHeight;
             }
 
         }

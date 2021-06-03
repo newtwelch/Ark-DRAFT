@@ -442,7 +442,9 @@ namespace Ark.Views
         // Put focus on the search box, Book Search
         private void FocusSearch(object sender, HotkeyEventArgs e)
         {
+            BookData book = BookList.SelectedItem as BookData;
             BookSearch.Text = "";
+            BookList.SelectedIndex = book.BookNumber-1;
             BookSearch.Focus();
         }
         // Put focus on the search box, Entire Bible Search

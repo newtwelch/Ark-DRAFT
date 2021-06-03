@@ -15,7 +15,6 @@
         IsVisibleChanged="Window_IsVisibleChanged"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
-        ShowActivated="False"
         WindowStyle="None"
         mc:Ignorable="d">
     <Grid>
