@@ -39,7 +39,6 @@ namespace Ark.Views
 
             BookList.SelectedIndex = 0;
             ChapterList.SelectedIndex = 0;
-            BookSearch.Focus();
         }
         private void HistoryEvent(object sender, object obj)
         {
@@ -47,11 +46,16 @@ namespace Ark.Views
             {
                 BibleData bible = (BibleData)obj;
 
+                BookSearch.Text = "";
+                ChapterSearch.Text = "";
+                VerseSearch.Text = "";
+
                 BookList.SelectedIndex = BookList.Items.Cast<BookData>().ToList().FindIndex(x => x.BookNumber == bible.BookData.BookNumber);
                 ChapterList.SelectedIndex = ChapterList.Items.Cast<ChapterData>().ToList().FindIndex(x => x.ChapterNumber == bible.ChapterData.ChapterNumber);
                 VerseList.SelectedIndex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber == bible.VerseData.VerseNumber);
 
                 VerseList.Focus();
+                History.Instance.shouldAdd = true;
             }
         }
 
@@ -248,9 +252,10 @@ namespace Ark.Views
                     TextSearch.Text = "";
                     int vindex = VerseList.Items.Cast<VerseData>().ToList().FindIndex(x => x.VerseNumber.ToString() == VerseSearch.Text);
                     VerseList.SelectedIndex = vindex;
+                    VerseSearch.Focus();
                     break;
             }
-            //e.Handled = true;
+            e.Handled = true;
         }
 
         private void Search_KeyDown(object sender, KeyEventArgs e)
@@ -425,6 +430,8 @@ namespace Ark.Views
             switchLanguage.HotkeyPressed += SwitchLanguage;
             focusSearch.HotkeyPressed += FocusSearch;
             focusSearchSpecific.HotkeyPressed += FocusSearchSpecific;
+
+            BookSearch.Focus();
 
             DisplayWindow.Instance.BibleBookText.Visibility = Visibility.Visible;
             DisplayWindow.Instance.BibleDisplay.Visibility = Visibility.Visible;

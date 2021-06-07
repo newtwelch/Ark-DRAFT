@@ -12,9 +12,11 @@
         d:DesignHeight="1080"
         d:DesignWidth="1920"
         Background="{StaticResource BackgroundBrush}"
+        Focusable="False"
         IsVisibleChanged="Window_IsVisibleChanged"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
+        ShowActivated="False"
         WindowStyle="None"
         mc:Ignorable="d">
     <Grid>

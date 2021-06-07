@@ -35,7 +35,13 @@ namespace Ark.Views
             DataContext = _viewModel;
 
             InitializeComponent();
-        }   
+
+            if (Screen.AllScreens.Length > 1)
+            {
+                MaxWidth = Screen.AllScreens[1].Bounds.Width;
+                MaxHeight = Screen.AllScreens[1].Bounds.Height;
+            }
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (Screen.AllScreens.Length == 1) { 
@@ -76,11 +82,15 @@ namespace Ark.Views
                 System.Drawing.Rectangle r = s.WorkingArea;
                 Top = r.Top;
                 Left = r.Left;
+                MaxWidth = Screen.AllScreens[1].Bounds.Width;
+                MaxHeight = Screen.AllScreens[1].Bounds.Height;
                 Width = Screen.AllScreens[1].Bounds.Width;
                 Height = Screen.AllScreens[1].Bounds.Height;
             }
             else
             {
+                MaxWidth = SystemParameters.PrimaryScreenWidth;
+                MaxHeight = SystemParameters.PrimaryScreenHeight;
                 Top = Screen.PrimaryScreen.WorkingArea.Top;
                 Left = Screen.PrimaryScreen.WorkingArea.Left;
                 Width = SystemParameters.PrimaryScreenWidth;

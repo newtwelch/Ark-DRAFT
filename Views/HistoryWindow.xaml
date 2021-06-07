@@ -13,6 +13,7 @@
         d:DataContext="{d:DesignInstance dd:HistoryWindowViewModel}"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
+        Topmost="True"
         WindowStyle="None"
         mc:Ignorable="d">
 
@@ -61,7 +62,6 @@
                  Margin="20 0 -5 20"
                  ItemContainerStyle="{StaticResource SongListItem}"
                  ItemsSource="{Binding HistoryObjects}"
-                 SelectedValue="{Binding Object}"
                  SelectedValuePath="Value"
                  SelectionChanged="HistoryList_SelectionChanged"
                  Style="{StaticResource SongListBox}"
