@@ -329,6 +329,8 @@ namespace Ark.Views
                 LyricBox.ScrollIntoView(LyricBox.SelectedItem);
             }
             LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+
+            LyricBox.Focus();
         }
 
         private void RawLyricToggle_Checked(object sender, RoutedEventArgs e)
