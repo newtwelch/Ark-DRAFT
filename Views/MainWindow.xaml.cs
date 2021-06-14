@@ -342,7 +342,6 @@ namespace Ark.Views
 
         }
 
-
         // Annoying Alt thingy on the window
         private const int GWL_STYLE = -16; //WPF's Message code for Title Bar's Style 
 

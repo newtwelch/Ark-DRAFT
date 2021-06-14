@@ -308,9 +308,9 @@ namespace Ark.Views
                 int lindex = LyricBox.Items.Cast<LyricData>().ToList().FindIndex(x => x.Line == e.Key.ToString().Replace("D", "").Replace("NumPad", ""));
                 LyricBox.SelectedIndex = lindex;
                 LyricBox.ScrollIntoView(LyricBox.SelectedItem);
-                e.Handled = true;
+                LyricBox.Focus();
             }
-            else if(e.Key == Key.D0 || e.Key == Key.NumPad0)
+            else if (e.Key == Key.D0 || e.Key == Key.NumPad0)
             {
                 LyricBox.ScrollIntoView(LyricBox.SelectedItem);
                 while (true)
@@ -321,16 +321,16 @@ namespace Ark.Views
                     {
                         break;
                     }
-                    if(!_viewModel.Lyrics.Any(x => x.Line == "C"))
+                    if (!_viewModel.Lyrics.Any(x => x.Line == "C"))
                     {
                         break;
                     }
                 }
-                LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+                LyricBox.Focus();
             }
-            LyricBox.ScrollIntoView(LyricBox.SelectedItem);
 
-            LyricBox.Focus();
+
+            e.Handled = true;
         }
 
         private void RawLyricToggle_Checked(object sender, RoutedEventArgs e)
@@ -349,6 +349,7 @@ namespace Ark.Views
             // Set Visibility for Raw Lyric Editor to COLLAPSED
             RawLyrics.Visibility = Visibility.Collapsed;
             Sequence.Visibility = Visibility.Collapsed;
+
             // And the lyricBox Visible
             LyricBox.Visibility = Visibility.Visible;
             _viewModel.SelectedSong.RawLyric = RawLyrics.Text;

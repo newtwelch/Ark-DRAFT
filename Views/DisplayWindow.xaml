@@ -24,21 +24,22 @@
                    Visibility="Collapsed" />
         <Grid>
             <Viewbox Stretch="Uniform">
-                <DockPanel>
+                <DockPanel Margin="0 20 0 0">
                     <TextBlock x:Name="BibleBookText"
+                               Margin="0 0 0 20"
                                HorizontalAlignment="Center"
                                DockPanel.Dock="Top"
                                FontFamily="Gontserrat"
                                FontSize="100"
+                               FontWeight="Bold"
                                Style="{StaticResource DisplayText}"
-                               Text="Genesis 1:1"
-                               TextDecorations="Underline"
                                Visibility="Collapsed" />
                     <controls:TextBlockHighlight x:Name="BibleDisplay"
                                                  Width="1920"
                                                  Margin="100 0 100 100"
                                                  FontFamily="Gontserrat"
                                                  FontSize="100"
+                                                 Foreground="{StaticResource FocusedBrush}"
                                                  HighlightBrush="{StaticResource OrangeBrush}"
                                                  HighlightPhrase="{Binding Text, ElementName=HighlightPhrase}"
                                                  Style="{StaticResource DisplayText}"
