@@ -303,34 +303,36 @@ namespace Ark.Views
 
         private void LyricBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.Key >= Key.D1 && e.Key <= Key.D9) || (e.Key >= Key.NumPad1 && e.Key <= Key.NumPad9))
+            if (!_viewModel.EditModeChecked)
             {
-                int lindex = LyricBox.Items.Cast<LyricData>().ToList().FindIndex(x => x.Line == e.Key.ToString().Replace("D", "").Replace("NumPad", ""));
-                LyricBox.SelectedIndex = lindex;
-                LyricBox.ScrollIntoView(LyricBox.SelectedItem);
-                LyricBox.Focus();
-            }
-            else if (e.Key == Key.D0 || e.Key == Key.NumPad0)
-            {
-                LyricBox.ScrollIntoView(LyricBox.SelectedItem);
-                while (true)
+                if ((e.Key >= Key.D1 && e.Key <= Key.D9) || (e.Key >= Key.NumPad1 && e.Key <= Key.NumPad9))
                 {
-                    LyricBox.SelectedIndex++;
-                    LyricData selectedLyric = LyricBox.SelectedItem as LyricData;
-                    if (selectedLyric.Line == "C")
-                    {
-                        break;
-                    }
-                    if (!_viewModel.Lyrics.Any(x => x.Line == "C"))
-                    {
-                        break;
-                    }
+                    int lindex = LyricBox.Items.Cast<LyricData>().ToList().FindIndex(x => x.Line == e.Key.ToString().Replace("D", "").Replace("NumPad", ""));
+                    LyricBox.SelectedIndex = lindex;
+                    LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+                    LyricBox.Focus();
                 }
-                LyricBox.Focus();
-            }
-
+                else if (e.Key == Key.D0 || e.Key == Key.NumPad0)
+                {
+                    LyricBox.ScrollIntoView(LyricBox.SelectedItem);
+                    while (true)
+                    {
+                        LyricBox.SelectedIndex++;
+                        LyricData selectedLyric = LyricBox.SelectedItem as LyricData;
+                        if (selectedLyric.Line == "C")
+                        {
+                            break;
+                        }
+                        if (!_viewModel.Lyrics.Any(x => x.Line == "C"))
+                        {
+                            break;
+                        }
+                    }
+                    LyricBox.Focus();
+                }
 
             e.Handled = true;
+            }
         }
 
         private void RawLyricToggle_Checked(object sender, RoutedEventArgs e)
