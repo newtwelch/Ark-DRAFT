@@ -80,7 +80,7 @@
                  Grid.RowSpan="2"
                  ItemContainerStyle="{StaticResource SongListItem}"
                  ItemsSource="{Binding Songs}"
-                 KeyDown="SongList_KeyDown"
+                 PreviewKeyDown="SongList_KeyDown"
                  SelectionChanged="SongList_SelectionChanged"
                  Style="{StaticResource SongListBox}"
                  VirtualizingPanel.IsContainerVirtualizable="True"

@@ -249,7 +249,7 @@ namespace Ark.Models.SongLibrary
                 string[] paragraphs = Array.FindAll(Regex.Split(rawlyric, "(\r?\n){2,}", RegexOptions.Multiline), p => !String.IsNullOrWhiteSpace(p));
                 foreach (string paragraph in paragraphs)
                 {
-                    if (paragraph.StartsWith("CHORUS"))
+                    if (paragraph.StartsWith("CHORUS") || paragraph.StartsWith("Chorus"))
                     {
                         Lyrics.Add(new LyricData() { Line = "C", Text = System.Text.RegularExpressions.Regex.Replace(paragraph, "^(.*\n){1}", ""), Type = LyricType.Chorus });
                     }
@@ -266,22 +266,45 @@ namespace Ark.Models.SongLibrary
                 // If sequence doesn't exist then do a default one
                 if (sequence == "o")
                 {
-                    // Check for stanzas
-                    List<LyricData> stanzas = Lyrics.FindAll(x => x.Type == LyricType.Stanza);
+                    //// Check for stanzas
+                    //List<LyricData> stanzas = Lyrics.FindAll(x => x.Type == LyricType.Stanza);
 
-                    // For each stanza add a Chorus if Chorus Exists
-                    foreach (LyricData stanza in stanzas)
+                    //// For each stanza add a Chorus if Chorus Exists
+                    //foreach (LyricData stanza in stanzas)
+                    //{
+                    //    // Add Stanza 
+                    //    SequencedLyrics.Add(stanza);
+
+                    //    // Check and add chorus
+                    //    if (Lyrics.Any(x => x.Type == LyricType.Chorus))
+                    //    {
+                    //        LyricData chorus = Lyrics.Find(x => x.Type == LyricType.Chorus);
+                    //        SequencedLyrics.Add(chorus);
+                    //    }
+                    //}
+
+                    foreach(LyricData lyric in Lyrics)
                     {
-                        // Add Stanza 
-                        SequencedLyrics.Add(stanza);
+                        if(lyric.Type == LyricType.Stanza)
+                        {
+                            SequencedLyrics.Add(lyric);
+
+                            // Check and add chorus
+                            if (SequencedLyrics.Any(x => x.Type == LyricType.Chorus))
+                            {
+                                LyricData chorus = SequencedLyrics.Find(x => x.Type == LyricType.Chorus);
+                                SequencedLyrics.Add(chorus);
+                            }
+                        }
 
                         // Check and add chorus
-                        if (Lyrics.Any(x => x.Type == LyricType.Chorus))
+                        if (lyric.Type == LyricType.Chorus )
                         {
                             LyricData chorus = Lyrics.Find(x => x.Type == LyricType.Chorus);
                             SequencedLyrics.Add(chorus);
                         }
                     }
+
                     // If Bridge Exists then put it on the very last
                     if (Lyrics.Any(x => x.Type == LyricType.Bridge))
                     {
