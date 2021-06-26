@@ -204,7 +204,7 @@ namespace Ark.Views
             {
                 string selectedItem = (string)e.AddedItems[0];
                 ENGLISH.Tag = selectedItem;
-                DisplayWindow.Instance.BibleDisplay.HighlightPhrase = selectedItem;
+                DisplayWindow.Instance.HighlightPhrase.Text = selectedItem;
             }
         }
 
